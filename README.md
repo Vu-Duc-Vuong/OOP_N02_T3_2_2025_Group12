@@ -43,7 +43,7 @@
 
 ---
 
-jdsjdjdsdkjfskjkfafsklafjlkafjlafajlfaljfalafklfalk
+
 
 #### **4. Doanh thu (Doanhthu)**
 - **trongNgay**: Doanh thu trong ngày

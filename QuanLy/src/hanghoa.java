@@ -6,5 +6,5 @@ String soLuongHangHoa;
 String nhaSanXuat;
 String namSanXuat;
 
-    
+    string setName(string ho)
 }
