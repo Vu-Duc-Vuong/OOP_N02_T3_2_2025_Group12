@@ -1,8 +1,8 @@
 public class App {
     public static void main(String[] args) {
-        BreakAndContinue.BaC();
-        CakeCase.Cc();
-        MyNumber.Num();
-        PassObject.PO();
+         System.out.println("== Bắt đầu test ==");
+         TestUser.test();
+       TestTime.test();
+
     }
 }
