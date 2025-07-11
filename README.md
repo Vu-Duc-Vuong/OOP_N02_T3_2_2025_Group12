@@ -43,10 +43,7 @@
 
 ---
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 213922931bdd6bb6b646dc565ba1513249558f1a
+jdsjdjdsdkjfskjkfafsklafjlkafjlafajlfaljfalafklfalk
 
 #### **4. Doanh thu (Doanhthu)**
 - **trongNgay**: Doanh thu trong ngày
