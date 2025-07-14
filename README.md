@@ -12,7 +12,7 @@
 
 ---
 
-## Ứng dụng: Xây dựng quản lý cửa hàng
+## Ứng dụng: Xây dựng quản lý cửa hàng quần áo
 
 ### **Phân tích đối tượng**
 
@@ -41,9 +41,6 @@
 - **soLuongBan**: Số lượng bán
 - **giaBan**: Giá bán
 
----
-
-jdsjdjdsdkjfskjkfafsklafjlkafjlafajlfaljfalafklfalk
 
 #### **4. Doanh thu (Doanhthu)**
 - **trongNgay**: Doanh thu trong ngày
