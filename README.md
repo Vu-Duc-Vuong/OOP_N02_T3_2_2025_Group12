@@ -12,7 +12,8 @@
 
 ---
 
-## Ứng dụng: Xây dựng quản lý cửa hàng quần áo
+## Ứng dụng: Xây dựng quản lý cửa hàng tạp hóa
+
 
 ### **Phân tích đối tượng**
 

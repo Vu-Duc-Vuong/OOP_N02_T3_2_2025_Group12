@@ -2,25 +2,20 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
 
+
 public class Main {
   public static void main(String[] args) {
-    ArrayList<HangHoa> dsHangHoa = new ArrayList<>();
+    dsHangHoa danhSach = new dsHangHoa();
     ArrayList<Nhap> dsNhap = new ArrayList<>();
     Scanner sc = new Scanner(System.in);
 
-    dsHangHoa.add(HangHoa.taoHangHoaMau());
-
+    danhSach.taoHangHoaMau();
+    danhSach.hienThiTatCa();
     System.out.println("=== Nhap hang ===");
     System.out.print("Nhap ma hang hoa: ");
     String maHH = sc.nextLine();
 
-    HangHoa tim = null;
-    for (HangHoa h : dsHangHoa) {
-      if (h.getHanghoaID().equalsIgnoreCase(maHH)) {
-        tim = h;
-        break;
-      }
-    }
+    HangHoa tim = danhSach.timTheoMa(maHH);
 
     if (tim != null) {
       System.out.print("Nhap so luong: ");
