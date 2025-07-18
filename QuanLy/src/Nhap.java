@@ -1,29 +1,15 @@
 public class Nhap {
-    private String hanghoaID;
-    private int soLuongNhap;
-    private double giaNhap;
-    private String ngayNhap;
+    String maPhieu;
+    HangHoa hang;
+    int soLuongNhap;
 
-    public Nhap(String hanghoaID, int soLuongNhap, double giaNhap, String ngayNhap) {
-        this.hanghoaID = hanghoaID;
+    public Nhap(String maPhieu, HangHoa hang, int soLuongNhap) {
+        this.maPhieu = maPhieu;
+        this.hang = hang;
         this.soLuongNhap = soLuongNhap;
-        this.giaNhap = giaNhap;
-        this.ngayNhap = ngayNhap;
     }
 
-    public double tongNhap() {
-        return soLuongNhap * giaNhap;
-    }
-
-    public void hienThiNhap() {
-        System.out.printf("Nhap: %s - SL: %d - Gia: %.2f - Ngay: %s\n", hanghoaID, soLuongNhap, giaNhap, ngayNhap);
-    }
-
-    public String getHanghoaID() {
-        return hanghoaID;
-    }
-
-    public int getSoLuongNhap() {
-        return soLuongNhap;
+    public double tongTien() {
+        return soLuongNhap * hang.donGia;
     }
 }

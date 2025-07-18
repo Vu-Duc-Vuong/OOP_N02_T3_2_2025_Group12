@@ -1,28 +1,27 @@
 public class DoanhThu {
-    private double trongNgay;
-    private double trongThang;
-    private double lai;
-    private double lo;
+    QuanLyNhap qlNhap;
+    QuanLyBan qlBan;
 
-    public void tinhLaiLo(double tongBan, double tongNhap) {
-        if (tongBan >= tongNhap) {
-            lai = tongBan - tongNhap;
-            lo = 0;
+    public QuanLyDoanhThu(QuanLyNhap qlNhap, QuanLyBan qlBan) {
+        this.qlNhap = qlNhap;
+        this.qlBan = qlBan;
+    }
+
+    public void thongKe() {
+        double tongNhap = qlNhap.tongNhap();
+        double tongBan = qlBan.tongBan();
+        double chenhLech = tongBan - tongNhap;
+
+        System.out.println("=== THONG KE DOANH THU ===");
+        System.out.printf("Tong tien nhap hang: %.2f\n", tongNhap);
+        System.out.printf("Tong tien ban hang : %.2f\n", tongBan);
+        
+        if (chenhLech > 0) {
+            System.out.printf("→ Lai: %.2f\n", chenhLech);
+        } else if (chenhLech < 0) {
+            System.out.printf("→ Lo: %.2f\n", -chenhLech);
         } else {
-            lo = tongNhap - tongBan;
-            lai = 0;
+            System.out.println("→ Hoa tien.");
         }
-    }
-
-    public void setTrongNgay(double tongBan) {
-        this.trongNgay = tongBan;
-    }
-
-    public void setTrongThang(double tongBan) {
-        this.trongThang = tongBan;
-    }
-
-    public void hienThiDoanhThu() {
-        System.out.printf("Ngay: %.2f - Thang: %.2f - Lai: %.2f - Lo: %.2f\n", trongNgay, trongThang, lai, lo);
     }
 }

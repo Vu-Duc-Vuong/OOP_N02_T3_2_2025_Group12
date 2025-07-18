@@ -1,53 +1,50 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class QuanLyHangHoa {
-    ArrayList<HangHoa> danhSach = new ArrayList<>();
+    ArrayList<HangHoa> ds = new ArrayList<>();
 
-    public ArrayList<HangHoa> them(HangHoa h) {
-        danhSach.add(h);
-        return danhSach;
+    public void them(HangHoa h) {
+        ds.add(h);
     }
 
-    public ArrayList<HangHoa> xoa(String maHang) {
-        for (int i = 0; i < danhSach.size(); i++) {
-            if (danhSach.get(i).maHang.equals(maHang)) {
-                danhSach.remove(i);
-                break;
-            }
-        }
-        return danhSach;
+    public void xoa(String ma) {
+        ds.removeIf(h -> h.maHang.equals(ma));
     }
 
-    public ArrayList<HangHoa> sua(String maHang) {
+    public void sua(String ma) {
         Scanner sc = new Scanner(System.in);
-        for (int i = 0; i < danhSach.size(); i++) {
-            if (danhSach.get(i).maHang.equals(maHang)) {
-                System.out.print("Nhập tên mới: ");
-                String tenMoi = sc.nextLine();
-
-                System.out.print("Nhập số lượng tồn mới: ");
-                int soLuongMoi = Integer.parseInt(sc.nextLine());
-
-                System.out.print("Nhập nhà sản xuất mới: ");
-                String nsxMoi = sc.nextLine();
-
-                danhSach.get(i).tenHang = tenMoi;
-                danhSach.get(i).soLuongTon = soLuongMoi;
-                danhSach.get(i).nhaSanXuat = nsxMoi;
+        for (HangHoa h : ds) {
+            if (h.maHang.equals(ma)) {
+                System.out.print("Ten moi: ");
+                h.tenHang = sc.nextLine();
+                System.out.print("SL moi: ");
+                h.soLuong = Integer.parseInt(sc.nextLine());
+                System.out.print("NSX moi: ");
+                h.nhaSanXuat = sc.nextLine();
+                System.out.print("Gia moi: ");
+                h.donGia = Double.parseDouble(sc.nextLine());
                 break;
             }
         }
-        return danhSach;
     }
 
-    public void lietKe() {
-        for (HangHoa h : danhSach) {
-            System.out.println("Mã: " + h.maHang);
-            System.out.println("Tên: " + h.tenHang);
-            System.out.println("SL tồn: " + h.soLuongTon);
-            System.out.println("NSX: " + h.nhaSanXuat);
-            System.out.println();
+    public void hienThi() {
+        for (HangHoa h : ds) {
+            System.out.println("[" + h.maHang + "] " + h.tenHang + " - SL: " + h.soLuong +
+                               ", NSX: " + h.nhaSanXuat + ", Gia: " + h.donGia);
         }
+    }
+
+    public HangHoa timTheoMa(String ma) {
+        for (HangHoa h : ds) {
+            if (h.maHang.equals(ma)) return h;
+        }
+        return null;
+    }
+
+    public double tongTienNhap() {
+        double tong = 0;
+        for (HangHoa h : ds) tong += h.thanhTien();
+        return tong;
     }
 }

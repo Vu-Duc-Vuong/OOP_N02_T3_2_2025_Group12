@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class QuanLyBan {
     ArrayList<Ban> dsBan = new ArrayList<>();
@@ -7,17 +7,31 @@ public class QuanLyBan {
         dsBan.add(b);
     }
 
-    public double tongBan() {
-        double tong = 0;
-        for (Ban b : dsBan) {
-            tong += b.tongBan();
+    public void xoa(String ma) {
+        dsBan.removeIf(p -> p.maPhieu.equals(ma));
+    }
+
+    public void sua(String ma) {
+        Scanner sc = new Scanner(System.in);
+        for (Ban p : dsBan) {
+            if (p.maPhieu.equals(ma)) {
+                System.out.print("SL ban moi: ");
+                p.soLuongBan = Integer.parseInt(sc.nextLine());
+                break;
+            }
         }
-        return tong;
     }
 
     public void hienThi() {
-        for (Ban b : dsBan) {
-            b.hienThiBan();
+        for (Ban p : dsBan) {
+            System.out.println("Phieu: " + p.maPhieu + " - Hang: " + p.hang.tenHang +
+                               ", SL: " + p.soLuongBan + ", Tong: " + p.tongTien());
         }
+    }
+
+    public double tongBan() {
+        double tong = 0;
+        for (Ban p : dsBan) tong += p.tongTien();
+        return tong;
     }
 }
