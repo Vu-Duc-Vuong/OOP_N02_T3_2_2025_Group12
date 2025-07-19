@@ -1,5 +1,7 @@
 import java.util.*;
 
+import Model.Ban;
+
 public class QuanLyBan {
     ArrayList<Ban> dsBan = new ArrayList<>();
 

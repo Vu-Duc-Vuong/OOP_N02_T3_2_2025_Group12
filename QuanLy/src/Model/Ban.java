@@ -1,3 +1,4 @@
+
 public class Ban {
     String maPhieu;
     HangHoa hang;

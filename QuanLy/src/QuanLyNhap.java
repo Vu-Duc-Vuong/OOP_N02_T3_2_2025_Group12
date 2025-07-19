@@ -1,5 +1,6 @@
 import java.util.*;
 
+
 public class QuanLyNhap {
     ArrayList<Nhap> dsNhap = new ArrayList<>();
 

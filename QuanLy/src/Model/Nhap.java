@@ -1,3 +1,4 @@
+
 public class Nhap {
     String maPhieu;
     HangHoa hang;

@@ -1,3 +1,6 @@
+import Model.Ban;
+import Model.Nhap;
+
 public class TestQuanLyHangHoa {
     public static void test() {
         testQuanLyHangHoa();
