@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class TestPhuongThuc1 {
     public static void main(String[] args) {
         System.out.println("=== TEST PHƯƠNG THỨC 1: LỌC HÀNG HÓA THEO TIÊU CHÍ ===");
-        System.out.println("Người thực hiện: Vũ Đức Vượng - 24100383");
+        System.out.println("Người thực hiện: Tưởng Văn Tuyên - 24100462");
         System.out.println("Phương thức: Lọc hàng hóa theo mã, tên, nhà sản xuất, số lượng\n");
         
         QuanLyHangHoa ql = new QuanLyHangHoa();

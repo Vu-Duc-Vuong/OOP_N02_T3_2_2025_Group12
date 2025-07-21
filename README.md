@@ -51,7 +51,7 @@
 
 ### **Phương thức chính**
 
-1. Phương thức lọc hàng hóa theo tiêu chí
+1. Phương thức lọc hàng hóa theo tiêu chí(Tuyên)
 •	Chức năng: Cho phép người dùng lọc danh sách hàng hóa dựa trên nhiều tiêu chí như: mã hàng hóa, tên hàng hóa, số lượng tồn kho, hoặc nhà sản xuất.
 
 •	Đầu vào: Người dùng nhập từ bàn phím tiêu chí cần lọc (ví dụ: nhập tên hàng là "Sữa").
