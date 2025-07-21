@@ -2,7 +2,7 @@ public class DoanhThu {
     QuanLyNhap qlNhap;
     QuanLyBan qlBan;
 
-    public QuanLyDoanhThu(QuanLyNhap qlNhap, QuanLyBan qlBan) {
+    public DoanhThu(QuanLyNhap qlNhap, QuanLyBan qlBan) {
         this.qlNhap = qlNhap;
         this.qlBan = qlBan;
     }

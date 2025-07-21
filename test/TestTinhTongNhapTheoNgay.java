@@ -1,4 +1,6 @@
 import java.time.LocalDate;
+import Model.HangHoa;
+import Model.Nhap;
 
 public class TestTinhTongNhapTheoNgay {
     public static void test() {

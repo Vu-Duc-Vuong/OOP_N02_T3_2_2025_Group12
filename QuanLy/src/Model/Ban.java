@@ -1,8 +1,10 @@
 
+package Model;
+
 public class Ban {
-    String maPhieu;
-    HangHoa hang;
-    int soLuongBan;
+    public String maPhieu;
+    public HangHoa hang;
+    public int soLuongBan;
 
     public Ban(String maPhieu, HangHoa hang, int soLuongBan) {
         this.maPhieu = maPhieu;

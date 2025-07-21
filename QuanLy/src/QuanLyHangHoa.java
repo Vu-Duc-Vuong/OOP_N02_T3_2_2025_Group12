@@ -1,4 +1,5 @@
 import java.util.*;
+import Model.HangHoa;
 
 public class QuanLyHangHoa {
     ArrayList<HangHoa> ds = new ArrayList<>();
@@ -46,5 +47,59 @@ public class QuanLyHangHoa {
         double tong = 0;
         for (HangHoa h : ds) tong += h.thanhTien();
         return tong;
+    }
+
+    // Phương thức 1: Lọc hàng hóa theo tiêu chí
+    public ArrayList<HangHoa> locTheoMa(String ma) {
+        ArrayList<HangHoa> ketQua = new ArrayList<>();
+        for (HangHoa h : ds) {
+            if (h.maHang.toLowerCase().contains(ma.toLowerCase())) {
+                ketQua.add(h);
+            }
+        }
+        return ketQua;
+    }
+
+    public ArrayList<HangHoa> locTheoTen(String ten) {
+        ArrayList<HangHoa> ketQua = new ArrayList<>();
+        for (HangHoa h : ds) {
+            if (h.tenHang.toLowerCase().contains(ten.toLowerCase())) {
+                ketQua.add(h);
+            }
+        }
+        return ketQua;
+    }
+
+    public ArrayList<HangHoa> locTheoNhaSanXuat(String nsx) {
+        ArrayList<HangHoa> ketQua = new ArrayList<>();
+        for (HangHoa h : ds) {
+            if (h.nhaSanXuat.toLowerCase().contains(nsx.toLowerCase())) {
+                ketQua.add(h);
+            }
+        }
+        return ketQua;
+    }
+
+    public ArrayList<HangHoa> locTheoSoLuong(int soLuongMin, int soLuongMax) {
+        ArrayList<HangHoa> ketQua = new ArrayList<>();
+        for (HangHoa h : ds) {
+            if (h.soLuong >= soLuongMin && h.soLuong <= soLuongMax) {
+                ketQua.add(h);
+            }
+        }
+        return ketQua;
+    }
+
+    public void hienThiKetQuaLoc(ArrayList<HangHoa> ketQua, String tieuChi) {
+        System.out.println("\n=== KẾT QUẢ LỌC THEO " + tieuChi.toUpperCase() + " ===");
+        if (ketQua.isEmpty()) {
+            System.out.println("Không tìm thấy hàng hóa nào thỏa mãn tiêu chí.");
+        } else {
+            System.out.println("Tìm thấy " + ketQua.size() + " hàng hóa:");
+            for (HangHoa h : ketQua) {
+                System.out.println("[" + h.maHang + "] " + h.tenHang + " - SL: " + h.soLuong +
+                                   ", NSX: " + h.nhaSanXuat + ", Gia: " + h.donGia);
+            }
+        }
     }
 }
