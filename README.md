@@ -64,7 +64,7 @@ ________________________________________
 
 •	Đầu vào: Danh sách các phiếu nhập có ngày nhập bằng ngày hiện tại.
 
-•	Đầu ra: In ra tổng số tiền nhập (tổng =  số lượng * giá nhập của từng mặt hàng trong phiếu nhập).
+•	Đầu ra: In ra tổng số tiền nhập (tổng =  tổng của (số lượng nhập × đơn giá) của từng mặt hàng trong phiếu nhập).
 ________________________________________
  3. Phương thức tính doanh thu và xác định lãi/lỗ trong ngày
 
@@ -73,5 +73,7 @@ ________________________________________
 •	Đầu vào: Danh sách các phiếu nhập và phiếu bán có ngày thực hiện là ngày hiện tại.
 
 •	Đầu ra:
+
 o	Tổng tiền nhập.
+
 o	Tổng tiền bán.
