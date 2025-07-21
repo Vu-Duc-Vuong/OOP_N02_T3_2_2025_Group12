@@ -1,6 +1,3 @@
-
-
-
 public class DoanhThu {
     QuanLyNhap qlNhap;
     QuanLyBan qlBan;

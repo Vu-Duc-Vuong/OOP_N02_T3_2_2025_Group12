@@ -1,3 +1,7 @@
+import QuanLyBan;
+import QuanLyNhap;
+
+package Controller;
 public class QuanLyDoanhThu {
     QuanLyNhap qlNhap;
     QuanLyBan qlBan;

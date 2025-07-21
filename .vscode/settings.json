@@ -2,7 +2,8 @@
     "java.debug.settings.onBuildFailureProceed": true,
     "java.project.sourcePaths": [
         "QuanLy/src/Model",
-        "QuanLy/src"
+        "QuanLy/src",
+        "test"
     ],
     "java.project.referencedLibraries": []
 }
