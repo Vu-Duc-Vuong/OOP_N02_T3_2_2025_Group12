@@ -53,18 +53,25 @@
 
 1. Phương thức lọc hàng hóa theo tiêu chí
 •	Chức năng: Cho phép người dùng lọc danh sách hàng hóa dựa trên nhiều tiêu chí như: mã hàng hóa, tên hàng hóa, số lượng tồn kho, hoặc nhà sản xuất.
+
 •	Đầu vào: Người dùng nhập từ bàn phím tiêu chí cần lọc (ví dụ: nhập tên hàng là "Sữa").
+
 •	Đầu ra: Danh sách các hàng hóa thỏa mãn tiêu chí lọc sẽ được hiển thị ra màn hình.
 ________________________________________
  2. Phương thức tính tổng tiền nhập hàng trong ngày (Vũ Đức Vượng)
 
 •	Chức năng: Tính tổng số tiền đã nhập hàng trong ngày hiện tại, dựa trên các phiếu nhập đã lưu.
+
 •	Đầu vào: Danh sách các phiếu nhập có ngày nhập bằng ngày hiện tại.
+
 •	Đầu ra: In ra tổng số tiền nhập (tổng =  số lượng * giá nhập của từng mặt hàng trong phiếu nhập).
 ________________________________________
  3. Phương thức tính doanh thu và xác định lãi/lỗ trong ngày
+
 •	Chức năng: Tính tổng tiền bán và tiền nhập trong ngày. Từ đó xác định lãi (tổng bán > tổng nhập) hoặc lỗ (tổng bán < tổng nhập).
+
 •	Đầu vào: Danh sách các phiếu nhập và phiếu bán có ngày thực hiện là ngày hiện tại.
+
 •	Đầu ra:
-o	Tổng tiền nhập
-o	Tổng tiền bán
+o	Tổng tiền nhập.
+o	Tổng tiền bán.
