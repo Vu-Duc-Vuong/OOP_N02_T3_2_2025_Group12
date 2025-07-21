@@ -57,7 +57,7 @@
 •	Đầu ra: Danh sách các hàng hóa thỏa mãn tiêu chí lọc sẽ được hiển thị ra màn hình.
 ________________________________________
  2. Phương thức tính tổng tiền nhập hàng trong ngày (Vũ Đức Vượng)
- 3. 
+
 •	Chức năng: Tính tổng số tiền đã nhập hàng trong ngày hiện tại, dựa trên các phiếu nhập đã lưu.
 •	Đầu vào: Danh sách các phiếu nhập có ngày nhập bằng ngày hiện tại.
 •	Đầu ra: In ra tổng số tiền nhập (tổng =  số lượng * giá nhập của từng mặt hàng trong phiếu nhập).
