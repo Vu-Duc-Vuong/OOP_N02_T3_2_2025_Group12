@@ -1,4 +1,4 @@
-# OOP_N02_Group10
+# OOP_N02_Group12
 
 ## Nhóm làm việc số 12
 
