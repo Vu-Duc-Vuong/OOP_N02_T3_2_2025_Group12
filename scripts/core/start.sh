@@ -17,10 +17,16 @@ fi
 
 echo ""
 echo "📁 Chuyển đến thư mục project..."
-cd ../../gs-serving-web-content-main/complete
 
-if [ ! -d "$(pwd)" ]; then
-    echo "❌ Không tìm thấy thư mục project"
+# Lấy đường dẫn tuyệt đối của thư mục root project
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
+SPRING_DIR="${PROJECT_ROOT}/gs-serving-web-content-main/complete"
+
+cd "${SPRING_DIR}"
+
+if [ ! -d "${SPRING_DIR}" ]; then
+    echo "❌ Không tìm thấy thư mục project: ${SPRING_DIR}"
     exit 1
 fi
 

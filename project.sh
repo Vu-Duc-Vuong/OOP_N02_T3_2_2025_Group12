@@ -102,42 +102,72 @@ show_status() {
     echo ""
 }
 
+# Function để hiển thị help
+show_help() {
+    echo -e "${GREEN}📖 HƯỚNG DẪN SỬ DỤNG${NC}"
+    echo -e "${GREEN}===================${NC}"
+    echo ""
+    echo -e "${CYAN}🚀 KHỞI ĐỘNG:${NC}"
+    echo "  ./start.sh          - Khởi động ứng dụng"
+    echo "  ./quick-start.sh    - Khởi động nhanh"
+    echo "  ./project.sh start  - Khởi động qua menu"
+    echo ""
+    echo -e "${CYAN}🔧 BUILD & TEST:${NC}"
+    echo "  ./project.sh build  - Build project"
+    echo "  ./project.sh test   - Chạy tests"
+    echo ""
+    echo -e "${CYAN}🌐 TRUY CẬP:${NC}"
+    echo "  URL: http://localhost:8080"
+    echo ""
+    echo -e "${CYAN}⚡ NHANH:${NC}"
+    echo "  chmod +x *.sh && ./start.sh"
+    echo ""
+}
+
 # Function để xử lý commands
 handle_command() {
     local cmd="$1"
     
     case "$cmd" in
-        "s"|"start")
-            echo -e "${CYAN}🚀 Khởi động ứng dụng...${NC}"
-            ./scripts/core/start.sh
+        's'|'start')
+            echo -e "${GREEN}🚀 Khởi động ứng dụng...${NC}"
+            ./start.sh
             ;;
+                'q'|'quick')
+            echo -e "${GREEN}⚡ Quick start...${NC}"
+            ./quick-start.sh
+            ;;
+        "b"|"build")
         "q"|"quick")
             echo -e "${CYAN}⚡ Quick start...${NC}"
             ./scripts/utils/quick-start.sh
             ;;
         "b"|"build")
             echo -e "${CYAN}🏗️  Building project...${NC}"
-            ./scripts/core/build.sh
+            cd gs-serving-web-content-main/complete && ./mvnw clean package -DskipTests
             ;;
         "t"|"test")
             echo -e "${CYAN}🧪 Running tests...${NC}"
-            ./scripts/core/test.sh
+            cd gs-serving-web-content-main/complete && ./mvnw test
             ;;
         "c"|"check")
             echo -e "${CYAN}🔍 Checking system...${NC}"
-            ./scripts/utils/check.sh
+            java -version
+            echo ""
+            echo "Maven Wrapper status:"
+            ls -la gs-serving-web-content-main/complete/mvnw
             ;;
         "clean"|"cleanup")
             echo -e "${CYAN}🧹 Cleaning up...${NC}"
-            ./scripts/utils/cleanup.sh
+            cd gs-serving-web-content-main/complete && ./mvnw clean
             ;;
         "dev")
             echo -e "${CYAN}🔧 Development tools...${NC}"
-            ./scripts/dev/dev.sh
+            cd gs-serving-web-content-main/complete && ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
             ;;
         "h"|"help")
-            echo -e "${CYAN}📖 Opening help...${NC}"
-            ./scripts/utils/help.sh
+            echo -e "${CYAN}📖 Help...${NC}"
+            show_help
             ;;
         "v"|"version")
             echo -e "${GREEN}📋 PROJECT INFO${NC}"
