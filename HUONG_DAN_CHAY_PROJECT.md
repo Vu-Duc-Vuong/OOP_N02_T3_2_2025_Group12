@@ -1,50 +1,3 @@
-# HƯỚNG DẪN CHẠY PROJECT - SPRING BOOT GUI QUẢN LÝ HÀNG HÓA
-
-## 📋 Mô tả dự án
-Ứng dụng Spring Boot Web GUI để quản lý Hàng Hóa với đầy đủ chức năng CRUD (Create, Read, Update, Delete), tìm kiếm và giao diện responsive sử dụng Bootstrap.
-
-## 🛠️ Công nghệ sử dụng
-- **Spring Boot 2.7.17** (tương thích với Java 11)
-- **Spring Web MVC** - Framework web
-- **Thymeleaf** - Template engine
-- **Bootstrap 5.1.3** - CSS Framework
-- **Font Awesome 6.0.0** - Icons
-- **Maven** - Build tool
-- **Tomcat Embedded** - Web server
-
-## 📋 Yêu cầu hệ thống
-- **Java 11** hoặc cao hơn
-- **Maven 3.6+** (hoặc sử dụng Maven Wrapper có sẵn)
-- **Web browser** hiện đại (Chrome, Firefox, Safari, Edge)
-
-## 📁 Cấu trúc dự án
-```
-gs-serving-web-content-main/complete/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/example/servingwebcontent/
-│   │   │       ├── ServingWebContentApplication.java    # Main class
-│   │   │       ├── controller/
-│   │   │       │   └── HangHoaController.java          # Web Controller
-│   │   │       ├── model/
-│   │   │       │   └── HangHoa.java                    # Model class
-│   │   │       └── service/
-│   │   │           └── HangHoaService.java             # Business Logic
-│   │   └── resources/
-│   │       ├── static/
-│   │       │   └── index.html                          # Trang chủ
-│   │       └── templates/
-│   │           ├── hanghoa/
-│   │           │   ├── list.html                       # Danh sách hàng hóa
-│   │           │   ├── form.html                       # Form thêm/sửa
-│   │           │   ├── detail.html                     # Chi tiết sản phẩm
-│   │           │   └── search.html                     # Tìm kiếm
-│   │           └── greeting.html                       # Template mẫu
-├── pom.xml                                             # Maven configuration
-└── target/                                             # Build output
-```
-
 ## 🚀 Hướng dẫn chạy ứng dụng
 
 ### Phương pháp 1: Sử dụng Maven Wrapper (Khuyến nghị)
@@ -179,7 +132,6 @@ java.lang.UnsupportedClassVersionError
 chmod +x mvnw
 ```
 
-## 📞 Hỗ trợ kỹ thuật
 
 ### Kiểm tra logs
 ```bash
@@ -210,16 +162,3 @@ java -jar target/serving-web-content-complete-0.0.1-SNAPSHOT.jar
 - **Refresh** trang sau khi thay đổi dữ liệu
 - Kiểm tra **console logs** nếu có lỗi
 
-## 📋 TODO và mở rộng
-
-- [ ] Thêm database persistent (MySQL/PostgreSQL)
-- [ ] Thêm authentication/authorization
-- [ ] Export dữ liệu ra Excel/PDF
-- [ ] API REST cho mobile app
-- [ ] Unit tests và integration tests
-
----
-
-**📧 Liên hệ:** Nếu có thắc mắc, vui lòng tạo issue trong repository này.
-
-**🌟 Đánh giá:** Nếu project hữu ích, hãy cho một ⭐ star!
