@@ -1,0 +1,82 @@
+<!-- Form thêm/sửa phiếu nhập -->
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-plus-circle" th:if="${action == 'add'}"></i>
+                    <i class="fas fa-edit" th:if="${action == 'edit'}"></i>
+                    <span th:text="${action == 'add' ? 'Thêm Phiếu Nhập Mới' : 'Sửa Phiếu Nhập'}">Thêm Phiếu Nhập Mới</span>
+                </h5>
+            </div>
+            <div class="card-body">
+                <form th:action="${action == 'add' ? '/nhap/add' : '/nhap/edit/' + index}" 
+                      th:object="${nhap}" method="post">
+                    
+                    <!-- Mã Hàng Hóa -->
+                    <div class="mb-3">
+                        <label for="hanghoaID" class="form-label">
+                            <i class="fas fa-barcode"></i> Mã Hàng Hóa <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="hanghoaID" 
+                               th:field="*{hanghoaID}" required
+                               placeholder="Nhập mã hàng hóa (VD: HH001)">
+                    </div>
+                    
+                    <!-- Số Lượng Nhập -->
+                    <div class="mb-3">
+                        <label for="soLuongNhap" class="form-label">
+                            <i class="fas fa-cubes"></i> Số Lượng Nhập <span class="text-danger">*</span>
+                        </label>
+                        <input type="number" class="form-control" id="soLuongNhap" 
+                               th:field="*{soLuongNhap}" required min="1"
+                               placeholder="Nhập số lượng">
+                    </div>
+                    
+                    <!-- Giá Nhập -->
+                    <div class="mb-3">
+                        <label for="giaNhap" class="form-label">
+                            <i class="fas fa-money-bill"></i> Giá Nhập (VNĐ) <span class="text-danger">*</span>
+                        </label>
+                        <input type="number" class="form-control" id="giaNhap" 
+                               th:field="*{giaNhap}" required min="0" step="1000"
+                               placeholder="Nhập giá nhập">
+                    </div>
+                    
+                    <!-- Ngày Nhập -->
+                    <div class="mb-3">
+                        <label for="ngayNhap" class="form-label">
+                            <i class="fas fa-calendar"></i> Ngày Nhập <span class="text-danger">*</span>
+                        </label>
+                        <input type="date" class="form-control" id="ngayNhap" 
+                               th:field="*{ngayNhap}" required>
+                    </div>
+                    
+                    <!-- Buttons -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="/nhap" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-times"></i> Hủy
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            <span th:text="${action == 'add' ? 'Thêm Phiếu Nhập' : 'Cập Nhật'}">Thêm Phiếu Nhập</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Tự động set ngày hiện tại nếu đang thêm mới
+    document.addEventListener('DOMContentLoaded', function() {
+        const action = /*[[${action}]]*/ 'add';
+        const ngayNhapInput = document.getElementById('ngayNhap');
+        
+        if (action === 'add' && !ngayNhapInput.value) {
+            const today = new Date().toISOString().split('T')[0];
+            ngayNhapInput.value = today;
+        }
+    });
+</script>
