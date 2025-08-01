@@ -205,7 +205,8 @@
                                         </a>
                                         <a th:href="@{/hanghoa/delete/{maHang}(maHang=${hangHoa.maHang})}" 
                                            class="btn btn-sm btn-outline-danger btn-action" title="Xóa"
-                                           th:onclick="'return confirmDelete(\'' + ${hangHoa.tenHang} + '\')'">
+                                           th:data-ten-hang="${hangHoa.tenHang}"
+                                           onclick="return confirmDelete(this.getAttribute('data-ten-hang'))">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </div>
