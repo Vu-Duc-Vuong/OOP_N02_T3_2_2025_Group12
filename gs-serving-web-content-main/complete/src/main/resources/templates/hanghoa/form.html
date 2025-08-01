@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${action == 'add' ? 'Thêm' : 'Chỉnh Sửa'} + ' Hàng Hóa - Quản Lý Cửa Hàng Tạp Hóa'">Form Hàng Hóa</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        .form-floating .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        .preview-card {
+            background-color: #f8f9fa;
+            border: 2px dashed #dee2e6;
+        }
+        .currency-input {
+            position: relative;
+        }
+        .currency-symbol {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-store"></i> Quản Lý Cửa Hàng Tạp Hóa
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-home"></i> Trang Chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hanghoa">
+                            <i class="fas fa-boxes"></i> Hàng Hóa
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hanghoa/search">
+                            <i class="fas fa-search"></i> Tìm Kiếm
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <h2>
+                    <i class="fas fa-edit" th:if="${action == 'edit'}"></i>
+                    <i class="fas fa-plus" th:if="${action == 'add'}"></i>
+                    <span th:text="${action == 'add' ? 'Thêm Hàng Hóa Mới' : 'Chỉnh Sửa Hàng Hóa'}"></span>
+                </h2>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Trang Chủ</a></li>
+                        <li class="breadcrumb-item"><a href="/hanghoa">Hàng Hóa</a></li>
+                        <li class="breadcrumb-item active" th:text="${action == 'add' ? 'Thêm Mới' : 'Chỉnh Sửa'}"></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-4 text-end">
+                <a href="/hanghoa" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Quay Lại
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Form Column -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-form" th:if="${action == 'add'}"></i>
+                            <i class="fas fa-edit" th:if="${action == 'edit'}"></i>
+                            Thông Tin Hàng Hóa
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="${action == 'add' ? '/hanghoa/add' : '/hanghoa/edit'}" 
+                              th:object="${hangHoa}" method="post" id="hangHoaForm">
+                            
+                            <!-- Mã hàng -->
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="maHang" 
+                                       th:field="*{maHang}" 
+                                       th:readonly="${action == 'edit'}"
+                                       placeholder="Nhập mã hàng">
+                                <label for="maHang">
+                                    <i class="fas fa-barcode"></i> Mã Hàng *
+                                </label>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('maHang')}" 
+                                     th:errors="*{maHang}"></div>
+                            </div>
+
+                            <!-- Tên hàng -->
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="tenHang" 
+                                       th:field="*{tenHang}" placeholder="Nhập tên hàng hóa">
+                                <label for="tenHang">
+                                    <i class="fas fa-tag"></i> Tên Hàng Hóa *
+                                </label>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('tenHang')}" 
+                                     th:errors="*{tenHang}"></div>
+                            </div>
+
+                            <!-- Nhà sản xuất -->
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="nhaSanXuat" 
+                                       th:field="*{nhaSanXuat}" placeholder="Nhập nhà sản xuất">
+                                <label for="nhaSanXuat">
+                                    <i class="fas fa-industry"></i> Nhà Sản Xuất *
+                                </label>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('nhaSanXuat')}" 
+                                     th:errors="*{nhaSanXuat}"></div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Số lượng -->
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control" id="soLuong" 
+                                               th:field="*{soLuong}" min="1" placeholder="Nhập số lượng">
+                                        <label for="soLuong">
+                                            <i class="fas fa-cubes"></i> Số Lượng *
+                                        </label>
+                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('soLuong')}" 
+                                             th:errors="*{soLuong}"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Năm sản xuất -->
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control" id="namSanXuat" 
+                                               th:field="*{namSanXuat}" min="2000" max="2025" placeholder="Năm sản xuất">
+                                        <label for="namSanXuat">
+                                            <i class="fas fa-calendar"></i> Năm Sản Xuất
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Đơn giá -->
+                            <div class="form-floating mb-3 currency-input">
+                                <input type="number" class="form-control" id="donGia" 
+                                       th:field="*{donGia}" min="0" step="1000" placeholder="Nhập đơn giá">
+                                <label for="donGia">
+                                    <i class="fas fa-money-bill"></i> Đơn Giá *
+                                </label>
+                                <span class="currency-symbol">VNĐ</span>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('donGia')}" 
+                                     th:errors="*{donGia}"></div>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="/hanghoa" class="btn btn-secondary me-md-2">
+                                    <i class="fas fa-times"></i> Hủy
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i>
+                                    <span th:text="${action == 'add' ? 'Thêm Hàng Hóa' : 'Cập Nhật'}"></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview Column -->
+            <div class="col-md-4">
+                <div class="card preview-card">
+                    <div class="card-header bg-info text-white">
+                        <h6 class="mb-0"><i class="fas fa-eye"></i> Xem Trước</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-box fa-3x text-info"></i>
+                        </div>
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Mã hàng:</strong></td>
+                                <td id="preview-maHang">-</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tên hàng:</strong></td>
+                                <td id="preview-tenHang">-</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Nhà SX:</strong></td>
+                                <td id="preview-nhaSanXuat">-</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Số lượng:</strong></td>
+                                <td id="preview-soLuong">-</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Đơn giá:</strong></td>
+                                <td id="preview-donGia">-</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Năm SX:</strong></td>
+                                <td id="preview-namSanXuat">-</td>
+                            </tr>
+                            <tr class="table-warning">
+                                <td><strong>Thành tiền:</strong></td>
+                                <td id="preview-thanhTien"><strong>-</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Help Card -->
+                <div class="card mt-3">
+                    <div class="card-header bg-warning text-dark">
+                        <h6 class="mb-0"><i class="fas fa-lightbulb"></i> Gợi Ý</h6>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-0">
+                            <li><i class="fas fa-check text-success"></i> Mã hàng nên ngắn và dễ nhớ</li>
+                            <li><i class="fas fa-check text-success"></i> Tên hàng nên rõ ràng, cụ thể</li>
+                            <li><i class="fas fa-check text-success"></i> Số lượng phải lớn hơn 0</li>
+                            <li><i class="fas fa-check text-success"></i> Đơn giá tính bằng VNĐ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p>&copy; 2025 Nhóm 10 - OOP_N02_T3. Ứng dụng Quản Lý Cửa Hàng Tạp Hóa với Spring Boot</p>
+            <p>
+                <strong>Thành viên:</strong> 
+                Vũ Đức Vượng (24100383) | Tưởng Văn Tuyên (24100462)
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Preview functionality
+        function updatePreview() {
+            const maHang = document.getElementById('maHang').value || '-';
+            const tenHang = document.getElementById('tenHang').value || '-';
+            const nhaSanXuat = document.getElementById('nhaSanXuat').value || '-';
+            const soLuong = document.getElementById('soLuong').value || 0;
+            const donGia = document.getElementById('donGia').value || 0;
+            const namSanXuat = document.getElementById('namSanXuat').value || '-';
+            
+            document.getElementById('preview-maHang').textContent = maHang;
+            document.getElementById('preview-tenHang').textContent = tenHang;
+            document.getElementById('preview-nhaSanXuat').textContent = nhaSanXuat;
+            document.getElementById('preview-soLuong').textContent = soLuong;
+            document.getElementById('preview-donGia').textContent = donGia ? 
+                new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(donGia) : '-';
+            document.getElementById('preview-namSanXuat').textContent = namSanXuat;
+            
+            const thanhTien = soLuong * donGia;
+            document.getElementById('preview-thanhTien').innerHTML = thanhTien ? 
+                '<strong>' + new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(thanhTien) + '</strong>' : '<strong>-</strong>';
+        }
+
+        // Add event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            updatePreview(); // Initial preview
+            
+            const inputs = ['maHang', 'tenHang', 'nhaSanXuat', 'soLuong', 'donGia', 'namSanXuat'];
+            inputs.forEach(id => {
+                document.getElementById(id).addEventListener('input', updatePreview);
+            });
+        });
+
+        // Form validation
+        document.getElementById('hangHoaForm').addEventListener('submit', function(e) {
+            const form = this;
+            if (!form.checkValidity()) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        });
+    </script>
+</body>
+</html>

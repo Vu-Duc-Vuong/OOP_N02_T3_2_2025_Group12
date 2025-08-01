@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Chi Tiết: ' + ${hangHoa.tenHang} + ' - Quản Lý Cửa Hàng Tạp Hóa'">Chi Tiết Hàng Hóa</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        .currency {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .detail-icon {
+            width: 20px;
+            text-align: center;
+        }
+        .product-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+        .info-card {
+            transition: transform 0.2s;
+        }
+        .info-card:hover {
+            transform: translateY(-2px);
+        }
+        .status-badge {
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-store"></i> Quản Lý Cửa Hàng Tạp Hóa
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-home"></i> Trang Chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hanghoa">
+                            <i class="fas fa-boxes"></i> Hàng Hóa
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hanghoa/search">
+                            <i class="fas fa-search"></i> Tìm Kiếm
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <h2><i class="fas fa-info-circle"></i> Chi Tiết Hàng Hóa</h2>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Trang Chủ</a></li>
+                        <li class="breadcrumb-item"><a href="/hanghoa">Hàng Hóa</a></li>
+                        <li class="breadcrumb-item active" th:text="${hangHoa.tenHang}"></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-4 text-end">
+                <a href="/hanghoa" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Quay Lại
+                </a>
+                <a th:href="@{/hanghoa/edit/{maHang}(maHang=${hangHoa.maHang})}" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Chỉnh Sửa
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Product Image/Icon -->
+            <div class="col-md-4">
+                <div class="card info-card">
+                    <div class="card-body text-center">
+                        <div class="product-image mb-3">
+                            <i class="fas fa-box fa-5x"></i>
+                        </div>
+                        <h5 class="card-title" th:text="${hangHoa.tenHang}"></h5>
+                        <p class="text-muted" th:text="'Mã: ' + ${hangHoa.maHang}"></p>
+                        
+                        <!-- Status Badges -->
+                        <div class="mt-3">
+                            <span class="badge bg-success status-badge" th:if="${hangHoa.soLuong > 50}">
+                                <i class="fas fa-check"></i> Còn nhiều hàng
+                            </span>
+                            <span class="badge bg-warning status-badge" th:if="${hangHoa.soLuong <= 50 and hangHoa.soLuong > 10}">
+                                <i class="fas fa-exclamation"></i> Sắp hết hàng
+                            </span>
+                            <span class="badge bg-danger status-badge" th:if="${hangHoa.soLuong <= 10}">
+                                <i class="fas fa-times"></i> Hết hàng
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card info-card mt-3">
+                    <div class="card-header">
+                        <h6 class="mb-0"><i class="fas fa-tools"></i> Thao Tác Nhanh</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a th:href="@{/hanghoa/edit/{maHang}(maHang=${hangHoa.maHang})}" 
+                               class="btn btn-outline-warning">
+                                <i class="fas fa-edit"></i> Chỉnh Sửa
+                            </a>
+                            <a th:href="@{/hanghoa/delete/{maHang}(maHang=${hangHoa.maHang})}" 
+                               class="btn btn-outline-danger"
+                               th:onclick="'return confirmDelete(\'' + ${hangHoa.tenHang} + '\')'">
+                                <i class="fas fa-trash"></i> Xóa
+                            </a>
+                            <hr>
+                            <a href="/hanghoa/add" class="btn btn-outline-success">
+                                <i class="fas fa-plus"></i> Thêm Hàng Mới
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Details -->
+            <div class="col-md-8">
+                <!-- Basic Information -->
+                <div class="card info-card mb-3">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-info"></i> Thông Tin Cơ Bản</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <td><i class="fas fa-barcode detail-icon text-primary"></i> <strong>Mã hàng:</strong></td>
+                                        <td th:text="${hangHoa.maHang}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-tag detail-icon text-primary"></i> <strong>Tên hàng:</strong></td>
+                                        <td th:text="${hangHoa.tenHang}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-industry detail-icon text-primary"></i> <strong>Nhà sản xuất:</strong></td>
+                                        <td th:text="${hangHoa.nhaSanXuat}"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <td><i class="fas fa-cubes detail-icon text-success"></i> <strong>Số lượng:</strong></td>
+                                        <td>
+                                            <span class="badge bg-info fs-6" th:text="${hangHoa.soLuong}"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-calendar detail-icon text-info"></i> <strong>Năm sản xuất:</strong></td>
+                                        <td th:text="${hangHoa.namSanXuat ?: 'Chưa xác định'}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-money-bill detail-icon text-warning"></i> <strong>Đơn giá:</strong></td>
+                                        <td class="currency" th:text="${#numbers.formatCurrency(hangHoa.donGia)}"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Financial Information -->
+                <div class="card info-card mb-3">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-calculator"></i> Thông Tin Tài Chính</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <div class="border rounded p-3">
+                                    <i class="fas fa-money-bill-wave fa-2x text-success mb-2"></i>
+                                    <h6>Đơn Giá</h6>
+                                    <h4 class="currency" th:text="${#numbers.formatCurrency(hangHoa.donGia)}"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="border rounded p-3">
+                                    <i class="fas fa-boxes fa-2x text-info mb-2"></i>
+                                    <h6>Số Lượng</h6>
+                                    <h4 th:text="${hangHoa.soLuong}"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="border rounded p-3 bg-light">
+                                    <i class="fas fa-equals fa-2x text-warning mb-2"></i>
+                                    <h6>Tổng Giá Trị</h6>
+                                    <h4 class="currency" th:text="${#numbers.formatCurrency(hangHoa.thanhTien())}"></h4>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <small class="text-muted">
+                                <i class="fas fa-info-circle"></i>
+                                Tổng giá trị = Số lượng × Đơn giá
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inventory Status -->
+                <div class="card info-card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-warehouse"></i> Tình Trạng Kho</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="progress mb-2" style="height: 25px;">
+                                    <div class="progress-bar bg-success" role="progressbar" 
+                                         th:style="'width: ' + ${hangHoa.soLuong > 100 ? 100 : hangHoa.soLuong} + '%'"
+                                         th:if="${hangHoa.soLuong > 50}">
+                                        <span th:text="${hangHoa.soLuong}"></span>
+                                    </div>
+                                    <div class="progress-bar bg-warning" role="progressbar" 
+                                         th:style="'width: ' + ${hangHoa.soLuong > 100 ? 100 : hangHoa.soLuong} + '%'"
+                                         th:if="${hangHoa.soLuong <= 50 and hangHoa.soLuong > 10}">
+                                        <span th:text="${hangHoa.soLuong}"></span>
+                                    </div>
+                                    <div class="progress-bar bg-danger" role="progressbar" 
+                                         th:style="'width: ' + ${hangHoa.soLuong > 100 ? 100 : hangHoa.soLuong} + '%'"
+                                         th:if="${hangHoa.soLuong <= 10}">
+                                        <span th:text="${hangHoa.soLuong}"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-muted">Tình trạng:</span>
+                                    <span th:if="${hangHoa.soLuong > 50}" class="text-success">
+                                        <i class="fas fa-check"></i> Đầy đủ
+                                    </span>
+                                    <span th:if="${hangHoa.soLuong <= 50 and hangHoa.soLuong > 10}" class="text-warning">
+                                        <i class="fas fa-exclamation"></i> Cần nhập thêm
+                                    </span>
+                                    <span th:if="${hangHoa.soLuong <= 10}" class="text-danger">
+                                        <i class="fas fa-times"></i> Thiếu hàng
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <h2 class="display-6" th:text="${hangHoa.soLuong}"></h2>
+                                    <small class="text-muted">Số lượng trong kho</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recommendations -->
+                        <div class="mt-3" th:if="${hangHoa.soLuong <= 20}">
+                            <div class="alert alert-warning" role="alert">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>Khuyến nghị:</strong> Nên nhập thêm hàng để đảm bảo nguồn cung.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product History/Statistics (Mock data) -->
+        <div class="card info-card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-chart-line"></i> Thống Kê & Lịch Sử</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <div class="border rounded p-3">
+                            <i class="fas fa-eye fa-2x text-info mb-2"></i>
+                            <h6>Lượt Xem</h6>
+                            <h5>247</h5>
+                            <small class="text-muted">30 ngày qua</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border rounded p-3">
+                            <i class="fas fa-shopping-cart fa-2x text-success mb-2"></i>
+                            <h6>Đã Bán</h6>
+                            <h5>89</h5>
+                            <small class="text-muted">Tháng này</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border rounded p-3">
+                            <i class="fas fa-truck fa-2x text-warning mb-2"></i>
+                            <h6>Lần Nhập Cuối</h6>
+                            <h5>15/07</h5>
+                            <small class="text-muted">2025</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border rounded p-3">
+                            <i class="fas fa-star fa-2x text-warning mb-2"></i>
+                            <h6>Đánh Giá</h6>
+                            <h5>4.5/5</h5>
+                            <small class="text-muted">23 đánh giá</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p>&copy; 2025 Nhóm 10 - OOP_N02_T3. Ứng dụng Quản Lý Cửa Hàng Tạp Hóa với Spring Boot</p>
+            <p>
+                <strong>Thành viên:</strong> 
+                Vũ Đức Vượng (24100383) | Tưởng Văn Tuyên (24100462)
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Xác nhận xóa
+        function confirmDelete(name) {
+            return confirm('Bạn có chắc chắn muốn xóa hàng hóa "' + name + '" không?');
+        }
+
+        // Animate progress bar on load
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const progressBar = document.querySelector('.progress-bar');
+                if (progressBar) {
+                    progressBar.style.width = '0%';
+                    setTimeout(function() {
+                        progressBar.style.transition = 'width 1s ease-in-out';
+                        progressBar.style.width = progressBar.getAttribute('data-width') || progressBar.style.width;
+                    }, 100);
+                }
+            }, 200);
+        });
+    </script>
+</body>
+</html>
