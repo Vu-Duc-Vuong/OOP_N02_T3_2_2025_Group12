@@ -1,0 +1,134 @@
+<!-- Báo cáo nhập hàng -->
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2><i class="fas fa-chart-bar text-primary"></i> Báo Cáo Nhập Hàng</h2>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="/nhap" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Quay Lại
+        </a>
+    </div>
+</div>
+
+<!-- Form chọn ngày -->
+<div class="row mb-4">
+    <div class="col-md-6 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-calendar"></i> Chọn Ngày Báo Cáo
+                </h5>
+            </div>
+            <div class="card-body">
+                <form action="/nhap/report" method="get">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-calendar-day"></i>
+                        </span>
+                        <input type="date" class="form-control" name="date" 
+                               th:value="${targetDate}" required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-chart-line"></i> Xem Báo Cáo
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Thống kê tổng quan -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card stats-card bg-primary text-white">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-calendar-day"></i> Ngày Báo Cáo
+                </h5>
+                <h4 th:text="${#temporals.format(targetDate, 'dd/MM/yyyy')}">01/08/2025</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stats-card bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-receipt"></i> Số Phiếu Nhập
+                </h5>
+                <h4 th:text="${#lists.size(nhapTrongNgay)}">0</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stats-card bg-success text-white">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-money-bill-wave"></i> Tổng Tiền Nhập
+                </h5>
+                <h4 th:text="${#numbers.formatDecimal(tongTienNhap, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">0 VNĐ</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chi tiết nhập hàng trong ngày -->
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="fas fa-list-alt"></i> Chi Tiết Nhập Hàng Ngày 
+            <span th:text="${#temporals.format(targetDate, 'dd/MM/yyyy')}">01/08/2025</span>
+        </h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã Hàng Hóa</th>
+                        <th>Số Lượng Nhập</th>
+                        <th>Giá Nhập</th>
+                        <th>Tổng Tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(nhapTrongNgay)}">
+                        <td colspan="5" class="text-center text-muted">
+                            <i class="fas fa-inbox"></i> Không có phiếu nhập nào trong ngày này
+                        </td>
+                    </tr>
+                    <tr th:each="nhap, iterStat : ${nhapTrongNgay}">
+                        <td th:text="${iterStat.index + 1}">1</td>
+                        <td>
+                            <strong th:text="${nhap.hanghoaID}">HH001</strong>
+                        </td>
+                        <td th:text="${nhap.soLuongNhap}">100</td>
+                        <td th:text="${#numbers.formatDecimal(nhap.giaNhap, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">15,000 VNĐ</td>
+                        <td>
+                            <strong class="text-success" th:text="${#numbers.formatDecimal(nhap.tongTien, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">1,500,000 VNĐ</strong>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot th:if="${!#lists.isEmpty(nhapTrongNgay)}" class="table-dark">
+                    <tr>
+                        <th colspan="4" class="text-end">TỔNG CỘNG:</th>
+                        <th>
+                            <span class="text-warning" th:text="${#numbers.formatDecimal(tongTienNhap, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">0 VNĐ</span>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Tự động set ngày hiện tại
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateInput = document.querySelector('input[name="date"]');
+        if (!dateInput.value) {
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.value = today;
+        }
+    });
+</script>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${title} + ' - Quản Lý Cửa Hàng Tạp Hóa'">Quản Lý Cửa Hàng Tạp Hóa</title>
+    <title th:text="${title} + ' - Nhập Hàng'">Nhập Hàng</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +28,7 @@
             margin-bottom: 20px;
         }
         .stats-card {
-            border-left: 4px solid #007bff;
+            border-left: 4px solid #ff0000;
         }
         .table-responsive {
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -46,7 +46,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="/">
-                <i class="fas fa-store"></i> Quản Lý Cửa Hàng Tạp Hóa
+                <i class="fas fa-store"></i> Quản Lý Nhập Hàng
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -59,12 +59,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/hanghoa">
-                            <i class="fas fa-boxes"></i> Hàng Hóa
+                        <a class="nav-link" href="/nhap">
+                            <i class="fas fa-truck"></i> Nhập Hàng
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/hanghoa/search">
+                        <a class="nav-link" href="/nhap/search">
                             <i class="fas fa-search"></i> Tìm Kiếm
                         </a>
                     </li>
@@ -108,7 +108,7 @@
     <script>
         // Xác nhận xóa
         function confirmDelete(name) {
-            return confirm('Bạn có chắc chắn muốn xóa hàng hóa "' + name + '" không?');
+            return confirm('Bạn có chắc chắn muốn xóa phiếu nhập "' + name + '" không?');
         }
         
         // Auto hide alerts
