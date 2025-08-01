@@ -155,3 +155,5 @@ public DoanhThu tinhDoanhThuNgay(LocalDate ngay) {
 
 1. **✅ Nhập Hàng (Nhap)**
    (Vũ Đức Vượng)
+2. **✅ Hàng Hóa (HangHoa)**
+   (Tưởng Văn Tuyên)
