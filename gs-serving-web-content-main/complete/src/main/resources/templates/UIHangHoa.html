@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Hàng Hóa - Quản Lý Kho</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        .stats-card {
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-store"></i> Quản Lý Cửa Hàng
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link active" href="/uihanghoa">Hàng Hóa</a>
+                <a class="nav-link" href="/uinhap">Nhập Hàng</a>
+                <a class="nav-link" href="/ban">Bán Hàng</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col">
+                <h2><i class="fas fa-boxes text-primary"></i> UI Hàng Hóa - Danh Sách Kho</h2>
+                <p class="text-muted">Quản lý thông tin hàng hóa theo mẫu Model-View-Controller</p>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card stats-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title text-muted">Tổng Số Mặt Hàng</h5>
+                                <h3 class="text-primary" th:text="${tongSoHang}">0</h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-cube fa-2x text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card stats-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title text-muted">Tổng Giá Trị Kho</h5>
+                                <h3 class="text-primary">
+                                    <span th:text="${#numbers.formatDecimal(tongGiaTri, 0, 0)}">0</span> VNĐ
+                                </h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-coins fa-2x text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HangHoa List -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-list"></i> Danh Sách Hàng Hóa (readList Method)
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th><i class="fas fa-hashtag"></i> STT</th>
+                                <th><i class="fas fa-barcode"></i> Mã Hàng</th>
+                                <th><i class="fas fa-tag"></i> Tên Hàng</th>
+                                <th><i class="fas fa-sort-numeric-up"></i> Số Lượng</th>
+                                <th><i class="fas fa-industry"></i> Nhà SX</th>
+                                <th><i class="fas fa-money-bill"></i> Đơn Giá</th>
+                                <th><i class="fas fa-calendar"></i> Năm SX</th>
+                                <th><i class="fas fa-calculator"></i> Giá Trị</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="hang, iterStat : ${hangHoaList}">
+                                <td th:text="${iterStat.count}">1</td>
+                                <td>
+                                    <span class="badge bg-primary" th:text="${hang.maHang}">H001</span>
+                                </td>
+                                <td th:text="${hang.tenHang}">Tên hàng</td>
+                                <td>
+                                    <span class="badge bg-info" th:text="${hang.soLuong}">0</span>
+                                </td>
+                                <td th:text="${hang.nhaSanXuat}">Nhà SX</td>
+                                <td>
+                                    <span th:text="${#numbers.formatDecimal(hang.donGia, 0, 0)}">0</span> VNĐ
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary" th:text="${hang.namSanXuat}">2024</span>
+                                </td>
+                                <td>
+                                    <strong class="text-primary">
+                                        <span th:text="${#numbers.formatDecimal(hang.soLuong * hang.donGia, 0, 0)}">0</span> VNĐ
+                                    </strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot class="table-light">
+                            <tr>
+                                <th colspan="7" class="text-end">
+                                    <strong>TỔNG GIÁ TRỊ KHO:</strong>
+                                </th>
+                                <th class="text-primary">
+                                    <strong>
+                                        <span th:text="${#numbers.formatDecimal(tongGiaTri, 0, 0)}">0</span> VNĐ
+                                    </strong>
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                
+                <!-- Empty State -->
+                <div th:if="${#lists.isEmpty(hangHoaList)}" class="text-center py-5">
+                    <i class="fas fa-boxes fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Chưa có hàng hóa nào</h5>
+                    <p class="text-muted">Danh sách hàng hóa sẽ hiển thị tại đây</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="row mt-4">
+            <div class="col">
+                <a href="/" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Quay về Trang chủ
+                </a>
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Thêm Hàng Hóa
+                </button>
+                <button class="btn btn-info">
+                    <i class="fas fa-search"></i> Tìm Kiếm
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
