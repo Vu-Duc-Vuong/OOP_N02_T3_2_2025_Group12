@@ -14,4 +14,10 @@ public class GreetingController {
 		return "greeting";
 	}
 
+	@GetMapping("totest")
+	public String greeting( Model model) {
+		//model.addAttribute("name", name);
+		return "toitest";
+	}
+
 }
