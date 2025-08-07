@@ -16,7 +16,8 @@ public class GreetingController {
 
 	@GetMapping("totest")
 	public String greeting( Model model) {
-		//model.addAttribute("name", name);
+		String vuong = "hello from Vuong";
+		model.addAttribute("v", vuong);
 		return "toitest";
 	}
 
