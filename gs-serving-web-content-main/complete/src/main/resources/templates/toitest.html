@@ -3,180 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UI Nhập - Quản Lý Nhập Hàng</title>
-    
-    <!-- Bootstrap CSS -->
+    <title th:text="${appName} + ' - Nhập Hàng'">Nhập Hàng</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
     <style>
-        .navbar-brand {
-            font-weight: bold;
-        }
-        .card-header {
-            background-color: #fd7e14;
-            color: white;
-        }
-        .table-hover tbody tr:hover {
-            background-color: #f8f9fa;
-        }
-        .stats-card {
-            border-left: 4px solid #fd7e14;
-        }
+        .hero-section {background: linear-gradient(135deg,#ffb347 0%,#ffcc33 100%);color:#fff;padding:60px 0}
+        .feature-card {transition:transform .3s;height:100%}
+        .feature-card:hover {transform:translateY(-5px)}
+        .navbar-brand {font-weight:bold}
+        footer {background:#343a40;color:#fff;padding:30px 0;margin-top:40px}
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="fas fa-store"></i> Quản Lý Cửa Hàng
-            </a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="/uihanghoa">Hàng Hóa</a>
-                <a class="nav-link active" href="/uinhap">Nhập Hàng</a>
-                <a class="nav-link" href="/ban">Bán Hàng</a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container mt-4">
-        <!-- Header -->
-        <div class="row mb-4">
-            <div class="col">
-                <h2><i class="fas fa-truck text-warning"></i> UI Nhập - Danh Sách Phiếu Nhập</h2>
-                <p class="text-muted">Quản lý thông tin nhập hàng theo mẫu Model-View-Controller</p>
-
-                [[${v}]]
-            </div>
-        </div>
-
-        <!-- Statistics Cards -->
-        <div class="row mb-4">
-            <div class="col-md-6">
-                <div class="card stats-card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5 class="card-title text-muted">Tổng Số Phiếu Nhập</h5>
-                                <h3 class="text-warning" th:text="${tongSoPhieu}">0</h3>
-                            </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-file-import fa-2x text-warning"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card stats-card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5 class="card-title text-muted">Tổng Số Lượng Nhập</h5>
-                                <h3 class="text-warning" th:text="${tongSoLuong}">0</h3>
-                            </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-cubes fa-2x text-warning"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Nhap List -->
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="fas fa-list"></i> Danh Sách Nhập Hàng (readList Method)
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead class="table-dark">
-                            <tr>
-                                <th><i class="fas fa-hashtag"></i> STT</th>
-                                <th><i class="fas fa-barcode"></i> Mã Hàng Hóa</th>
-                                <th><i class="fas fa-sort-numeric-up"></i> Số Lượng Nhập</th>
-                                <th><i class="fas fa-money-bill"></i> Giá Nhập</th>
-                                <th><i class="fas fa-calculator"></i> Tổng Tiền</th>
-                                <th><i class="fas fa-calendar-alt"></i> Ngày Nhập</th>
-                                <th><i class="fas fa-clock"></i> Thời Gian</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="nhap, iterStat : ${nhapList}">
-                                <td th:text="${iterStat.count}">1</td>
-                                <td>
-                                    <span class="badge bg-warning" th:text="${nhap.hanghoaID}">HH001</span>
-                                </td>
-                                <td>
-                                    <span class="badge bg-info" th:text="${nhap.soLuongNhap}">0</span>
-                                </td>
-                                <td>
-                                    <span th:text="${#numbers.formatDecimal(nhap.giaNhap, 0, 0)}">0</span> VNĐ
-                                </td>
-                                <td>
-                                    <strong class="text-warning">
-                                        <span th:text="${#numbers.formatDecimal(nhap.tongTien, 0, 0)}">0</span> VNĐ
-                                    </strong>
-                                </td>
-                                <td>
-                                    <span th:text="${#temporals.format(nhap.ngayNhap, 'dd/MM/yyyy')}">01/01/2024</span>
-                                </td>
-                                <td>
-                                    <span class="text-muted">
-                                        <i class="fas fa-clock"></i>
-                                        <span th:text="${T(java.time.temporal.ChronoUnit).DAYS.between(nhap.ngayNhap, T(java.time.LocalDate).now())}">0</span> ngày trước
-                                    </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tfoot class="table-light">
-                            <tr>
-                                <th colspan="2" class="text-end">
-                                    <strong>TỔNG CỘNG:</strong>
-                                </th>
-                                <th class="text-warning">
-                                    <strong>
-                                        <span th:text="${tongSoLuong}">0</span> sản phẩm
-                                    </strong>
-                                </th>
-                                <th colspan="4"></th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-                
-                <!-- Empty State -->
-                <div th:if="${#lists.isEmpty(nhapList)}" class="text-center py-5">
-                    <i class="fas fa-truck fa-3x text-muted mb-3"></i>
-                    <h5 class="text-muted">Chưa có phiếu nhập nào</h5>
-                    <p class="text-muted">Danh sách phiếu nhập sẽ hiển thị tại đây</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="row mt-4">
-            <div class="col">
-                <a href="/" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Quay về Trang chủ
-                </a>
-                <button class="btn btn-warning">
-                    <i class="fas fa-plus"></i> Thêm Phiếu Nhập
-                </button>
-                <button class="btn btn-info">
-                    <i class="fas fa-chart-line"></i> Báo Cáo
-                </button>
-            </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="fas fa-store"></i> <span th:text="${appName}">Quản Lý Cửa Hàng</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/"><i class="fas fa-home"></i> Trang Chủ</a></li>
+                <li class="nav-item"><a class="nav-link" href="/hanghoa"><i class="fas fa-boxes"></i> Hàng Hóa</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/nhap"><i class="fas fa-truck"></i> Nhập Hàng</a></li>
+                <li class="nav-item"><a class="nav-link" href="/ban"><i class="fas fa-cash-register"></i> Bán Hàng</a></li>
+                <li class="nav-item"><a class="nav-link" href="/hanghoa/search"><i class="fas fa-search"></i> Tìm Kiếm</a></li>
+            </ul>
         </div>
     </div>
+</nav>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<section class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-6 mb-3"><i class="fas fa-truck"></i> Trang Nhập Hàng</h1>
+        <p class="lead mb-4">Cổng vào nhanh để chuyển tới các chức năng quản lý nhập</p>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="row g-3">
+                    <div class="col-md-6"><a href="/quanly/nhap" class="btn btn-light btn-lg w-100"><i class="fas fa-list"></i> Danh Sách Phiếu</a></div>
+                    <div class="col-md-6"><a href="/quanly/nhap/add" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-plus"></i> Thêm Phiếu</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 text-white small">[[${v}]]</div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center mb-4">
+            <div class="col"><h2>Tính Năng Nhập Hàng</h2><p class="text-muted">Quản lý phiếu nhập - thống kê - báo cáo</p></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4"><div class="card feature-card text-center"><div class="card-body"><i class="fas fa-file-import fa-3x text-warning mb-3"></i><h5>Danh Sách Phiếu</h5><p>Theo dõi toàn bộ phiếu nhập.</p><a href="/quanly/nhap" class="btn btn-warning btn-sm text-white">Xem</a></div></div></div>
+            <div class="col-md-4 mb-4"><div class="card feature-card text-center"><div class="card-body"><i class="fas fa-plus-circle fa-3x text-primary mb-3"></i><h5>Thêm Phiếu</h5><p>Tạo nhanh một phiếu nhập mới.</p><a href="/quanly/nhap/add" class="btn btn-primary btn-sm">Thêm</a></div></div></div>
+            <div class="col-md-4 mb-4"><div class="card feature-card text-center"><div class="card-body"><i class="fas fa-chart-line fa-3x text-success mb-3"></i><h5>Báo Cáo</h5><p>Xem báo cáo tổng hợp nhập hàng.</p><a href="/quanly/nhap/report" class="btn btn-success btn-sm">Báo Cáo</a></div></div></div>
+        </div>
+    </div>
+</section>
+
+<footer class="text-center">
+    <div class="container">
+        <p>&copy; 2025 Nhóm 10 - OOP_N02_T3. <span th:text="${appName}">Quản Lý Cửa Hàng</span></p>
+        <div class="mt-2">
+            <a href="/hanghoa" class="btn btn-outline-light btn-sm me-2"><i class="fas fa-boxes"></i> Hàng Hóa</a>
+            <a href="/quanly/nhap" class="btn btn-outline-light btn-sm me-2"><i class="fas fa-list"></i> Phiếu Nhập</a>
+            <a href="/hanghoa/search" class="btn btn-outline-light btn-sm"><i class="fas fa-search"></i> Tìm Kiếm</a>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

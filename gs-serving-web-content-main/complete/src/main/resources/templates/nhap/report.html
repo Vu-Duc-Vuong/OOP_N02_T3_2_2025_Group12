@@ -4,7 +4,7 @@
         <h2><i class="fas fa-chart-bar text-primary"></i> Báo Cáo Nhập Hàng</h2>
     </div>
     <div class="col-md-4 text-end">
-        <a href="/nhap" class="btn btn-secondary">
+    <a href="/quanly/nhap" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Quay Lại
         </a>
     </div>
@@ -20,7 +20,7 @@
                 </h5>
             </div>
             <div class="card-body">
-                <form action="/nhap/report" method="get">
+                <form action="/quanly/nhap/report" method="get">
                     <div class="input-group">
                         <span class="input-group-text">
                             <i class="fas fa-calendar-day"></i>
@@ -86,6 +86,7 @@
                     <tr>
                         <th>STT</th>
                         <th>Mã Hàng Hóa</th>
+                        <th>Tên Hàng</th>
                         <th>Số Lượng Nhập</th>
                         <th>Giá Nhập</th>
                         <th>Tổng Tiền</th>
@@ -93,7 +94,7 @@
                 </thead>
                 <tbody>
                     <tr th:if="${#lists.isEmpty(nhapTrongNgay)}">
-                        <td colspan="5" class="text-center text-muted">
+                        <td colspan="6" class="text-center text-muted">
                             <i class="fas fa-inbox"></i> Không có phiếu nhập nào trong ngày này
                         </td>
                     </tr>
@@ -102,6 +103,7 @@
                         <td>
                             <strong th:text="${nhap.hanghoaID}">HH001</strong>
                         </td>
+                        <td th:text="${nhap.tenHang}">Gạo ST25</td>
                         <td th:text="${nhap.soLuongNhap}">100</td>
                         <td th:text="${#numbers.formatDecimal(nhap.giaNhap, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">15,000 VNĐ</td>
                         <td>
@@ -111,7 +113,7 @@
                 </tbody>
                 <tfoot th:if="${!#lists.isEmpty(nhapTrongNgay)}" class="table-dark">
                     <tr>
-                        <th colspan="4" class="text-end">TỔNG CỘNG:</th>
+                        <th colspan="5" class="text-end">TỔNG CỘNG:</th>
                         <th>
                             <span class="text-warning" th:text="${#numbers.formatDecimal(tongTienNhap, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">0 VNĐ</span>
                         </th>

@@ -10,7 +10,7 @@
                 </h5>
             </div>
             <div class="card-body">
-                <form th:action="${action == 'add' ? '/nhap/add' : '/nhap/edit/' + index}" 
+                <form th:action="${action == 'add' ? '/quanly/nhap/add' : '/quanly/nhap/edit/' + index}" 
                       th:object="${nhap}" method="post">
                     
                     <!-- Mã Hàng Hóa -->
@@ -21,6 +21,15 @@
                         <input type="text" class="form-control" id="hanghoaID" 
                                th:field="*{hanghoaID}" required
                                placeholder="Nhập mã hàng hóa (VD: HH001)">
+                    </div>
+                    <!-- Tên Hàng -->
+                    <div class="mb-3">
+                        <label for="tenHang" class="form-label">
+                            <i class="fas fa-box"></i> Tên Hàng <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="tenHang" 
+                               th:field="*{tenHang}" required
+                               placeholder="Nhập tên hàng (VD: Gạo ST25)">
                     </div>
                     
                     <!-- Số Lượng Nhập -->
@@ -54,7 +63,7 @@
                     
                     <!-- Buttons -->
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="/nhap" class="btn btn-secondary me-md-2">
+                        <a href="/quanly/nhap" class="btn btn-secondary me-md-2">
                             <i class="fas fa-times"></i> Hủy
                         </a>
                         <button type="submit" class="btn btn-primary">

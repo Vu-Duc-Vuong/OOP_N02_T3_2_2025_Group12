@@ -33,10 +33,17 @@
             <a class="navbar-brand" href="/">
                 <i class="fas fa-store"></i> Quản Lý Cửa Hàng
             </a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="/uihanghoa">Hàng Hóa</a>
-                <a class="nav-link active" href="/uinhap">Nhập Hàng</a>
-                <a class="nav-link" href="/ban">Bán Hàng</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/"><i class="fas fa-home"></i> Trang Chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/hanghoa"><i class="fas fa-boxes"></i> Hàng Hóa</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/nhap"><i class="fas fa-truck"></i> Nhập Hàng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/ban"><i class="fas fa-cash-register"></i> Bán Hàng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/hanghoa/search"><i class="fas fa-search"></i> Tìm Kiếm</a></li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -50,41 +57,7 @@
             </div>
         </div>
 
-        <!-- Statistics Cards -->
-        <div class="row mb-4">
-            <div class="col-md-6">
-                <div class="card stats-card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5 class="card-title text-muted">Tổng Số Phiếu Nhập</h5>
-                                <h3 class="text-warning" th:text="${tongSoPhieu}">0</h3>
-                            </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-file-import fa-2x text-warning"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card stats-card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5 class="card-title text-muted">Tổng Số Lượng Nhập</h5>
-                                <h3 class="text-warning" th:text="${tongSoLuong}">0</h3>
-                            </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-cubes fa-2x text-warning"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Nhap List -->
+    <!-- Nhap List (moved above statistics) -->
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0">
@@ -153,7 +126,40 @@
                 <div th:if="${#lists.isEmpty(nhapList)}" class="text-center py-5">
                     <i class="fas fa-truck fa-3x text-muted mb-3"></i>
                     <h5 class="text-muted">Chưa có phiếu nhập nào</h5>
-                    <p class="text-muted">Danh sách phiếu nhập sẽ hiển thị tại đây</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Cards (moved below list) -->
+        <div class="row mb-4 mt-4">
+            <div class="col-md-6">
+                <div class="card stats-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title text-muted">Tổng Số Phiếu Nhập</h5>
+                                <h3 class="text-warning" th:text="${tongSoPhieu}">0</h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-file-import fa-2x text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card stats-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title text-muted">Tổng Số Lượng Nhập</h5>
+                                <h3 class="text-warning" th:text="${tongSoLuong}">0</h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-cubes fa-2x text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -164,12 +170,12 @@
                 <a href="/" class="btn btn-secondary">
                     <i class="fas fa-arrow-left"></i> Quay về Trang chủ
                 </a>
-                <button class="btn btn-warning">
+                <a href="/nhap/add" class="btn btn-warning">
                     <i class="fas fa-plus"></i> Thêm Phiếu Nhập
-                </button>
-                <button class="btn btn-info">
+                </a>
+                <a href="/nhap/report" class="btn btn-info">
                     <i class="fas fa-chart-line"></i> Báo Cáo
-                </button>
+                </a>
             </div>
         </div>
     </div>

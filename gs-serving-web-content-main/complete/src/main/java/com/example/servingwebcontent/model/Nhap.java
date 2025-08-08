@@ -1,11 +1,14 @@
 package com.example.servingwebcontent.model;
 
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Nhap {
     private String hanghoaID;
+    private String tenHang; // Tên hàng hóa (mới thêm)
     private int soLuongNhap;
     private double giaNhap;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate ngayNhap;
     
     // Constructor mặc định
@@ -20,6 +23,15 @@ public class Nhap {
         this.giaNhap = giaNhap;
         this.ngayNhap = ngayNhap;
     }
+
+    // Constructor đầy đủ bao gồm tên hàng
+    public Nhap(String hanghoaID, String tenHang, int soLuongNhap, double giaNhap, LocalDate ngayNhap) {
+        this.hanghoaID = hanghoaID;
+        this.tenHang = tenHang;
+        this.soLuongNhap = soLuongNhap;
+        this.giaNhap = giaNhap;
+        this.ngayNhap = ngayNhap;
+    }
     
     // Getters và Setters
     public String getHanghoaID() {
@@ -28,6 +40,14 @@ public class Nhap {
     
     public void setHanghoaID(String hanghoaID) {
         this.hanghoaID = hanghoaID;
+    }
+
+    public String getTenHang() {
+        return tenHang;
+    }
+
+    public void setTenHang(String tenHang) {
+        this.tenHang = tenHang;
     }
     
     public int getSoLuongNhap() {
@@ -63,6 +83,7 @@ public class Nhap {
     public String toString() {
         return "Nhap{" +
                 "hanghoaID='" + hanghoaID + '\'' +
+                ", tenHang='" + tenHang + '\'' +
                 ", soLuongNhap=" + soLuongNhap +
                 ", giaNhap=" + giaNhap +
                 ", ngayNhap=" + ngayNhap +

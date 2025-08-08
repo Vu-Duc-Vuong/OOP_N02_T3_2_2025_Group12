@@ -15,9 +15,9 @@ public class NhapService {
     
     public NhapService() {
         // Dữ liệu mẫu
-        danhSachNhap.add(new Nhap("HH001", 100, 15000, LocalDate.now().minusDays(1)));
-        danhSachNhap.add(new Nhap("HH002", 50, 25000, LocalDate.now()));
-        danhSachNhap.add(new Nhap("HH003", 200, 8000, LocalDate.now().minusDays(2)));
+    danhSachNhap.add(new Nhap("HH001", "Gạo ST25", 100, 15000, LocalDate.now().minusDays(1)));
+    danhSachNhap.add(new Nhap("HH002", "Nước Mắm", 50, 25000, LocalDate.now()));
+    danhSachNhap.add(new Nhap("HH003", "Đường Cát", 200, 8000, LocalDate.now().minusDays(2)));
     }
     
     public List<Nhap> getAllNhap() {

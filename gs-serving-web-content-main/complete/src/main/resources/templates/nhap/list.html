@@ -1,15 +1,28 @@
 <!-- Danh sách phiếu nhập -->
+
+<!-- Thông báo thành công -->
+<div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fas fa-check-circle"></i> <span th:text="${successMessage}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<!-- Thông báo lỗi -->
+<div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="fas fa-exclamation-circle"></i> <span th:text="${errorMessage}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 <div class="row mb-4">
     <div class="col-md-6">
         <h2><i class="fas fa-truck text-primary"></i> Danh Sách Phiếu Nhập</h2>
     </div>
     <div class="col-md-6 text-end">
-        <a href="/nhap/add" class="btn btn-success">
-            <i class="fas fa-plus"></i> Thêm Phiếu Nhập
-        </a>
-        <a href="/nhap/report" class="btn btn-info">
-            <i class="fas fa-chart-bar"></i> Báo Cáo
-        </a>
+    <a href="/quanly/nhap/add" class="btn btn-warning text-dark">
+        <i class="fas fa-plus"></i> Thêm Phiếu Nhập
+    </a>
+    <a href="/quanly/nhap/report" class="btn btn-info">
+        <i class="fas fa-chart-bar"></i> Báo Cáo
+    </a>
     </div>
 </div>
 
@@ -41,6 +54,7 @@
                     <tr>
                         <th>STT</th>
                         <th>Mã Hàng Hóa</th>
+                        <th>Tên Hàng</th>
                         <th>Số Lượng Nhập</th>
                         <th>Giá Nhập</th>
                         <th>Ngày Nhập</th>
@@ -50,7 +64,7 @@
                 </thead>
                 <tbody>
                     <tr th:if="${#lists.isEmpty(danhSachNhap)}">
-                        <td colspan="7" class="text-center text-muted">
+                        <td colspan="8" class="text-center text-muted">
                             <i class="fas fa-inbox"></i> Chưa có phiếu nhập nào
                         </td>
                     </tr>
@@ -59,6 +73,7 @@
                         <td>
                             <strong th:text="${nhap.hanghoaID}">HH001</strong>
                         </td>
+                        <td th:text="${nhap.tenHang}">Gạo ST25</td>
                         <td th:text="${nhap.soLuongNhap}">100</td>
                         <td th:text="${#numbers.formatDecimal(nhap.giaNhap, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">15,000 VNĐ</td>
                         <td th:text="${#temporals.format(nhap.ngayNhap, 'dd/MM/yyyy')}">01/08/2025</td>
@@ -66,13 +81,13 @@
                             <strong class="text-success" th:text="${#numbers.formatDecimal(nhap.tongTien, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">1,500,000 VNĐ</strong>
                         </td>
                         <td>
-                            <a th:href="@{/nhap/edit/{index}(index=${iterStat.index})}" 
+                            <a th:href="@{/quanly/nhap/edit/{index}(index=${iterStat.index})}" 
                                class="btn btn-sm btn-warning btn-action">
                                 <i class="fas fa-edit"></i> Sửa
                             </a>
-                            <form th:action="@{/nhap/delete/{index}(index=${iterStat.index})}" 
+                            <form th:action="@{/quanly/nhap/delete/{index}(index=${iterStat.index})}" 
                                   method="post" class="d-inline"
-                                  th:onsubmit="'return confirmDelete(\'' + ${nhap.hanghoaID} + '\')'">
+                                  th:onsubmit="|return confirm('Bạn có chắc muốn xóa phiếu nhập ${nhap.hanghoaID}?')|">
                                 <button type="submit" class="btn btn-sm btn-danger btn-action">
                                     <i class="fas fa-trash"></i> Xóa
                                 </button>
@@ -82,5 +97,20 @@
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
+
+<!-- Action Buttons Bottom -->
+<div class="row mt-4">
+    <div class="col">
+        <a href="/" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Quay về Trang chủ
+        </a>
+        <a href="/quanly/nhap/add" class="btn btn-warning text-dark">
+            <i class="fas fa-plus"></i> Thêm Phiếu Nhập
+        </a>
+        <a href="/quanly/nhap/report" class="btn btn-info">
+            <i class="fas fa-chart-bar"></i> Báo Cáo
+        </a>
     </div>
 </div>

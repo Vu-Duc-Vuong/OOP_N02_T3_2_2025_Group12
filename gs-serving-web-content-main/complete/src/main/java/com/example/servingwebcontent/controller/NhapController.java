@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-@RequestMapping("/nhap")
+@RequestMapping("/quanly/nhap")
 public class NhapController {
     
     @Autowired
@@ -47,7 +47,7 @@ public class NhapController {
             redirectAttributes.addFlashAttribute("errorMessage", 
                 "Có lỗi xảy ra khi thêm phiếu nhập: " + e.getMessage());
         }
-        return "redirect:/nhap";
+    return "redirect:/quanly/nhap";
     }
     
     @GetMapping("/edit/{index}")
@@ -55,7 +55,7 @@ public class NhapController {
         Nhap nhap = nhapService.getNhapByIndex(index);
         if (nhap == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy phiếu nhập!");
-            return "redirect:/nhap";
+            return "redirect:/quanly/nhap";
         }
         
         model.addAttribute("nhap", nhap);
@@ -77,7 +77,7 @@ public class NhapController {
             redirectAttributes.addFlashAttribute("errorMessage", 
                 "Có lỗi xảy ra khi cập nhật phiếu nhập: " + e.getMessage());
         }
-        return "redirect:/nhap";
+    return "redirect:/quanly/nhap";
     }
     
     @PostMapping("/delete/{index}")
@@ -95,7 +95,7 @@ public class NhapController {
             redirectAttributes.addFlashAttribute("errorMessage", 
                 "Có lỗi xảy ra khi xóa phiếu nhập: " + e.getMessage());
         }
-        return "redirect:/nhap";
+    return "redirect:/quanly/nhap";
     }
     
     @GetMapping("/search")

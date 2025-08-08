@@ -2,6 +2,7 @@ package com.example.servingwebcontent.model;
 
 public class Ban {
     private String maPhieu;
+    private String tenHang; // tên hàng (mới)
     private String tenKhach;
     private int soLuong;
     private double donGia;
@@ -15,6 +16,15 @@ public class Ban {
         this.soLuong = soLuong;
         this.donGia = donGia;
     }
+
+    // Constructor đầy đủ bao gồm tên hàng
+    public Ban(String maPhieu, String tenHang, String tenKhach, int soLuong, double donGia) {
+        this.maPhieu = maPhieu;
+        this.tenHang = tenHang;
+        this.tenKhach = tenKhach;
+        this.soLuong = soLuong;
+        this.donGia = donGia;
+    }
     
     // Getter và Setter
     public String getMaPhieu() {
@@ -23,6 +33,14 @@ public class Ban {
     
     public void setMaPhieu(String maPhieu) {
         this.maPhieu = maPhieu;
+    }
+
+    public String getTenHang() {
+        return tenHang;
+    }
+
+    public void setTenHang(String tenHang) {
+        this.tenHang = tenHang;
     }
     
     public String getTenKhach() {
@@ -58,6 +76,7 @@ public class Ban {
     public String toString() {
         return "Ban{" +
                 "maPhieu='" + maPhieu + '\'' +
+                ", tenHang='" + tenHang + '\'' +
                 ", tenKhach='" + tenKhach + '\'' +
                 ", soLuong=" + soLuong +
                 ", donGia=" + donGia +

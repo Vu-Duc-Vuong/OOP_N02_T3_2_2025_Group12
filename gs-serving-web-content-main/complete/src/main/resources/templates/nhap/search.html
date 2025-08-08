@@ -6,7 +6,7 @@
                 <i class="fas fa-search text-primary"></i> Tìm Kiếm Phiếu Nhập
             </h4>
             
-            <form action="/nhap/search" method="post">
+            <form action="/quanly/nhap/search" method="post">
                 <div class="input-group mb-3">
                     <span class="input-group-text">
                         <i class="fas fa-search"></i>
@@ -21,10 +21,10 @@
             </form>
             
             <div class="text-center">
-                <a href="/nhap" class="btn btn-outline-secondary">
+                <a href="/quanly/nhap" class="btn btn-outline-secondary">
                     <i class="fas fa-list"></i> Xem Tất Cả Phiếu Nhập
                 </a>
-                <a href="/nhap/add" class="btn btn-success">
+                <a href="/quanly/nhap/add" class="btn btn-success">
                     <i class="fas fa-plus"></i> Thêm Phiếu Nhập Mới
                 </a>
             </div>
@@ -87,13 +87,13 @@
                                 <strong class="text-success" th:text="${#numbers.formatDecimal(nhap.tongTien, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">1,500,000 VNĐ</strong>
                             </td>
                             <td>
-                                <a th:href="@{/nhap/edit/{index}(index=${iterStat.index})}" 
+                                <a th:href="@{/quanly/nhap/edit/{index}(index=${iterStat.index})}" 
                                    class="btn btn-sm btn-warning btn-action">
                                     <i class="fas fa-edit"></i> Sửa
                                 </a>
-                                <form th:action="@{/nhap/delete/{index}(index=${iterStat.index})}" 
+                                <form th:action="@{/quanly/nhap/delete/{index}(index=${iterStat.index})}" 
                                       method="post" class="d-inline"
-                                      th:onsubmit="'return confirmDelete(\'' + ${nhap.hanghoaID} + '\')'">
+                                      th:onsubmit="|return confirm('Bạn có chắc muốn xóa phiếu nhập ${nhap.hanghoaID}?')|">
                                     <button type="submit" class="btn btn-sm btn-danger btn-action">
                                         <i class="fas fa-trash"></i> Xóa
                                     </button>
