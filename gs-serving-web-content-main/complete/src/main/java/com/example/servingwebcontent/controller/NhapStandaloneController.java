@@ -24,8 +24,14 @@ public class NhapStandaloneController {
 
     @PostMapping("/add")
     public String addNhap(@ModelAttribute Nhap nhap, RedirectAttributes redirectAttributes) {
-        nhapService.addNhap(nhap);
-        redirectAttributes.addFlashAttribute("successMessage", "Thêm phiếu nhập " + nhap.getHanghoaID() + " thành công!");
+        try {
+            nhapService.addNhap(nhap);
+            redirectAttributes.addFlashAttribute("successMessage", 
+                "Thêm phiếu nhập hàng hóa " + nhap.getHanghoaID() + " (" + nhap.getTenHang() + ") thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", 
+                "Có lỗi xảy ra khi thêm phiếu nhập: " + e.getMessage());
+        }
         return "redirect:/quanly/nhap"; // quay về danh sách quản lý
     }
 }

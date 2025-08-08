@@ -42,7 +42,7 @@ public class NhapController {
         try {
             nhapService.addNhap(nhap);
             redirectAttributes.addFlashAttribute("successMessage", 
-                "Thêm phiếu nhập hàng hóa " + nhap.getHanghoaID() + " thành công!");
+                "Thêm phiếu nhập hàng hóa " + nhap.getHanghoaID() + " (" + nhap.getTenHang() + ") thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", 
                 "Có lỗi xảy ra khi thêm phiếu nhập: " + e.getMessage());
@@ -72,7 +72,7 @@ public class NhapController {
         try {
             nhapService.updateNhap(index, nhap);
             redirectAttributes.addFlashAttribute("successMessage", 
-                "Cập nhật phiếu nhập hàng hóa " + nhap.getHanghoaID() + " thành công!");
+                "Cập nhật phiếu nhập hàng hóa " + nhap.getHanghoaID() + " (" + nhap.getTenHang() + ") thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", 
                 "Có lỗi xảy ra khi cập nhật phiếu nhập: " + e.getMessage());
@@ -87,7 +87,7 @@ public class NhapController {
             if (nhap != null) {
                 nhapService.deleteNhap(index);
                 redirectAttributes.addFlashAttribute("successMessage", 
-                    "Xóa phiếu nhập hàng hóa " + nhap.getHanghoaID() + " thành công!");
+                    "Xóa phiếu nhập hàng hóa " + nhap.getHanghoaID() + " (" + nhap.getTenHang() + ") thành công!");
             } else {
                 redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy phiếu nhập!");
             }
