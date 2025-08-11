@@ -68,14 +68,13 @@
                         <th>Tên Hàng</th>
                         <th>Số Lượng Nhập</th>
                         <th>Giá Nhập</th>
-                        <th>Ngày Nhập</th>
                         <th>Tổng Tiền</th>
                         <th>Thao Tác</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:if="${#lists.isEmpty(danhSachNhap)}">
-                        <td colspan="8" class="text-center text-muted">
+                        <td colspan="7" class="text-center text-muted">
                             <i class="fas fa-inbox"></i> Chưa có phiếu nhập nào
                         </td>
                     </tr>
@@ -87,7 +86,6 @@
                         <td th:text="${nhap.tenHang}">Gạo ST25</td>
                         <td th:text="${nhap.soLuongNhap}">100</td>
                         <td th:text="${#numbers.formatDecimal(nhap.giaNhap, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">15,000 VNĐ</td>
-                        <td th:text="${#temporals.format(nhap.ngayNhap, 'dd/MM/yyyy')}">01/08/2025</td>
                         <td>
                             <strong class="text-success" th:text="${#numbers.formatDecimal(nhap.tongTien, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">1,500,000 VNĐ</strong>
                         </td>

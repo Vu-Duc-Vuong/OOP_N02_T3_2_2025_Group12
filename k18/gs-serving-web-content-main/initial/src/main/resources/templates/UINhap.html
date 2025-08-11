@@ -71,11 +71,10 @@
                             <tr>
                                 <th><i class="fas fa-hashtag"></i> STT</th>
                                 <th><i class="fas fa-barcode"></i> Mã Hàng Hóa</th>
+                                <th><i class="fas fa-box"></i> Tên Hàng</th>
                                 <th><i class="fas fa-sort-numeric-up"></i> Số Lượng Nhập</th>
                                 <th><i class="fas fa-money-bill"></i> Giá Nhập</th>
                                 <th><i class="fas fa-calculator"></i> Tổng Tiền</th>
-                                <th><i class="fas fa-calendar-alt"></i> Ngày Nhập</th>
-                                <th><i class="fas fa-clock"></i> Thời Gian</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,6 +82,9 @@
                                 <td th:text="${iterStat.count}">1</td>
                                 <td>
                                     <span class="badge bg-warning" th:text="${nhap.hanghoaID}">HH001</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary" th:text="${nhap.tenHang}">Tên hàng</span>
                                 </td>
                                 <td>
                                     <span class="badge bg-info" th:text="${nhap.soLuongNhap}">0</span>
@@ -95,20 +97,11 @@
                                         <span th:text="${#numbers.formatDecimal(nhap.tongTien, 0, 0)}">0</span> VNĐ
                                     </strong>
                                 </td>
-                                <td>
-                                    <span th:text="${#temporals.format(nhap.ngayNhap, 'dd/MM/yyyy')}">01/01/2024</span>
-                                </td>
-                                <td>
-                                    <span class="text-muted">
-                                        <i class="fas fa-clock"></i>
-                                        <span th:text="${T(java.time.temporal.ChronoUnit).DAYS.between(nhap.ngayNhap, T(java.time.LocalDate).now())}">0</span> ngày trước
-                                    </span>
-                                </td>
                             </tr>
                         </tbody>
                         <tfoot class="table-light">
                             <tr>
-                                <th colspan="2" class="text-end">
+                                <th colspan="3" class="text-end">
                                     <strong>TỔNG CỘNG:</strong>
                                 </th>
                                 <th class="text-warning">
@@ -116,7 +109,7 @@
                                         <span th:text="${tongSoLuong}">0</span> sản phẩm
                                     </strong>
                                 </th>
-                                <th colspan="4"></th>
+                                <th colspan="2"></th>
                             </tr>
                         </tfoot>
                     </table>

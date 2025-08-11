@@ -52,14 +52,7 @@
                                placeholder="Nhập giá nhập">
                     </div>
                     
-                    <!-- Ngày Nhập -->
-                    <div class="mb-3">
-                        <label for="ngayNhap" class="form-label">
-                            <i class="fas fa-calendar"></i> Ngày Nhập <span class="text-danger">*</span>
-                        </label>
-                        <input type="date" class="form-control" id="ngayNhap" 
-                               th:field="*{ngayNhap}" required>
-                    </div>
+                    <!-- Bỏ trường Ngày Nhập theo yêu cầu; giá trị sẽ mặc định LocalDate.now() trong model -->
                     
                     <!-- Buttons -->
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -77,15 +70,4 @@
     </div>
 </div>
 
-<script>
-    // Tự động set ngày hiện tại nếu đang thêm mới
-    document.addEventListener('DOMContentLoaded', function() {
-        const action = /*[[${action}]]*/ 'add';
-        const ngayNhapInput = document.getElementById('ngayNhap');
-        
-        if (action === 'add' && !ngayNhapInput.value) {
-            const today = new Date().toISOString().split('T')[0];
-            ngayNhapInput.value = today;
-        }
-    });
-</script>
+<!-- Đã xóa script tự động set Ngày Nhập theo yêu cầu -->
