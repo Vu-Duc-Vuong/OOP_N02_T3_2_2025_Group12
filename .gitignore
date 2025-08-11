@@ -1,0 +1,17 @@
+# Build
+**/target/
+**/bin/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# Secrets / local config
+application.properties
+**/src/main/resources/application.properties
+
+# Logs
+*.log
