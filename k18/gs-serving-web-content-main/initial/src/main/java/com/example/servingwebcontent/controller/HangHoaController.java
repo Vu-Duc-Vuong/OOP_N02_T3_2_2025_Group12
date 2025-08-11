@@ -28,35 +28,6 @@ public class HangHoaController {
         return "hanghoa/list";
     }
 
-    // Hiển thị form thêm hàng hóa
-    @GetMapping("/add")
-    public String showAddForm(Model model) {
-        model.addAttribute("hangHoa", new HangHoa());
-        model.addAttribute("action", "add");
-        return "hanghoa/form";
-    }
-
-    // Xử lý thêm hàng hóa
-    @PostMapping("/add")
-    public String addHangHoa(@Valid @ModelAttribute HangHoa hangHoa, 
-                            BindingResult bindingResult, 
-                            RedirectAttributes redirectAttributes,
-                            Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("action", "add");
-            return "hanghoa/form";
-        }
-
-        if (hangHoaService.addHangHoa(hangHoa)) {
-            redirectAttributes.addFlashAttribute("successMessage", 
-                "Thêm hàng hóa thành công!");
-        } else {
-            redirectAttributes.addFlashAttribute("errorMessage", 
-                "Mã hàng đã tồn tại!");
-        }
-        
-        return "redirect:/hanghoa";
-    }
 
     // Hiển thị form chỉnh sửa
     @GetMapping("/edit/{maHang}")

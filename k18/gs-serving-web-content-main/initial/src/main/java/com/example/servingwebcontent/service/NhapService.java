@@ -25,6 +25,19 @@ public class NhapService {
     }
     
     public void addNhap(Nhap nhap) {
+        // Kiểm tra dữ liệu đầu vào
+        if (nhap.getHanghoaID() == null || nhap.getHanghoaID().isEmpty()) {
+            throw new IllegalArgumentException("Mã hàng hóa không được để trống!");
+        }
+        if (nhap.getTenHang() == null || nhap.getTenHang().isEmpty()) {
+            throw new IllegalArgumentException("Tên hàng hóa không được để trống!");
+        }
+        if (nhap.getSoLuongNhap() <= 0) {
+            throw new IllegalArgumentException("Số lượng nhập phải lớn hơn 0!");
+        }
+        if (nhap.getGiaNhap() < 0) {
+            throw new IllegalArgumentException("Giá nhập phải >= 0!");
+        }
         if (nhap.getNgayNhap() == null) {
             nhap.setNgayNhap(LocalDate.now());
         }

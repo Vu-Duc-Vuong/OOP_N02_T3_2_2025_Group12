@@ -4,9 +4,7 @@ import Model.HangHoa;
 public class QuanLyHangHoa {
     ArrayList<HangHoa> ds = new ArrayList<>();
 
-    public void them(HangHoa h) {
-        ds.add(h);
-    }
+    // Đã xóa chức năng thêm hàng hóa
 
     public void xoa(String ma) {
         ds.removeIf(h -> h.maHang.equals(ma));

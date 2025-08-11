@@ -21,8 +21,13 @@ public class NhapController {
     @GetMapping
     public String listNhap(Model model) {
         List<Nhap> danhSachNhap = nhapService.getAllNhap();
+        LocalDate today = LocalDate.now();
+        List<Nhap> nhapToday = nhapService.getNhapByDate(today);
+        int totalCountToday = nhapToday.size();
+        double totalMoneyToday = nhapService.getTongTienNhapTheoNgay(today);
         model.addAttribute("danhSachNhap", danhSachNhap);
-        model.addAttribute("totalCount", nhapService.getTotalCount());
+        model.addAttribute("totalCountToday", totalCountToday);
+        model.addAttribute("totalMoneyToday", String.format("%,.0f VNĐ", totalMoneyToday));
         model.addAttribute("title", "Danh Sách Nhập Hàng");
         model.addAttribute("content", "nhap/list");
         return "layout";

@@ -4,12 +4,9 @@ echo "================================================"
 echo "🚀 SPRING BOOT - QUẢN LÝ HÀNG HÓA GROUP10"
 echo "================================================"
 
-# Lấy đường dẫn của script
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_DIR="${SCRIPT_DIR}/gs-serving-web-content-main/complete"
 
-echo "📁 Chuyển đến thư mục project: ${PROJECT_DIR}"
-cd "${PROJECT_DIR}"
+echo "📁 Chuyển đến thư mục project: k18/gs-serving-web-content-main/initial"
+cd k18/gs-serving-web-content-main/initial
 
 if [ ! -f "mvnw" ]; then
     echo "❌ Không tìm thấy Maven Wrapper (mvnw)"

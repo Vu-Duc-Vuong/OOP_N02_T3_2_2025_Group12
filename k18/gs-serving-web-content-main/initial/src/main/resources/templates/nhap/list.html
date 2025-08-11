@@ -34,11 +34,22 @@
                 <h5 class="card-title">
                     <i class="fas fa-receipt text-primary"></i> Tổng Phiếu Nhập
                 </h5>
-                <h3 class="text-primary" th:text="${totalCount}">0</h3>
+                <h3 class="text-primary" th:text="${totalCountToday}">0</h3>
             </div>
         </div>
     </div>
 </div>
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card stats-card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-money-bill-wave text-success"></i> Tổng Số Tiền Nhập Hàng Trong Ngày
+                </h5>
+                <h3 class="text-success" th:text="${totalMoneyToday}">0 VNĐ</h3>
+            </div>
+        </div>
+    </div>
 
 <!-- Bảng danh sách -->
 <div class="card">

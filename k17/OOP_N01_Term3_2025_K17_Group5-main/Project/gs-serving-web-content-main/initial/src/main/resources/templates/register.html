@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng ký | Shopbee 🐝</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #fffbee;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .register-container {
+            background-color: #ffffff;
+            border: 2px solid #fbbc04;
+            border-radius: 12px;
+            padding: 30px;
+            width: 400px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin: 40px 0;
+        }
+
+        .register-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #f9a825;
+        }
+
+        .register-container label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .register-container input,
+        .register-container select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .register-container button {
+            background-color: #fbbc04;
+            color: white;
+            padding: 12px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .register-container button:hover {
+            background-color: #f9a825;
+        }
+
+        .register-container .error {
+            color: red;
+            margin-top: 15px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .register-container a {
+            display: block;
+            margin-top: 15px;
+            color: #fbbc04;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .register-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="register-container">
+    <h2>🐝 Đăng ký Shopbee</h2>
+    
+    <div th:if="${error}" class="alert alert-danger text-center w-75 mx-auto" role="alert">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span th:text="${error}">Có lỗi xảy ra</span>
+    </div>
+
+    <form th:action="@{/register}" th:object="${user}" method="post">
+        <label for="name">Tên:</label>
+        <input type="text" th:field="*{name}" required>
+
+        <label for="email">Email:</label>
+        <input type="email" th:field="*{email}" required>
+
+        <label for="password">Mật khẩu:</label>
+        <input type="password" th:field="*{password}" required>
+
+        <label for="gender">Giới tính:</label>
+        <select th:field="*{gender}">
+            <option value="Male">Nam</option>
+            <option value="Female">Nữ</option>
+            <option value="Other">Khác</option>
+        </select>
+
+        <label for="birthDate">Ngày sinh:</label>
+        <input type="text" th:field="*{birthDate}" placeholder="yyyy-mm-dd">
+
+        <label for="phoneNumber">SĐT:</label>
+        <input type="text" th:field="*{phoneNumber}">
+
+        <label for="address">Địa chỉ:</label>
+        <input type="text" th:field="*{address}">
+
+        <label for="userType">Loại người dùng:</label>
+        <select th:field="*{userType}">
+            <option value="Customer">Khách hàng</option>
+            <option value="Seller">Người bán</option>
+        </select>
+
+        <button type="submit">Đăng ký</button>
+    </form>
+
+    <div th:if="${error}" th:text="${error}" class="error"></div>
+    <a href="/login">Đã có tài khoản? Đăng nhập</a>
+</div>
+</body>
+</html>

@@ -10,9 +10,35 @@ import Model.HangHoa;
 public class QuanLyNhap {
     ArrayList<Nhap> dsNhap = new ArrayList<>();
 
-    // Thêm phiếu nhập
-    public void them(Nhap n) {
-        dsNhap.add(n);
+    // Thêm phiếu nhập với kiểm tra dữ liệu và xử lý lỗi
+    public boolean them(Nhap n) {
+        if (n == null) {
+            System.out.println("Phiếu nhập không được null!");
+            return false;
+        }
+        if (n.maPhieu == null || n.maPhieu.trim().isEmpty()) {
+            System.out.println("Mã phiếu nhập không hợp lệ!");
+            return false;
+        }
+        if (n.hang == null) {
+            System.out.println("Hàng hóa không được null!");
+            return false;
+        }
+        if (n.soLuongNhap <= 0) {
+            System.out.println("Số lượng nhập phải lớn hơn 0!");
+            return false;
+        }
+        if (n.ngayNhap == null) {
+            System.out.println("Ngày nhập không được null!");
+            return false;
+        }
+        try {
+            dsNhap.add(n);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Lỗi khi thêm phiếu nhập: " + e.getMessage());
+            return false;
+        }
     }
 
     // Xoá phiếu nhập theo mã
@@ -50,12 +76,13 @@ public class QuanLyNhap {
         return tong;
     }
 
-//phương thức 2 tính tổng nhập trong ngày ...: 
-    public double tongNhapTrongNgay(LocalDate ngay) {
+    // Chức năng: Tính tổng số tiền đã nhập hàng trong ngày hiện tại
+    public double tongNhapTrongNgayHienTai() {
         double tong = 0;
+        LocalDate ngayHienTai = LocalDate.now();
         for (Nhap p : dsNhap) {
-            if (p.getNgayNhap().equals(ngay)) {
-                tong += p.tongTien();
+            if (p.getNgayNhap().equals(ngayHienTai)) {
+                tong += p.soLuongNhap * p.hang.donGia;
             }
         }
         return tong;
