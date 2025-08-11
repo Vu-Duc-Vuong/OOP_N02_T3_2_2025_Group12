@@ -57,7 +57,7 @@ public class Nhap {
     private int soLuongNhap;       // Số lượng nhập
     private double giaNhap;        // Giá nhập
     private LocalDate ngayNhap;    // Ngày nhập
-    private String nhaCungCap;     // Nhà cung cấp
+   private String tenHangHoa;     // Tên hàng hóa
 }
 ```
 
