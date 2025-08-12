@@ -1,0 +1,97 @@
+<div class="row mb-4">
+  <div class="col-md-12">
+  <h2><i class="fas fa-chart-line text-primary"></i> Doanh Thu</h2>
+  <form class="row gy-2 gx-2 align-items-end" method="get" action="/doanhthu">
+      <div class="col-md-3">
+        <label class="form-label">Từ (24h)</label>
+        <div class="d-flex gap-1">
+          <input type="date" class="form-control" id="fromDate" th:value="${from != null ? #temporals.format(from,'yyyy-MM-dd') : ''}">
+          <select class="form-select" id="fromHour">
+            <option th:each="h : ${#numbers.sequence(0,23)}" th:value="${h}" th:text="${h < 10 ? '0' + h : h}"
+              th:selected="${from != null and from.hour == h}"></option>
+          </select>
+          <select class="form-select" id="fromMinute">
+            <option th:each="m : ${#numbers.sequence(0,55,5)}" th:value="${m}" th:text="${m < 10 ? '0' + m : (m < 60 ? (m + (m % 5 == 0 ? '' : '')) : m)}"
+              th:selected="${from != null and from.minute == m}"></option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Đến (24h)</label>
+        <div class="d-flex gap-1">
+          <input type="date" class="form-control" id="toDate" th:value="${to != null ? #temporals.format(to,'yyyy-MM-dd') : ''}">
+          <select class="form-select" id="toHour">
+            <option th:each="h : ${#numbers.sequence(0,23)}" th:value="${h}" th:text="${h < 10 ? '0' + h : h}"
+              th:selected="${to != null and to.hour == h}"></option>
+          </select>
+          <select class="form-select" id="toMinute">
+            <option th:each="m : ${#numbers.sequence(0,55,5)}" th:value="${m}" th:text="${m < 10 ? '0' + m : m}"
+              th:selected="${to != null and to.minute == m}"></option>
+          </select>
+        </div>
+      </div>
+      <input type="hidden" name="from" id="fromHidden">
+      <input type="hidden" name="to" id="toHidden">
+      <div class="col-md-2">
+        <button class="btn btn-primary w-100" type="submit"><i class="fas fa-filter"></i> Lọc</button>
+      </div>
+      <div class="col-md-2">
+        <a href="/doanhthu" class="btn btn-secondary w-100"><i class="fas fa-sync"></i> Hôm nay</a>
+      </div>
+    </form>
+    <div class="mt-2 small text-muted" th:if="${from != null}">
+  Khoảng: <span th:text="${from}"></span> → <span th:text="${to}"></span> (giờ)
+    </div>
+  </div>
+</div>
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card border-info h-100">
+      <div class="card-body">
+        <h5 class="card-title"><i class="fas fa-truck text-info"></i> Tổng Tiền Nhập</h5>
+        <h3 class="text-info" th:text="${#numbers.formatDecimal(tongNhap,0,'POINT',0,'COMMA')} + ' VNĐ'">0 VNĐ</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card border-success h-100">
+      <div class="card-body">
+        <h5 class="card-title"><i class="fas fa-cash-register text-success"></i> Tổng Tiền Bán</h5>
+        <h3 class="text-success" th:text="${#numbers.formatDecimal(tongBan,0,'POINT',0,'COMMA')} + ' VNĐ'">0 VNĐ</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card border-warning h-100">
+      <div class="card-body">
+        <h5 class="card-title"><i class="fas fa-balance-scale text-warning"></i> Kết Quả</h5>
+        <h4 th:text="${trangThai}">HÒA VỐN</h4>
+        <p class="mb-0">
+          Mức: <strong th:text="${#numbers.formatDecimal(laiLo,0,'POINT',0,'COMMA')} + ' VNĐ'">0 VNĐ</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Kết hợp các trường ngày + giờ + phút thành ISO 'yyyy-MM-ddTHH:mm' trước submit
+  (function(){
+    function build(idDate,idHour,idMinute){
+      const d=document.getElementById(idDate).value;
+      const h=document.getElementById(idHour).value;
+      const m=document.getElementById(idMinute).value;
+      if(!d) return '';
+      return d+'T'+h+':'+m;
+    }
+    function sync(){
+      const f = build('fromDate','fromHour','fromMinute');
+      const t = build('toDate','toHour','toMinute');
+      document.getElementById('fromHidden').value = f || '';
+      document.getElementById('toHidden').value   = t || '';
+      if(!f) document.getElementById('fromHidden').removeAttribute('name'); else document.getElementById('fromHidden').setAttribute('name','from');
+      if(!t) document.getElementById('toHidden').removeAttribute('name'); else document.getElementById('toHidden').setAttribute('name','to');
+    }
+    document.querySelector('form[action="/doanhthu"]').addEventListener('submit',function(){sync();});
+  })();
+</script>

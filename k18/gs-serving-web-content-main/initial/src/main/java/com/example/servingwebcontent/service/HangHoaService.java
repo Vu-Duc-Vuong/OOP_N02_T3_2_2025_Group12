@@ -32,6 +32,40 @@ public class HangHoaService {
     public List<HangHoa> getAllHangHoa() {
         return new ArrayList<>(hangHoaMap.values());
     }
+
+    // Tìm theo tên (exact, bỏ qua hoa thường)
+    public HangHoa findByTenExact(String ten) {
+        if (ten == null) return null;
+        return hangHoaMap.values().stream()
+                .filter(h -> h.getTenHang() != null && h.getTenHang().equalsIgnoreCase(ten.trim()))
+                .findFirst().orElse(null);
+    }
+
+    // Tăng / giảm số lượng (delta có thể âm). Trả về true nếu thành công.
+    public boolean adjustSoLuong(String maHang, int delta) {
+        HangHoa h = hangHoaMap.get(maHang);
+        if (h == null) return false;
+        int newQty = h.getSoLuong() + delta;
+        if (newQty < 0) return false; // không cho âm
+        h.setSoLuong(newQty);
+        // nếu về 0 có thể giữ lại để tham chiếu, không xóa tự động
+        hangHoaMap.put(maHang, h);
+        return true;
+    }
+
+    // Thêm mới hoặc cộng dồn số lượng nếu mã đã tồn tại
+    public void addOrIncrease(HangHoa hangHoa) {
+        HangHoa existing = hangHoaMap.get(hangHoa.getMaHang());
+        if (existing == null) {
+            hangHoaMap.put(hangHoa.getMaHang(), hangHoa);
+        } else {
+            existing.setSoLuong(existing.getSoLuong() + hangHoa.getSoLuong());
+            // cập nhật giá / năm SX nếu cần (giữ đơn giản: cập nhật nếu khác null)
+            if (hangHoa.getDonGia() != null) existing.setDonGia(hangHoa.getDonGia());
+            if (hangHoa.getNamSanXuat() != null) existing.setNamSanXuat(hangHoa.getNamSanXuat());
+            hangHoaMap.put(existing.getMaHang(), existing);
+        }
+    }
     
     // Lấy hàng hóa theo mã
     public HangHoa getHangHoaById(String maHang) {

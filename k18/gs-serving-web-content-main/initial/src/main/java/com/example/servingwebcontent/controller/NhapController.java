@@ -103,23 +103,6 @@ public class NhapController {
     return "redirect:/quanly/nhap";
     }
     
-    @GetMapping("/search")
-    public String showSearchForm(Model model) {
-        model.addAttribute("title", "Tìm Kiếm Phiếu Nhập");
-        model.addAttribute("content", "nhap/search");
-        return "layout";
-    }
-    
-    @PostMapping("/search")
-    public String searchNhap(@RequestParam("keyword") String keyword, Model model) {
-        List<Nhap> ketQuaTimKiem = nhapService.searchNhap(keyword);
-        model.addAttribute("danhSachNhap", ketQuaTimKiem);
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("totalCount", ketQuaTimKiem.size());
-        model.addAttribute("title", "Kết Quả Tìm Kiếm");
-        model.addAttribute("content", "nhap/search");
-        return "layout";
-    }
     
     @GetMapping("/report")
     public String showReport(@RequestParam(required = false) String date, Model model) {

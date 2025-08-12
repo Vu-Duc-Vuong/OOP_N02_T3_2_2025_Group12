@@ -72,6 +72,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/nhap">
+                            <i class="fas fa-truck"></i> Nhập Hàng
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ban">
+                            <i class="fas fa-cash-register"></i> Bán Hàng
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link active" href="/hanghoa/search">
                             <i class="fas fa-search"></i> Tìm Kiếm
                         </a>
@@ -93,10 +103,6 @@
                 <a href="/hanghoa" class="btn btn-secondary">
                     <i class="fas fa-list"></i> Danh Sách Hàng Hóa
                 </a>
-                <a href="/hanghoa/add" class="btn btn-success">
-                    <i class="fas fa-plus"></i> Thêm Mới
-                </a>
-                    <!-- Nút Thêm Mới đã ẩn -->
             </div>
         </div>
 
@@ -215,17 +221,77 @@
                 <h5 class="mb-0">
                     <i class="fas fa-search-plus"></i> Kết Quả Tìm Kiếm
                 </h5>
-                <span class="badge bg-info search-result-badge" th:text="'Tìm thấy ' + ${searchCount} + ' kết quả'"></span>
+                <!-- Fix concatenation syntax causing parser confusion: use Thymeleaf literal substitution -->
+                <span class="badge bg-info search-result-badge" th:text="|Tìm thấy ${searchCount} kết quả|"></span>
             </div>
             <div class="card-body">
                 <!-- Search Summary -->
                 <div class="alert alert-info" role="alert">
                     <i class="fas fa-info-circle"></i>
                     <strong>Tiêu chí tìm kiếm:</strong>
-                    <span th:if="${tenHang}" th:text="'Tên hàng: ' + ${tenHang}"></span>
-                    <span th:if="${nhaSanXuat}" th:text="'Nhà sản xuất: ' + ${nhaSanXuat}"></span>
-                    <span th:if="${soLuongMin}" th:text="'Số lượng tối thiểu: ' + ${soLuongMin}"></span>
-                    <span th:if="${giaMin and giaMax}" th:text="'Khoảng giá: ' + ${#numbers.formatCurrency(giaMin)} + ' - ' + ${#numbers.formatCurrency(giaMax)}"></span>
+                    <!-- Sửa cú pháp th:text: dùng biểu thức đơn với pipe để tránh lỗi phân tích Thymeleaf -->
+                    <span th:if="${tenHang}" th:text="|Tên hàng: ${tenHang}|"></span>
+                    <span th:if="${nhaSanXuat}" th:text="|Nhà sản xuất: ${nhaSanXuat}|"></span>
+                    <span th:if="${soLuongMin}" th:text="|Số lượng tối thiểu: ${soLuongMin}|"></span>
+                    <span th:if="${giaMin and giaMax}" th:text="|Khoảng giá: ${#numbers.formatCurrency(giaMin)} - ${#numbers.formatCurrency(giaMax)}|"></span>
+                </div>
+
+                <!-- Bảng thông tin chi tiết khi chỉ có 1 kết quả (dùng cờ singleResult) -->
+                <div th:if="${singleResult}" th:with="p=${hangHoaList.get(0)}" class="mb-4">
+                    <div class="card border-primary shadow-sm">
+                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-bullseye"></i> Kết Quả Trùng Khớp Chính Xác</span>
+                            <span class="badge bg-light text-dark" th:text="${p.maHang}"></span>
+                        </div>
+                        <div class="card-body p-0">
+                            <table class="table table-bordered mb-0 align-middle">
+                                <tbody>
+                                    <tr class="table-light">
+                                        <th style="width:25%">Tên hàng</th>
+                                        <td>
+                                            <span th:text="${p.tenHang}" class="fw-bold text-primary"></span>
+                                            <span th:if="${searchType == 'tenHang'}" class="badge bg-success ms-2"><i class="fas fa-check"></i> match</span>
+                                        </td>
+                                        <th style="width:15%">Nhà SX</th>
+                                        <td>
+                                            <span th:text="${p.nhaSanXuat}"></span>
+                                            <span th:if="${searchType == 'nhaSanXuat'}" class="badge bg-success ms-2"><i class="fas fa-check"></i> match</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Số lượng</th>
+                                        <td>
+                                            <span class="badge bg-info" th:text="${p.soLuong}"></span>
+                                            <span th:if="${searchType == 'soLuong'}" class="badge bg-success ms-2"><i class="fas fa-check"></i> đạt</span>
+                                        </td>
+                                        <th>Năm SX</th>
+                                        <td th:text="${p.namSanXuat}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Đơn giá</th>
+                                        <td>
+                                            <span class="currency" th:text="${#numbers.formatCurrency(p.donGia)}"></span>
+                                            <span th:if="${searchType == 'gia'}" class="badge bg-success ms-2"><i class="fas fa-check"></i> trong khoảng</span>
+                                        </td>
+                                        <th>Thành tiền</th>
+                                        <td class="currency fw-bold" th:text="${#numbers.formatCurrency(p.thanhTien())}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer d-flex justify-content-end gap-2">
+                            <a th:href="@{/hanghoa/detail/{maHang}(maHang=${p.maHang})}" class="btn btn-outline-info btn-sm"><i class="fas fa-eye"></i> Chi tiết</a>
+                            <a th:href="@{/hanghoa/edit/{maHang}(maHang=${p.maHang})}" class="btn btn-outline-warning btn-sm"><i class="fas fa-edit"></i> Sửa</a>
+                            <a href="/hanghoa/search" class="btn btn-outline-secondary btn-sm"><i class="fas fa-search"></i> Tìm khác</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Match Information (khi có kết quả trùng khớp) -->
+                <div th:if="${matchInfo != null and !#strings.isEmpty(matchInfo)}" class="alert alert-success" role="alert">
+                    <i class="fas fa-check-circle"></i>
+                    <strong>Thông tin trùng khớp:</strong>
+                    <span th:text="${matchInfo}"></span>
                 </div>
 
                 <!-- No Results -->
@@ -238,43 +304,209 @@
                     </a>
                 </div>
 
-                <!-- Results Table -->
-                <div th:if="${not hangHoaList.empty}" class="table-responsive">
+                <!-- Khối chi tiết mở rộng (giữ lại cho trường hợp muốn style khác) -->
+                <div th:if="${false}" th:with="h=${hangHoaList.get(0)}">
+                    <!-- Thông báo trùng khớp -->
+                    <div class="alert alert-success border-success mb-3" role="alert">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-bullseye fa-2x text-success me-3"></i>
+                            <div>
+                                <h6 class="alert-heading mb-1"><i class="fas fa-check-circle"></i> Tìm Thấy Kết Quả Trùng Khớp!</h6>
+                                <p class="mb-0" th:text="${matchInfo}"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4 border-success shadow">
+                        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-box"></i> Thông Tin Chi Tiết Sản Phẩm Trùng Khớp</span>
+                            <div>
+                                <span class="badge bg-light text-dark me-2" th:text="${h.maHang}"></span>
+                                <i class="fas fa-star text-warning" title="Kết quả chính xác"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <div class="border rounded p-4 text-center bg-light h-100 position-relative">
+                                        <!-- Badge highlight cho kết quả trùng khớp -->
+                                        <div class="position-absolute top-0 start-50 translate-middle">
+                                            <span class="badge bg-success"><i class="fas fa-check"></i> TRÙNG KHỚP</span>
+                                        </div>
+                                        <i class="fas fa-box fa-4x text-success mb-3 mt-2"></i>
+                                        <h5 th:text="${h.tenHang}" class="text-primary"></h5>
+                                        <p class="text-muted mb-1" th:text="'Nhà SX: ' + ${h.nhaSanXuat}"></p>
+                                        <span class="badge bg-info" th:text="'SL: ' + ${h.soLuong}"></span>
+                                        
+                                        <!-- Hiển thị lý do trùng khớp -->
+                                        <div class="mt-2">
+                                            <small class="text-success fw-bold">
+                                                <span th:if="${searchType != null and searchType == 'tenHang'}">
+                                                    <i class="fas fa-tag"></i> Trùng khớp tên sản phẩm
+                                                </span>
+                                                <span th:if="${searchType != null and searchType == 'nhaSanXuat'}">
+                                                    <i class="fas fa-industry"></i> Trùng khớp nhà sản xuất
+                                                </span>
+                                                <span th:if="${searchType != null and searchType == 'soLuong'}">
+                                                    <i class="fas fa-cubes"></i> Đủ số lượng yêu cầu
+                                                </span>
+                                                <span th:if="${searchType != null and searchType == 'gia'}">
+                                                    <i class="fas fa-money-bill"></i> Trong khoảng giá phù hợp
+                                                </span>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="border rounded p-3 h-100">
+                                                <h6 class="text-muted"><i class="fas fa-info-circle"></i> Thông Tin Cơ Bản</h6>
+                                                <table class="table table-sm mb-0">
+                                                    <tr>
+                                                        <th class="w-40">Tên hàng:</th>
+                                                        <td>
+                                                            <span th:text="${h.tenHang}"></span>
+                                                            <span th:if="${searchType != null and searchType == 'tenHang'}" class="badge bg-warning text-dark ms-1" title="Trùng khớp tìm kiếm">
+                                                                <i class="fas fa-search"></i>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Nhà SX:</th>
+                                                        <td>
+                                                            <span th:text="${h.nhaSanXuat}"></span>
+                                                            <span th:if="${searchType != null and searchType == 'nhaSanXuat'}" class="badge bg-warning text-dark ms-1" title="Trùng khớp tìm kiếm">
+                                                                <i class="fas fa-search"></i>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr><th>Năm SX:</th><td th:text="${h.namSanXuat}"></td></tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="border rounded p-3 h-100">
+                                                <h6 class="text-muted"><i class="fas fa-calculator"></i> Tài Chính</h6>
+                                                <table class="table table-sm mb-0">
+                                                    <tr>
+                                                        <th class="w-40">Đơn giá:</th>
+                                                        <td class="currency">
+                                                            <span th:text="${#numbers.formatCurrency(h.donGia)}"></span>
+                                                            <span th:if="${searchType != null and searchType == 'gia'}" class="badge bg-warning text-dark ms-1" title="Trong khoảng giá tìm kiếm">
+                                                                <i class="fas fa-search"></i>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Số lượng:</th>
+                                                        <td>
+                                                            <span class="badge bg-info" th:text="${h.soLuong}"></span>
+                                                            <span th:if="${searchType != null and searchType == 'soLuong'}" class="badge bg-warning text-dark ms-1" title="Đạt yêu cầu số lượng">
+                                                                <i class="fas fa-search"></i>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr><th>Tổng giá trị:</th><td class="currency"><strong th:text="${#numbers.formatCurrency(h.thanhTien())}"></strong></td></tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-secondary py-2 mb-3">
+                                        <i class="fas fa-warehouse"></i>
+                                        <span th:if="${h.soLuong > 50}" class="text-success fw-bold"> Còn nhiều hàng</span>
+                                        <span th:if="${h.soLuong <= 50 and h.soLuong > 10}" class="text-warning fw-bold"> Sắp hết hàng</span>
+                                        <span th:if="${h.soLuong <= 10}" class="text-danger fw-bold"> Hết hàng</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <a th:href="@{/hanghoa/detail/{maHang}(maHang=${h.maHang})}" class="btn btn-outline-info btn-sm me-2"><i class="fas fa-eye"></i> Chi Tiết</a>
+                                <a th:href="@{/hanghoa/edit/{maHang}(maHang=${h.maHang})}" class="btn btn-outline-warning btn-sm me-2"><i class="fas fa-edit"></i> Sửa</a>
+                                <a href="/hanghoa/search" class="btn btn-outline-secondary btn-sm me-2"><i class="fas fa-search"></i> Tìm Khác</a>
+                                <a href="/hanghoa" class="btn btn-primary btn-sm"><i class="fas fa-list"></i> Xem Tất Cả</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Table (multiple) -->
+                <div th:if="${not hangHoaList.empty and !singleResult}" class="table-responsive">
                     <table class="table table-striped table-hover">
                         <thead class="table-dark">
                             <tr>
                                 <th>Mã Hàng</th>
-                                <th>Tên Hàng Hóa</th>
-                                <th>Số Lượng</th>
-                                <th>Nhà Sản Xuất</th>
-                                <th>Đơn Giá</th>
+                                <th>
+                                    Tên Hàng Hóa
+                                    <span th:if="${searchType != null and searchType == 'tenHang'}" class="badge bg-warning text-dark ms-1" title="Cột tìm kiếm">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                </th>
+                                <th>
+                                    Số Lượng
+                                    <span th:if="${searchType != null and searchType == 'soLuong'}" class="badge bg-warning text-dark ms-1" title="Cột tìm kiếm">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                </th>
+                                <th>
+                                    Nhà Sản Xuất
+                                    <span th:if="${searchType != null and searchType == 'nhaSanXuat'}" class="badge bg-warning text-dark ms-1" title="Cột tìm kiếm">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                </th>
+                                <th>
+                                    Đơn Giá
+                                    <span th:if="${searchType != null and searchType == 'gia'}" class="badge bg-warning text-dark ms-1" title="Cột tìm kiếm">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                </th>
                                 <th>Năm SX</th>
                                 <th>Thành Tiền</th>
                                 <th class="text-center">Thao Tác</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="hangHoa : ${hangHoaList}">
+                            <!-- Cleaned up row tag (ensure no accidental line breaks splitting attributes) -->
+                            <tr th:each="hangHoa : ${hangHoaList}" class="position-relative">
                                 <td>
                                     <strong th:text="${hangHoa.maHang}"></strong>
                                 </td>
                                 <td>
                                     <span th:text="${hangHoa.tenHang}"></span>
-                                    <!-- Highlight search term -->
-                                    <span th:if="${tenHang and #strings.containsIgnoreCase(hangHoa.tenHang, tenHang)}" 
-                                          class="badge bg-warning text-dark ms-1">Match</span>
+                                    <!-- Highlight search term for product name -->
+                                    <span th:if="${searchType != null and searchType == 'tenHang'}" 
+                                          class="badge bg-success ms-1" title="Trùng khớp tìm kiếm">
+                                        <i class="fas fa-check"></i> Match
+                                    </span>
                                 </td>
                                 <td>
                                     <span class="badge bg-info" th:text="${hangHoa.soLuong}"></span>
-                                    <span th:if="${soLuongMin and hangHoa.soLuong >= soLuongMin}" 
-                                          class="badge bg-success ms-1">✓</span>
+                                    <!-- Highlight for quantity search -->
+                                    <span th:if="${searchType != null and searchType == 'soLuong' and soLuongMin != null and hangHoa.soLuong >= soLuongMin}" 
+                                          class="badge bg-success ms-1" title="Đạt yêu cầu số lượng">
+                                        <i class="fas fa-check"></i>
+                                    </span>
                                 </td>
                                 <td>
                                     <span th:text="${hangHoa.nhaSanXuat}"></span>
-                                    <span th:if="${nhaSanXuat and #strings.containsIgnoreCase(hangHoa.nhaSanXuat, nhaSanXuat)}" 
-                                          class="badge bg-warning text-dark ms-1">Match</span>
+                                    <!-- Highlight search term for manufacturer -->
+                                    <span th:if="${searchType != null and searchType == 'nhaSanXuat'}" 
+                                          class="badge bg-success ms-1" title="Trùng khớp tìm kiếm">
+                                        <i class="fas fa-check"></i> Match
+                                    </span>
                                 </td>
-                                <td class="currency" th:text="${#numbers.formatCurrency(hangHoa.donGia)}"></td>
+                                <td class="currency">
+                                    <span th:text="${#numbers.formatCurrency(hangHoa.donGia)}"></span>
+                                    <!-- Highlight for price range search -->
+                                    <span th:if="${searchType != null and searchType == 'gia' and giaMin != null and giaMax != null and hangHoa.donGia >= giaMin and hangHoa.donGia <= giaMax}" 
+                                          class="badge bg-success ms-1" title="Trong khoảng giá tìm kiếm">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                </td>
                                 <td th:text="${hangHoa.namSanXuat}"></td>
                                 <td class="currency">
                                     <strong th:text="${#numbers.formatCurrency(hangHoa.thanhTien())}"></strong>
@@ -294,6 +526,19 @@
                             </tr>
                         </tbody>
                     </table>
+
+                    <!-- Summary of matching information -->
+                    <div class="alert alert-info mt-3" role="alert">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Thông tin kết quả:</strong>
+                        <!-- Sửa cú pháp nối chuỗi trong th:text -->
+                        <span th:if="${searchType != null and searchType == 'tenHang' and searchKeyword != null}" th:text="|Tìm thấy ${searchCount} sản phẩm có tên chứa từ khóa '${searchKeyword}'|"></span>
+                        <span th:if="${searchType != null and searchType == 'nhaSanXuat' and searchKeyword != null}" th:text="|Tìm thấy ${searchCount} sản phẩm của nhà sản xuất '${searchKeyword}'|"></span>
+                        <span th:if="${searchType != null and searchType == 'soLuong' and searchKeyword != null}" th:text="|Tìm thấy ${searchCount} sản phẩm có số lượng >= ${searchKeyword}|"></span>
+                        <span th:if="${searchType != null and searchType == 'gia' and searchKeyword != null}" th:text="|Tìm thấy ${searchCount} sản phẩm trong khoảng giá ${searchKeyword} VNĐ|"></span>
+                        <span th:if="${searchType == null or searchKeyword == null}" th:text="|Tìm thấy ${searchCount} kết quả|"></span>
+                        - Các sản phẩm trùng khớp được đánh dấu bằng <span class="badge bg-success"><i class="fas fa-check"></i> Match</span>
+                    </div>
                 </div>
 
                 <!-- Action Buttons -->
@@ -308,44 +553,12 @@
             </div>
         </div>
 
-        <!-- Default View (no search performed) -->
-        <div th:if="${not searchResult}" class="card">
-            <div class="card-header">
-                <h5 class="mb-0"><i class="fas fa-lightbulb"></i> Hướng Dẫn Tìm Kiếm</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h6><i class="fas fa-search text-primary"></i> Các loại tìm kiếm</h6>
-                        <ul class="list-unstyled">
-                            <li><i class="fas fa-tag text-info"></i> <strong>Tìm theo tên:</strong> Tìm hàng hóa có tên chứa từ khóa</li>
-                            <li><i class="fas fa-industry text-info"></i> <strong>Tìm theo NSX:</strong> Tìm hàng hóa theo nhà sản xuất</li>
-                            <li><i class="fas fa-cubes text-info"></i> <strong>Lọc số lượng:</strong> Lọc hàng hóa có số lượng tối thiểu</li>
-                            <li><i class="fas fa-money-bill text-info"></i> <strong>Lọc theo giá:</strong> Lọc hàng hóa trong khoảng giá</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6">
-                        <h6><i class="fas fa-tips text-success"></i> Mẹo tìm kiếm</h6>
-                        <ul class="list-unstyled">
-                            <li><i class="fas fa-check text-success"></i> Không phân biệt chữ hoa/thường</li>
-                            <li><i class="fas fa-check text-success"></i> Có thể tìm từ khóa một phần</li>
-                            <li><i class="fas fa-check text-success"></i> Kết quả hiển thị tức thì</li>
-                            <li><i class="fas fa-check text-success"></i> Có thể thực hiện nhiều thao tác từ kết quả</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="text-center mt-4">
-                    <p class="text-muted">Chọn một tab phía trên để bắt đầu tìm kiếm</p>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Footer -->
     <footer class="text-center">
         <div class="container">
-            <p>&copy; 2025 Nhóm 10 - OOP_N02_T3. Ứng dụng Quản Lý Cửa Hàng Tạp Hóa với Spring Boot</p>
+            <p>&copy; 2025 Nhóm 12 - OOP_N02_T3. Ứng dụng Quản Lý Cửa Hàng Tạp Hóa với Spring Boot</p>
             <p>
                 <strong>Thành viên:</strong> 
                 Vũ Đức Vượng (24100383) | Tưởng Văn Tuyên (24100462)

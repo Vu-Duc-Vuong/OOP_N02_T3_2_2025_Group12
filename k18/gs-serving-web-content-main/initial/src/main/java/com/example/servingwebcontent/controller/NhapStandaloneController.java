@@ -22,6 +22,7 @@ public class NhapStandaloneController {
         return "nhap/fullform"; // template full page
     }
 
+
     @PostMapping("/add")
     public String addNhap(@ModelAttribute Nhap nhap, RedirectAttributes redirectAttributes) {
         try {

@@ -30,7 +30,7 @@
                 <li class="nav-item"><a class="nav-link" href="/hanghoa"><i class="fas fa-boxes"></i> Hàng Hóa</a></li>
                 <li class="nav-item"><a class="nav-link" href="/nhap"><i class="fas fa-truck"></i> Nhập Hàng</a></li>
                 <li class="nav-item"><a class="nav-link" href="/ban"><i class="fas fa-cash-register"></i> Bán Hàng</a></li>
-                <li class="nav-item"><a class="nav-link" href="/hanghoa/search"><i class="fas fa-search"></i> Tìm Kiếm</a></li>
+                <li class="nav-item"><a class="nav-link" href="/doanhthu"><i class="fas fa-chart-line"></i> Doanh Thu</a></li>
             </ul>
         </div>
     </div>
@@ -41,11 +41,12 @@
         <h1 class="display-5 mb-4"><i class="fas fa-store"></i> <span th:text="${appName}">Hệ Thống Quản Lý</span></h1>
         <p class="lead mb-5">Ứng dụng quản lý hiện đại được xây dựng với Spring Boot</p>
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="row g-3">
-                    <div class="col-md-4"><a href="/hanghoa" class="btn btn-light btn-lg w-100"><i class="fas fa-boxes"></i> Hàng Hóa</a></div>
-                    <div class="col-md-4"><a href="/nhap" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-truck"></i> Nhập Hàng</a></div>
-                    <div class="col-md-4"><a href="/hanghoa/search" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-search"></i> Tìm Kiếm</a></div>
+                    <div class="col-6 col-md-3"><a href="/hanghoa" class="btn btn-light btn-lg w-100"><i class="fas fa-boxes"></i> Hàng Hóa</a></div>
+                    <div class="col-6 col-md-3"><a href="/nhap" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-truck"></i> Nhập Hàng</a></div>
+                    <div class="col-6 col-md-3"><a href="/ban" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-cash-register"></i> Bán Hàng</a></div>
+                    <div class="col-6 col-md-3"><a href="/doanhthu" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-chart-line"></i> Doanh Thu</a></div>
                 </div>
             </div>
         </div>
@@ -55,24 +56,21 @@
 <section class="py-5">
     <div class="container">
         <div class="row text-center mb-5">
-            <div class="col"><h2>Tính Năng Chính</h2><p class="text-muted">Quản lý kho - nhập hàng - tìm kiếm</p></div>
+            <div class="col"><h2>Tính Năng Chính</h2><p class="text-muted">Quản lý kho - nhập hàng - doanh thu</p></div>
         </div>
         <div class="row">
-            <div class="col-md-4 mb-4"><div class="card feature-card text-center"><div class="card-body"><i class="fas fa-boxes fa-3x text-primary mb-3"></i><h5>Kho Hàng</h5><p>Quản lý danh mục & tồn kho.</p><a href="/hanghoa" class="btn btn-primary btn-sm">Xem</a></div></div></div>
-            <div class="col-md-4 mb-4"><div class="card feature-card text-center"><div class="card-body"><i class="fas fa-truck fa-3x text-warning mb-3"></i><h5>Nhập Hàng</h5><p>Theo dõi phiếu nhập nhanh.</p><a href="/nhap" class="btn btn-warning btn-sm text-white">Vào</a></div></div></div>
-            <div class="col-md-4 mb-4"><div class="card feature-card text-center"><div class="card-body"><i class="fas fa-search fa-3x text-success mb-3"></i><h5>Tìm Kiếm</h5><p>Lọc & tra cứu hàng hóa.</p><a href="/hanghoa/search" class="btn btn-success btn-sm">Tìm</a></div></div></div>
+            <div class="col-md-3 mb-4"><div class="card feature-card text-center"><div class="card-body"><i class="fas fa-boxes fa-3x text-primary mb-3"></i><h5>Kho Hàng</h5><p>Quản lý danh mục & tồn kho.</p><a href="/hanghoa" class="btn btn-primary btn-sm">Xem</a></div></div></div>
+            <div class="col-md-3 mb-4"><div class="card feature-card text-center"><div class="card-body"><i class="fas fa-truck fa-3x text-warning mb-3"></i><h5>Nhập Hàng</h5><p>Theo dõi phiếu nhập nhanh.</p><a href="/nhap" class="btn btn-warning btn-sm text-white">Vào</a></div></div></div>
+            <div class="col-md-3 mb-4"><div class="card feature-card text-center"><div class="card-body"><i class="fas fa-cash-register fa-3x text-danger mb-3"></i><h5>Bán Hàng</h5><p>Quản lý & ghi nhận phiếu bán.</p><a href="/ban" class="btn btn-danger btn-sm text-white">Mở</a></div></div></div>
+            <div class="col-md-3 mb-4"><div class="card feature-card text-center"><div class="card-body"><i class="fas fa-chart-line fa-3x text-success mb-3"></i><h5>Doanh Thu</h5><p>Theo dõi lãi / lỗ mỗi ngày.</p><a href="/doanhthu" class="btn btn-success btn-sm">Xem</a></div></div></div>
         </div>
     </div>
 </section>
 
 <footer class="text-center">
     <div class="container">
-        <p>&copy; 2025 Nhóm 10 - OOP_N02_T3. <span th:text="${appName}">Quản Lý Cửa Hàng</span></p>
-        <div class="mt-2">
-            <a href="/hanghoa" class="btn btn-outline-light btn-sm me-2"><i class="fas fa-boxes"></i> Hàng Hóa</a>
-            <a href="/nhap" class="btn btn-outline-light btn-sm me-2"><i class="fas fa-truck"></i> Nhập Hàng</a>
-            <a href="/hanghoa/search" class="btn btn-outline-light btn-sm"><i class="fas fa-search"></i> Tìm Kiếm</a>
-        </div>
+    <p>&copy; 2025 Nhóm 12 - OOP_N02_T3. <span th:text="${appName}">Quản Lý Cửa Hàng</span></p>
+    <div class="mt-2 fw-bold">Nhóm phát triển: Vũ Đức Vượng, Tưởng Văn Tuyên</div>
     </div>
 </footer>
 

@@ -26,19 +26,7 @@
     </div>
 </div>
 
-<!-- Thống kê -->
-<div class="row mb-4">
-    <div class="col-md-4">
-        <div class="card stats-card">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <i class="fas fa-receipt text-primary"></i> Tổng Phiếu Nhập
-                </h5>
-                <h3 class="text-primary" th:text="${totalCountToday}">0</h3>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- Thống kê (chỉ giữ tổng tiền trong ngày) -->
 <div class="row mb-4">
     <div class="col-md-4">
         <div class="card stats-card">
@@ -50,7 +38,7 @@
             </div>
         </div>
     </div>
-
+</div>
 <!-- Bảng danh sách -->
 <div class="card">
     <div class="card-header">
@@ -85,18 +73,21 @@
                         </td>
                         <td th:text="${nhap.tenHang}">Gạo ST25</td>
                         <td th:text="${nhap.soLuongNhap}">100</td>
-                        <td th:text="${#numbers.formatDecimal(nhap.giaNhap, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">15,000 VNĐ</td>
                         <td>
-                            <strong class="text-success" th:text="${#numbers.formatDecimal(nhap.tongTien, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">1,500,000 VNĐ</strong>
+                            <!-- Đơn giản hóa format số: chỉ cần 0 chữ số thập phân -->
+                            <span th:if="${nhap.giaNhap >= 0}" th:text="|${#numbers.formatDecimal(nhap.giaNhap,0,0)} VNĐ|">0 VNĐ</span>
+                        </td>
+                        <td>
+                            <strong class="text-success" th:text="|${#numbers.formatDecimal(nhap.tongTien,0,0)} VNĐ|">0 VNĐ</strong>
                         </td>
                         <td>
                             <a th:href="@{/quanly/nhap/edit/{index}(index=${iterStat.index})}" 
                                class="btn btn-sm btn-warning btn-action">
                                 <i class="fas fa-edit"></i> Sửa
                             </a>
-                            <form th:action="@{/quanly/nhap/delete/{index}(index=${iterStat.index})}" 
-                                  method="post" class="d-inline"
-                                  th:onsubmit="|return confirm('Bạn có chắc muốn xóa phiếu nhập ${nhap.hanghoaID}?')|">
+                    <form th:action="@{/quanly/nhap/delete/{index}(index=${iterStat.index})}" 
+                        method="post" class="d-inline"
+                        onsubmit="return confirm('Bạn có chắc muốn xóa phiếu nhập này?')">
                                 <button type="submit" class="btn btn-sm btn-danger btn-action">
                                     <i class="fas fa-trash"></i> Xóa
                                 </button>

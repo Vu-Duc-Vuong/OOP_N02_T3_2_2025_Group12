@@ -46,7 +46,7 @@
                     <li class="nav-item"><a class="nav-link" href="/hanghoa"><i class="fas fa-boxes"></i> Hàng Hóa</a></li>
                     <li class="nav-item"><a class="nav-link" href="/nhap"><i class="fas fa-truck"></i> Nhập Hàng</a></li>
                     <li class="nav-item"><a class="nav-link active" href="/ban"><i class="fas fa-cash-register"></i> Bán Hàng</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/hanghoa/search"><i class="fas fa-search"></i> Tìm Kiếm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/doanhthu"><i class="fas fa-chart-line"></i> Doanh Thu</a></li>
                 </ul>
             </div>
         </div>
@@ -65,7 +65,7 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0">
-                    <i class="fas fa-list"></i> Danh Sách Bán Hàng (readList Method)
+                    <i class="fas fa-list"></i> Danh Sách Bán Hàng
                 </h5>
             </div>
             <div class="card-body">
@@ -77,9 +77,10 @@
                                 <th><i class="fas fa-file-alt"></i> Mã Phiếu</th>
                                 <th><i class="fas fa-box"></i> Tên Hàng</th>
                                 <th><i class="fas fa-user"></i> Tên Khách Hàng</th>
-                                <th><i class="fas fa-sort-numeric-up"></i> Số Lượng</th>
-                                <th><i class="fas fa-tag"></i> Đơn Giá</th>
-                                <th><i class="fas fa-calculator"></i> Tổng Tiền</th>
+                                <th class="text-end"><i class="fas fa-sort-numeric-up"></i> Số Lượng</th>
+                                <th class="text-end"><i class="fas fa-tag"></i> Đơn Giá (VNĐ)</th>
+                                <th class="text-end"><i class="fas fa-clock"></i> Thời Gian Bán</th>
+                                <th class="text-end"><i class="fas fa-calculator"></i> Tổng Tiền (VNĐ)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,21 +89,18 @@
                                 <td><span class="badge bg-primary" th:text="${ban.maPhieu}">P001</span></td>
                                 <td th:text="${ban.tenHang}">Gạo</td>
                                 <td th:text="${ban.tenKhach}">Khách hàng</td>
-                                <td><span class="badge bg-info" th:text="${ban.soLuong}">0</span></td>
-                                <td><span th:text="${#numbers.formatDecimal(ban.donGia, 0, 0)}">0</span> VNĐ</td>
-                                <td><strong class="text-success"><span th:text="${#numbers.formatDecimal(ban.tongTien(), 0, 0)}">0</span> VNĐ</strong></td>
+                                <td class="text-end"><span class="badge bg-info" th:text="${ban.soLuong}">0</span></td>
+                                <!-- Sửa thứ tự tham số formatDecimal -->
+                                <td class="text-end"><span th:text="${#numbers.formatDecimal(ban.donGia, 0, 'POINT', 0, 'COMMA')}">0</span></td>
+                                <td class="text-end"><span class="badge bg-light text-dark" th:text="${#temporals.format(ban.thoiGianBan, 'dd/MM HH:mm')}">--</span></td>
+                                <td class="text-end"><strong class="text-success"><span th:text="${#numbers.formatDecimal(ban.tongTien(), 0, 'POINT', 0, 'COMMA')}">0</span></strong></td>
                             </tr>
                         </tbody>
                         <tfoot class="table-light">
                             <tr>
-                                <th colspan="5" class="text-end">
-                                    <strong>TỔNG CỘNG:</strong>
-                                </th>
-                                <th class="text-success">
-                                    <strong>
-                                        <span th:text="${#numbers.formatDecimal(tongDoanhThu, 0, 0)}">0</span> VNĐ
-                                    </strong>
-                                </th>
+                                <th colspan="6" class="text-end"><strong>TỔNG CỘNG:</strong></th>
+                                <!-- Sửa thứ tự tham số formatDecimal -->
+                                <th class="text-success text-end"><strong><span th:text="${#numbers.formatDecimal(tongDoanhThu, 0, 'POINT', 0, 'COMMA')}">0</span></strong></th>
                             </tr>
                         </tfoot>
                     </table>
@@ -116,41 +114,6 @@
             </div>
         </div>
 
-        <!-- Statistics Cards (đưa xuống dưới danh sách) -->
-        <div class="row mt-4">
-            <div class="col-md-6 mb-4 mb-md-0">
-                <div class="card stats-card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5 class="card-title text-muted">Tổng Số Phiếu</h5>
-                                <h3 class="text-success" th:text="${tongSoPhieu}">0</h3>
-                            </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-receipt fa-2x text-success"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card stats-card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5 class="card-title text-muted">Tổng Doanh Thu</h5>
-                                <h3 class="text-success">
-                                    <span th:text="${#numbers.formatDecimal(tongDoanhThu, 0, 0)}">0</span> VNĐ
-                                </h3>
-                            </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-money-bill-wave fa-2x text-success"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Action Buttons -->
         <div class="row mt-4">
@@ -161,9 +124,9 @@
                 <a href="/ban/add" class="btn btn-success">
                     <i class="fas fa-plus"></i> Thêm Phiếu Bán
                 </a>
-                <button class="btn btn-info">
+                <a href="/ban/stats" class="btn btn-info">
                     <i class="fas fa-chart-bar"></i> Thống Kê
-                </button>
+                </a>
             </div>
         </div>
     </div>

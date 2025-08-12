@@ -62,10 +62,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/hanghoa/search">
-                            <i class="fas fa-search"></i> Tìm Kiếm
+                        <a class="nav-link" href="/nhap">
+                            <i class="fas fa-truck"></i> Nhập Hàng
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ban">
+                            <i class="fas fa-cash-register"></i> Bán Hàng
+                        </a>
+                    </li>
+                    <!-- Đã gỡ bỏ mục Tìm Kiếm -->
                 </ul>
             </div>
         </div>
@@ -90,63 +96,11 @@
                 <h2><i class="fas fa-boxes"></i> Quản Lý Hàng Hóa</h2>
                 <p class="text-muted">Danh sách tất cả hàng hóa trong cửa hàng</p>
             </div>
-            <div class="col-md-4 text-end">
-                <!-- Đã xóa nút Thêm Hàng Hóa -->
-                <a href="/hanghoa/search" class="btn btn-info">
-                    <i class="fas fa-search"></i> Tìm Kiếm
-                </a>
-                <!-- Nút Thêm Hàng Hóa đã ẩn -->
+            <div class="col-md-4 text-end d-flex justify-content-end gap-2">
+                <!-- Nút tìm kiếm đã bị xóa -->
             </div>
         </div>
 
-        <!-- Statistics Cards -->
-        <div class="row mb-4">
-            <div class="col-md-4">
-                <div class="card stats-card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h6 class="card-title text-muted">Tổng Số Mặt Hàng</h6>
-                                <h3 class="card-text" th:text="${hangHoaList.size()}">0</h3>
-                            </div>
-                            <div class="text-primary">
-                                <i class="fas fa-box fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card stats-card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h6 class="card-title text-muted">Tổng Giá Trị Kho</h6>
-                                <h3 class="card-text currency" th:text="${#numbers.formatCurrency(tongGiaTriKho)}">0 VNĐ</h3>
-                            </div>
-                            <div class="text-success">
-                                <i class="fas fa-money-bill-wave fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card stats-card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h6 class="card-title text-muted">Hàng Hóa Giá Trị Cao</h6>
-                                <h3 class="card-text" th:text="${topHangHoa.size()}">0</h3>
-                            </div>
-                            <div class="text-warning">
-                                <i class="fas fa-star fa-2x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Danh sách hàng hóa -->
         <div class="card">
@@ -192,10 +146,6 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group" role="group">
-                                        <a th:href="@{/hanghoa/detail/{maHang}(maHang=${hangHoa.maHang})}" 
-                                           class="btn btn-sm btn-outline-info btn-action" title="Xem chi tiết">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
                                         <a th:href="@{/hanghoa/edit/{maHang}(maHang=${hangHoa.maHang})}" 
                                            class="btn btn-sm btn-outline-warning btn-action" title="Chỉnh sửa">
                                             <i class="fas fa-edit"></i>
@@ -215,35 +165,13 @@
             </div>
         </div>
 
-        <!-- Top hàng hóa có giá trị cao -->
-        <div class="card mt-4" th:if="${not topHangHoa.empty}">
-            <div class="card-header">
-                <h5 class="mb-0"><i class="fas fa-star"></i> Top 3 Hàng Hóa Có Giá Trị Cao Nhất</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4" th:each="hangHoa, iterStat : ${topHangHoa}">
-                        <div class="card border-warning">
-                            <div class="card-body text-center">
-                                <i class="fas fa-trophy fa-2x text-warning mb-2" th:if="${iterStat.index == 0}"></i>
-                                <i class="fas fa-medal fa-2x text-secondary mb-2" th:if="${iterStat.index == 1}"></i>
-                                <i class="fas fa-award fa-2x text-warning mb-2" th:if="${iterStat.index == 2}"></i>
-                                <h6 th:text="${hangHoa.tenHang}"></h6>
-                                <p class="text-muted mb-1" th:text="${hangHoa.maHang}"></p>
-                                <h5 class="currency" th:text="${#numbers.formatCurrency(hangHoa.thanhTien())}"></h5>
-                                <small class="text-muted" th:text="'SL: ' + ${hangHoa.soLuong}"></small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
+
 
     <!-- Footer -->
     <footer class="text-center">
         <div class="container">
-            <p>&copy; 2025 Nhóm 10 - OOP_N02_T3. Ứng dụng Quản Lý Cửa Hàng Tạp Hóa với Spring Boot</p>
+            <p>&copy; 2025 Nhóm 12 - OOP_N02_T3. Ứng dụng Quản Lý Cửa Hàng Tạp Hóa với Spring Boot</p>
             <p>
                 <strong>Thành viên:</strong> 
                 Vũ Đức Vượng (24100383) | Tưởng Văn Tuyên (24100462)

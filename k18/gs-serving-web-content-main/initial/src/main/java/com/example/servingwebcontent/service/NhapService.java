@@ -1,6 +1,8 @@
 package com.example.servingwebcontent.service;
 
 import com.example.servingwebcontent.model.Nhap;
+import com.example.servingwebcontent.model.HangHoa;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,6 +14,9 @@ import java.util.stream.Collectors;
 public class NhapService {
     
     private List<Nhap> danhSachNhap = new ArrayList<>();
+
+    @Autowired
+    private HangHoaService hangHoaService; // đồng bộ kho hàng
     
     public NhapService() {
         // Dữ liệu mẫu
@@ -42,6 +47,27 @@ public class NhapService {
             nhap.setNgayNhap(LocalDate.now());
         }
         danhSachNhap.add(nhap);
+        // Cập nhật / thêm mới hàng hóa vào kho
+        if(hangHoaService != null){
+            HangHoa existing = hangHoaService.getHangHoaById(nhap.getHanghoaID());
+            if(existing == null){
+                // tạo hàng mới với thông tin tối thiểu
+                HangHoa hh = new HangHoa(
+                    nhap.getHanghoaID(),
+                    nhap.getTenHang()!=null? nhap.getTenHang(): nhap.getHanghoaID(),
+                    nhap.getSoLuongNhap(),
+                    "Nhập Kho", // nhà SX mặc định
+                    nhap.getGiaNhap(),
+                    LocalDate.now().getYear()
+                );
+                hangHoaService.addHangHoa(hh);
+            } else {
+                existing.setSoLuong(existing.getSoLuong() + nhap.getSoLuongNhap());
+                if(nhap.getTenHang()!=null) existing.setTenHang(nhap.getTenHang());
+                if(nhap.getGiaNhap()>0) existing.setDonGia(nhap.getGiaNhap());
+                hangHoaService.updateHangHoa(existing);
+            }
+        }
     }
     
     public void updateNhap(int index, Nhap nhap) {

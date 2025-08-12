@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.*;
 import java.time.LocalDate;
 import com.example.servingwebcontent.model.Nhap;
+import com.example.servingwebcontent.model.StatItem;
 
 @Controller
 public class GreetingController {
@@ -37,13 +38,26 @@ public class GreetingController {
 
 
 	@GetMapping("/nhap")
-	public String nhap(Model model) {
-		model.addAttribute("appName", "Quản Lý Cửa Hàng Tạp Hóa");
-		model.addAttribute("nhapList", uiNhapList);
-		model.addAttribute("tongSoPhieu", uiNhapList.size());
-		int tongSoLuong = uiNhapList.stream().mapToInt(Nhap::getSoLuongNhap).sum();
-		model.addAttribute("tongSoLuong", tongSoLuong);
-		return "UINhap";
+	public String nhapRedirect(){
+		// Hợp nhất về module /quanly/nhap
+		return "redirect:/quanly/nhap";
+	}
+
+	@GetMapping("/nhap/stats")
+	public String nhapStats(Model model){
+		Map<String, StatItem> map = new LinkedHashMap<>();
+		for(Nhap n: uiNhapList){
+			String code = n.getHanghoaID();
+			map.computeIfAbsent(code, c -> new StatItem(c, n.getTenHang()!=null? n.getTenHang():c))
+				.add(n.getSoLuongNhap(), n.getTongTien());
+		}
+		List<StatItem> items = new ArrayList<>(map.values());
+		double totalValue = items.stream().mapToDouble(StatItem::getTotalValue).sum();
+		int totalQty = items.stream().mapToInt(StatItem::getQuantity).sum();
+		model.addAttribute("items", items);
+		model.addAttribute("totalValue", totalValue);
+		model.addAttribute("totalQty", totalQty);
+		return "statsNhap";
 	}
 
 	// ĐÃ GỠ /nhap/add để tránh trùng với NhapStandaloneController (/nhap/add)

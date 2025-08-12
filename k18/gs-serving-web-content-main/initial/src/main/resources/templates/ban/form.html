@@ -21,6 +21,7 @@
                 <li class="nav-item"><a class="nav-link" href="/hanghoa"><i class="fas fa-boxes"></i> Hàng Hóa</a></li>
                 <li class="nav-item"><a class="nav-link" href="/nhap"><i class="fas fa-truck"></i> Nhập Hàng</a></li>
                 <li class="nav-item"><a class="nav-link active" href="/ban"><i class="fas fa-cash-register"></i> Bán Hàng</a></li>
+                <li class="nav-item"><a class="nav-link" href="/doanhthu"><i class="fas fa-chart-line"></i> Doanh Thu</a></li>
             </ul>
         </div>
     </div>
@@ -59,7 +60,7 @@
                             </label>
                             <input type="text" class="form-control" th:field="*{tenKhach}" required placeholder="Nhập tên khách hàng">
                         </div>
-                        <!-- Số Lượng & Đơn Giá -->
+                        <!-- Số Lượng & Giá Bán -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">
@@ -69,10 +70,25 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">
-                                    <i class="fas fa-tag"></i> Đơn Giá (VNĐ) <span class="text-danger">*</span>
+                                    <i class="fas fa-tag"></i> Giá Bán (VNĐ) <span class="text-danger">*</span>
                                 </label>
-                                <input type="number" class="form-control" th:field="*{donGia}" min="0" step="1000" required placeholder="Nhập đơn giá">
+                                <!-- Input hiển thị định dạng 100.000 -->
+                                <input type="text" id="donGiaDisplay" class="form-control" placeholder="VD: 150.000" inputmode="numeric" autocomplete="off">
+                                <!-- Hidden để submit giá trị số thực -->
+                                <input type="hidden" th:field="*{donGia}" id="donGia" />
+                                <div class="form-text">Nhập 100000 sẽ tự thành 100.000</div>
                             </div>
+                        </div>
+                        <!-- Tổng tiền (giống phiếu nhập: ô readonly) -->
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-calculator"></i> Tổng Tiền</label>
+                            <input type="text" class="form-control" id="tongTienDisplay" value="0" readonly>
+                        </div>
+                        <!-- Thời gian bán -->
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-clock"></i> Thời Gian Bán</label>
+                            <input type="datetime-local" class="form-control" th:field="*{thoiGianBan}" id="thoiGianBanInput">
+                            <div class="form-text">Mặc định là thời điểm hiện tại (24h gần nhất dùng cho doanh thu).</div>
                         </div>
                         <!-- Buttons -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -91,5 +107,38 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Định dạng giá bán & tổng tiền dạng 100.000 (dấu chấm)
+(function(){
+    function formatNumber(v){
+        if(v === '' || v == null) return '';
+        const num = Number(v.toString().replace(/\D/g,''));
+        if(isNaN(num)) return '';
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+    function recalc(){
+        const sl = Number(document.querySelector('[name="soLuong"]').value) || 0;
+        const gia = Number(document.getElementById('donGia').value) || 0;
+        const total = sl * gia;
+        document.getElementById('tongTienDisplay').value = formatNumber(total);
+    }
+    document.addEventListener('DOMContentLoaded', function(){
+        const display = document.getElementById('donGiaDisplay');
+        const hidden = document.getElementById('donGia');
+        // Nếu đang sửa có sẵn giá trị
+        if(hidden.value){
+            display.value = formatNumber(hidden.value);
+        }
+        display.addEventListener('input', function(){
+            const numeric = this.value.replace(/\D/g,'');
+            hidden.value = numeric;
+            this.value = formatNumber(numeric);
+            recalc();
+        });
+        document.querySelector('[name="soLuong"]').addEventListener('input', recalc);
+        recalc();
+    });
+})();
+</script>
 </body>
 </html>

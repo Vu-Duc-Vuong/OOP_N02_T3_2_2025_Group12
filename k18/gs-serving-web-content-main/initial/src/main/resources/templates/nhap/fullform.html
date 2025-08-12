@@ -20,6 +20,8 @@
                 <li class="nav-item"><a class="nav-link" href="/"><i class="fas fa-home"></i> Trang Chủ</a></li>
                 <li class="nav-item"><a class="nav-link" href="/hanghoa"><i class="fas fa-boxes"></i> Hàng Hóa</a></li>
                 <li class="nav-item"><a class="nav-link active" href="/quanly/nhap"><i class="fas fa-truck"></i> Nhập Hàng</a></li>
+                <li class="nav-item"><a class="nav-link" href="/ban"><i class="fas fa-cash-register"></i> Bán Hàng</a></li>
+                <li class="nav-item"><a class="nav-link" href="/doanhthu"><i class="fas fa-chart-line"></i> Doanh Thu</a></li>
             </ul>
         </div>
     </div>
@@ -39,10 +41,6 @@
                 <div class="card-body">
                     <form th:action="${action == 'add' ? '/nhap/add' : '/nhap/edit/' + index}" th:object="${nhap}" method="post">
                         <div class="mb-3">
-                            <label class="form-label">STT</label>
-                            <input type="number" class="form-control" th:field="*{stt}" required min="1" placeholder="Số thứ tự">
-                        </div>
-                        <div class="mb-3">
                             <label class="form-label"><i class="fas fa-barcode"></i> Mã Hàng Hóa <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" th:field="*{hanghoaID}" required placeholder="VD: HH001">
                         </div>
@@ -56,14 +54,22 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label"><i class="fas fa-money-bill"></i> Giá Nhập (VNĐ) <span class="text-danger">*</span></label>
-                            <input type="number" class="form-control" th:field="*{giaNhap}" required min="0" step="1000" placeholder="Nhập giá nhập">
+                            <!-- Trường hiển thị định dạng 100.000 -->
+                            <input type="text" class="form-control" id="giaNhapDisplay" placeholder="VD: 100.000" inputmode="numeric" autocomplete="off">
+                            <!-- Trường ẩn để submit giá trị số thực tế -->
+                            <input type="hidden" th:field="*{giaNhap}" id="giaNhap" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-clock"></i> Thời Gian Nhập</label>
+                            <input type="datetime-local" class="form-control" th:field="*{thoiGianNhap}" id="thoiGianNhapInput">
+                            <div class="form-text">Nếu bỏ trống sẽ lấy thời điểm hiện tại.</div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Tổng Tiền</label>
-                            <input type="number" class="form-control" id="tongTien" min="0" placeholder="Tổng tiền" readonly>
+                            <input type="text" class="form-control" id="tongTienDisplay" placeholder="Tổng tiền" readonly>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="/quanly/nhap" class="btn btn-secondary me-md-2"><i class="fas fa-arrow-left"></i> Quay Lại</a>
+                            <a href="/nhap" class="btn btn-secondary me-md-2"><i class="fas fa-arrow-left"></i> Quay Lại</a>
                             <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span th:text="${action == 'add' ? 'Thêm Phiếu Nhập' : 'Cập Nhật'}">Thêm Phiếu Nhập</span></button>
                         </div>
                     </form>
@@ -76,22 +82,45 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Removed auto-set date/time script per requirements -->
 <script>
-    // Tự động tính Tổng Tiền = Số Lượng Nhập * Giá Nhập
+    // Định dạng nghìn bằng dấu chấm và tính tổng tiền
     document.addEventListener('DOMContentLoaded', function(){
-    const soLuong = document.getElementById('soLuongNhap');
-    const giaNhap = document.getElementById('giaNhap');
-    const tongTien = document.getElementById('tongTien');
+        const soLuong = document.getElementById('soLuongNhap');
+        const giaNhapHidden = document.getElementById('giaNhap');
+        const giaNhapDisplay = document.getElementById('giaNhapDisplay');
+        const tongTienDisplay = document.getElementById('tongTienDisplay');
 
-        if(soLuong && giaNhap && tongTien){
-            const recalc = () => {
-                const sl = Number(soLuong.value) || 0;
-                const gia = Number(giaNhap.value) || 0;
-                tongTien.value = sl * gia;
-            };
-            soLuong.addEventListener('input', recalc);
-            giaNhap.addEventListener('input', recalc);
-            recalc();
+        // Khởi tạo nếu có giá trị sẵn (trường hợp edit)
+        if(giaNhapHidden.value){
+            giaNhapDisplay.value = formatNumber(giaNhapHidden.value);
         }
+
+        function formatNumber(v){
+            if(v === '' || v == null) return '';
+            const num = Number(v.toString().replace(/\D/g,''));
+            if(isNaN(num)) return '';
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+        function parseDisplay(v){
+            if(!v) return 0;
+            return Number(v.replace(/\./g,'')) || 0;
+        }
+        function recalc(){
+            const sl = Number(soLuong.value) || 0;
+            const gia = Number(giaNhapHidden.value) || 0;
+            const total = sl * gia;
+            tongTienDisplay.value = formatNumber(total);
+        }
+
+        giaNhapDisplay.addEventListener('input', function(){
+            const caret = this.selectionStart;
+            const raw = this.value;
+            const numeric = raw.replace(/\D/g,'');
+            giaNhapHidden.value = numeric;
+            this.value = formatNumber(numeric);
+            recalc();
+        });
+        soLuong.addEventListener('input', recalc);
+        recalc();
     });
     </script>
 </body>

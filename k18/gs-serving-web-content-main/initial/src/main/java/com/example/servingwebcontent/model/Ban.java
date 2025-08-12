@@ -1,20 +1,29 @@
 package com.example.servingwebcontent.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Ban {
     private String maPhieu;
     private String tenHang; // tên hàng (mới)
     private String tenKhach;
     private int soLuong;
     private double donGia;
+    private LocalDate ngayBan; // thêm ngày bán
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime thoiGianBan; // thời gian bán chi tiết
     
     // Constructor
-    public Ban() {}
+    public Ban() { this.ngayBan = LocalDate.now(); this.thoiGianBan = LocalDateTime.now(); }
     
     public Ban(String maPhieu, String tenKhach, int soLuong, double donGia) {
         this.maPhieu = maPhieu;
         this.tenKhach = tenKhach;
         this.soLuong = soLuong;
         this.donGia = donGia;
+    this.ngayBan = LocalDate.now();
+    this.thoiGianBan = LocalDateTime.now();
     }
 
     // Constructor đầy đủ bao gồm tên hàng
@@ -24,6 +33,8 @@ public class Ban {
         this.tenKhach = tenKhach;
         this.soLuong = soLuong;
         this.donGia = donGia;
+    this.ngayBan = LocalDate.now();
+    this.thoiGianBan = LocalDateTime.now();
     }
     
     // Getter và Setter
@@ -71,6 +82,11 @@ public class Ban {
     public double tongTien() {
         return soLuong * donGia;
     }
+
+    public LocalDate getNgayBan(){ return ngayBan; }
+    public void setNgayBan(LocalDate d){ this.ngayBan = d; }
+    public LocalDateTime getThoiGianBan(){ return thoiGianBan; }
+    public void setThoiGianBan(LocalDateTime t){ this.thoiGianBan = t; }
     
     @Override
     public String toString() {
@@ -80,6 +96,8 @@ public class Ban {
                 ", tenKhach='" + tenKhach + '\'' +
                 ", soLuong=" + soLuong +
                 ", donGia=" + donGia +
+                ", ngayBan=" + ngayBan +
+                ", thoiGianBan=" + thoiGianBan +
                 ", tongTien=" + tongTien() +
                 '}';
     }

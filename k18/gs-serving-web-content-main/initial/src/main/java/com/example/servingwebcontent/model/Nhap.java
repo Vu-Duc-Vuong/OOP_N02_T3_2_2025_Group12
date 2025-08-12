@@ -1,6 +1,7 @@
 package com.example.servingwebcontent.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Nhap {
@@ -10,10 +11,13 @@ public class Nhap {
     private double giaNhap;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate ngayNhap;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime thoiGianNhap; // thời gian chi tiết
     
     // Constructor mặc định
     public Nhap() {
         this.ngayNhap = LocalDate.now();
+    this.thoiGianNhap = LocalDateTime.now();
     }
     
     // Constructor đầy đủ
@@ -22,6 +26,7 @@ public class Nhap {
         this.soLuongNhap = soLuongNhap;
         this.giaNhap = giaNhap;
         this.ngayNhap = ngayNhap;
+    this.thoiGianNhap = LocalDateTime.now();
     }
 
     // Constructor đầy đủ bao gồm tên hàng
@@ -31,6 +36,7 @@ public class Nhap {
         this.soLuongNhap = soLuongNhap;
         this.giaNhap = giaNhap;
         this.ngayNhap = ngayNhap;
+    this.thoiGianNhap = LocalDateTime.now();
     }
     
     // Getters và Setters
@@ -73,6 +79,8 @@ public class Nhap {
     public void setNgayNhap(LocalDate ngayNhap) {
         this.ngayNhap = ngayNhap;
     }
+    public LocalDateTime getThoiGianNhap(){ return thoiGianNhap; }
+    public void setThoiGianNhap(LocalDateTime t){ this.thoiGianNhap = t; }
     
     // Phương thức tính tổng tiền
     public double getTongTien() {
@@ -87,6 +95,7 @@ public class Nhap {
                 ", soLuongNhap=" + soLuongNhap +
                 ", giaNhap=" + giaNhap +
                 ", ngayNhap=" + ngayNhap +
+                ", thoiGianNhap=" + thoiGianNhap +
                 '}';
     }
 }

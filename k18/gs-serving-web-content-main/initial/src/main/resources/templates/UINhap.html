@@ -42,7 +42,7 @@
                     <li class="nav-item"><a class="nav-link" href="/hanghoa"><i class="fas fa-boxes"></i> Hàng Hóa</a></li>
                     <li class="nav-item"><a class="nav-link active" href="/nhap"><i class="fas fa-truck"></i> Nhập Hàng</a></li>
                     <li class="nav-item"><a class="nav-link" href="/ban"><i class="fas fa-cash-register"></i> Bán Hàng</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/hanghoa/search"><i class="fas fa-search"></i> Tìm Kiếm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/doanhthu"><i class="fas fa-chart-line"></i> Doanh Thu</a></li>
                 </ul>
             </div>
         </div>
@@ -61,7 +61,7 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0">
-                    <i class="fas fa-list"></i> Danh Sách Nhập Hàng (readList Method)
+                    <i class="fas fa-list"></i> Danh Sách Nhập Hàng
                 </h5>
             </div>
             <div class="card-body">
@@ -74,6 +74,7 @@
                                 <th><i class="fas fa-box"></i> Tên Hàng</th>
                                 <th><i class="fas fa-sort-numeric-up"></i> Số Lượng Nhập</th>
                                 <th><i class="fas fa-money-bill"></i> Giá Nhập</th>
+                                <th><i class="fas fa-clock"></i> Thời Gian Nhập</th>
                                 <th><i class="fas fa-calculator"></i> Tổng Tiền</th>
                             </tr>
                         </thead>
@@ -90,11 +91,15 @@
                                     <span class="badge bg-info" th:text="${nhap.soLuongNhap}">0</span>
                                 </td>
                                 <td>
-                                    <span th:text="${#numbers.formatDecimal(nhap.giaNhap, 0, 0)}">0</span> VNĐ
+                                    <!-- Sửa thứ tự tham số: value, minInt, thousandsType, decimalDigits, decimalType -->
+                                    <span th:text="${#numbers.formatDecimal(nhap.giaNhap, 0, 'POINT', 0, 'COMMA')}">0</span> VNĐ
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark" th:text="${#temporals.format(nhap.thoiGianNhap, 'dd/MM HH:mm')}" title="" ></span>
                                 </td>
                                 <td>
                                     <strong class="text-warning">
-                                        <span th:text="${#numbers.formatDecimal(nhap.tongTien, 0, 0)}">0</span> VNĐ
+                                        <span th:text="${#numbers.formatDecimal(nhap.tongTien, 0, 'POINT', 0, 'COMMA')}">0</span> VNĐ
                                     </strong>
                                 </td>
                             </tr>
@@ -106,7 +111,8 @@
                                 </th>
                                 <th class="text-warning">
                                     <strong>
-                                        <span th:text="${tongSoLuong}">0</span> sản phẩm
+                                        <!-- Sửa thứ tự tham số -->
+                                        <span th:text="${#numbers.formatDecimal(tongSoLuong, 0, 'POINT', 0, 'COMMA')}">0</span> sản phẩm
                                     </strong>
                                 </th>
                                 <th colspan="2"></th>
@@ -123,52 +129,14 @@
             </div>
         </div>
 
-        <!-- Statistics Cards (moved below list) -->
-        <div class="row mb-4 mt-4">
-            <div class="col-md-6">
-                <div class="card stats-card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5 class="card-title text-muted">Tổng Số Phiếu Nhập</h5>
-                                <h3 class="text-warning" th:text="${tongSoPhieu}">0</h3>
-                            </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-file-import fa-2x text-warning"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card stats-card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5 class="card-title text-muted">Tổng Số Lượng Nhập</h5>
-                                <h3 class="text-warning" th:text="${tongSoLuong}">0</h3>
-                            </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-cubes fa-2x text-warning"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Action Buttons -->
-        <div class="row mt-4">
-            <div class="col">
-                <a href="/" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Quay về Trang chủ
-                </a>
-                <a href="/nhap/add" class="btn btn-warning">
-                    <i class="fas fa-plus"></i> Thêm Phiếu Nhập
-                </a>
-                <a href="/nhap/report" class="btn btn-info">
-                    <i class="fas fa-chart-line"></i> Báo Cáo
-                </a>
+
+    <!-- Action Buttons -->
+        <div class="row mb-4">
+            <div class="col d-flex flex-wrap gap-2">
+                <a href="/" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Trang chủ</a>
+                <a href="/nhap/add" class="btn btn-warning"><i class="fas fa-plus"></i> Thêm Phiếu Nhập</a>
+                <a href="/nhap/stats" class="btn btn-primary"><i class="fas fa-chart-pie"></i> Thống Kê</a>
             </div>
         </div>
     </div>
