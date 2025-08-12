@@ -1,5 +1,4 @@
 package com.example.servingwebcontent.controller;
-
 import com.example.servingwebcontent.model.Ban;
 import com.example.servingwebcontent.model.Nhap;
 import com.example.servingwebcontent.service.NhapService;
@@ -69,13 +68,17 @@ public class DoanhThuController {
 
         double laiLo = tongBan - tongNhap;
         String trangThai = laiLo > 0 ? "LÃI" : (laiLo < 0 ? "LỖ" : "HÒA VỐN");
+    String statusIcon = laiLo > 0 ? "📈" : (laiLo < 0 ? "📉" : "⚖️");
+    String resultClass = laiLo > 0 ? "profit" : (laiLo < 0 ? "loss" : "even");
         model.addAttribute("tongNhap", tongNhap);
         model.addAttribute("tongBan", tongBan);
         model.addAttribute("laiLo", laiLo);
         model.addAttribute("trangThai", trangThai);
+    model.addAttribute("statusIcon", statusIcon);
+    model.addAttribute("resultClass", resultClass);
         model.addAttribute("from", start);
         model.addAttribute("to", end);
-    model.addAttribute("title", "Doanh Thu 24h");
+    model.addAttribute("title", "Doanh Thu");
         model.addAttribute("content", "doanhthu");
         return "layout";
     }

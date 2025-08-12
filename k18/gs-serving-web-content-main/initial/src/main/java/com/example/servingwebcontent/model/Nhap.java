@@ -2,6 +2,7 @@ package com.example.servingwebcontent.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Nhap {
@@ -17,7 +18,8 @@ public class Nhap {
     // Constructor mặc định
     public Nhap() {
         this.ngayNhap = LocalDate.now();
-    this.thoiGianNhap = LocalDateTime.now();
+        // Đồng bộ thời gian chi tiết cùng ngày với ngayNhap để tránh gây hiểu nhầm ở màn hình
+        this.thoiGianNhap = LocalDateTime.of(this.ngayNhap, LocalTime.now());
     }
     
     // Constructor đầy đủ
@@ -26,7 +28,7 @@ public class Nhap {
         this.soLuongNhap = soLuongNhap;
         this.giaNhap = giaNhap;
         this.ngayNhap = ngayNhap;
-    this.thoiGianNhap = LocalDateTime.now();
+        this.thoiGianNhap = LocalDateTime.of(this.ngayNhap, LocalTime.now());
     }
 
     // Constructor đầy đủ bao gồm tên hàng
@@ -36,7 +38,7 @@ public class Nhap {
         this.soLuongNhap = soLuongNhap;
         this.giaNhap = giaNhap;
         this.ngayNhap = ngayNhap;
-    this.thoiGianNhap = LocalDateTime.now();
+        this.thoiGianNhap = LocalDateTime.of(this.ngayNhap, LocalTime.now());
     }
     
     // Getters và Setters

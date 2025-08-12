@@ -52,11 +52,21 @@
                                placeholder="Nhập giá nhập">
                     </div>
                     
-                    <!-- Bỏ trường Ngày Nhập theo yêu cầu; giá trị sẽ mặc định LocalDate.now() trong model -->
+                    <!-- Thời Gian Nhập (mới bổ sung) -->
+                    <div class="mb-3">
+                        <label for="thoiGianNhap" class="form-label">
+                            <i class="fas fa-clock"></i> Thời Gian Nhập
+                        </label>
+                        <input type="datetime-local" class="form-control" id="thoiGianNhap"
+                               th:field="*{thoiGianNhap}" />
+                        <div class="form-text">Nếu để trống sẽ lấy thời điểm hiện tại.</div>
+                    </div>
+
+                    <!-- Bỏ trường Ngày Nhập riêng lẻ; model tự set & đồng bộ với thời gian chi tiết -->
                     
                     <!-- Buttons -->
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="/nhap" class="btn btn-secondary me-md-2">
+                        <a href="/quanly/nhap" class="btn btn-secondary me-md-2">
                             <i class="fas fa-times"></i> Hủy
                         </a>
                         <button type="submit" class="btn btn-primary">

@@ -22,6 +22,8 @@ public class NhapStandaloneController {
         return "nhap/fullform"; // template full page
     }
 
+    // Root /nhap đã được GreetingController xử lý redirect; không khai báo lại để tránh xung đột.
+
 
     @PostMapping("/add")
     public String addNhap(@ModelAttribute Nhap nhap, RedirectAttributes redirectAttributes) {

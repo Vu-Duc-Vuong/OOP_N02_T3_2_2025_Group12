@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UI Bán - Quản Lý Bán Hàng</title>
+    <title>Danh Sách Bán Hàng</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -11,23 +11,47 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        .navbar-brand {
-            font-weight: bold;
+        :root {
+            --primary:#3B82F6; /* xanh dương nhạt */
+            --primary-hover:#2563EB;
+            --success:#10B981; /* xanh lá nút hành động */
+            --danger:#EF4444;
+            --warning:#F59E0B;
+            --sale:#EF4444; /* đỏ nhạt bán hàng theo mapping */
+            --bg:#F3F4F6; /* xám sáng */
+            --card-bg:#FFFFFF;
+            --text:#1F2937;
+            --muted:#6B7280;
+            --table-hover:#E0F2FE; /* xanh nhạt hover */
         }
-        .card-header {
-            background-color: #28a745;
-            color: white;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-        .table-hover tbody tr:hover {
-            background-color: #f8f9fa;
-        }
-        .stats-card {
-            border-left: 4px solid #28a745;
-        }
+        body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Arial,sans-serif;}
+        .navbar-brand{font-weight:600;}
+        .navbar.bg-primary{background:var(--primary)!important;}
+        .nav-link.active{background:rgba(255,255,255,.15);border-radius:6px;}
+        .card{border:1px solid #e5e7eb;box-shadow:0 2px 4px rgba(0,0,0,.04);border-radius:12px;overflow:hidden;background:var(--card-bg);}        
+        .card-header{background:linear-gradient(90deg,var(--primary),var(--primary-hover));color:#fff;padding:.85rem 1.25rem;}
+    h2,h5{font-weight:600;}
+    .text-sale{color:var(--sale)!important;}
+    .btn-sale{background:var(--sale);border-color:var(--sale);color:#fff;}
+    .btn-sale:hover{background:#ea580c;border-color:#ea580c;color:#fff;}
+        .btn{border-radius:8px;font-weight:500;letter-spacing:.2px;}
+        .btn-success{background:var(--success);border-color:var(--success);}        
+        .btn-warning{background:var(--warning);border-color:var(--warning);color:#1F2937;}
+        .btn-danger{background:var(--danger);border-color:var(--danger);}        
+        .table{vertical-align:middle;}
+        thead.table-dark{background:#1F2937!important;}
+        .table-hover tbody tr:hover{background:var(--table-hover);}        
+        .badge.bg-primary{background:var(--primary)!important;}
+        .badge.bg-info{background:#0ea5e9!important;}
+        .text-success{color:var(--success)!important;}
+        footer{background:#1F2937;color:#F9FAFB;margin-top:70px;padding:24px 0;}
+        /* Dark mode */
+        .dark-mode body,body.dark-mode{--bg:#1F2937;--card-bg:#273345;--text:#F9FAFB;--muted:#9CA3AF;--table-hover:#334155;background:var(--bg);}
+        body.dark-mode .card{border-color:#334155;}
+        body.dark-mode .card-header{background:linear-gradient(90deg,#0f4ba8,#1d62c8);}        
+        body.dark-mode .navbar.bg-primary{background:#1E3A8A!important;}
+        body.dark-mode thead.table-dark{background:#0f172a!important;}
+        .mode-toggle{position:fixed;right:16px;bottom:16px;z-index:999;}
     </style>
 </head>
 <body>
@@ -44,7 +68,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="/"><i class="fas fa-home"></i> Trang Chủ</a></li>
                     <li class="nav-item"><a class="nav-link" href="/hanghoa"><i class="fas fa-boxes"></i> Hàng Hóa</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/nhap"><i class="fas fa-truck"></i> Nhập Hàng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/quanly/nhap"><i class="fas fa-truck"></i> Nhập Hàng</a></li>
                     <li class="nav-item"><a class="nav-link active" href="/ban"><i class="fas fa-cash-register"></i> Bán Hàng</a></li>
                     <li class="nav-item"><a class="nav-link" href="/doanhthu"><i class="fas fa-chart-line"></i> Doanh Thu</a></li>
                 </ul>
@@ -56,8 +80,7 @@
         <!-- Header -->
         <div class="row mb-4">
             <div class="col">
-                <h2><i class="fas fa-shopping-cart text-success"></i> UI Bán - Danh Sách Phiếu Bán</h2>
-                <p class="text-muted">Quản lý thông tin bán hàng theo mẫu Model-View-Controller</p>
+                <h2><i class="fas fa-shopping-cart text-sale"></i> Danh Sách Phiếu Bán Hàng</h2>
             </div>
         </div>
 
@@ -65,7 +88,7 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0">
-                    <i class="fas fa-list"></i> Danh Sách Bán Hàng
+                    <i class="fas fa-list"></i> Danh Sách Phiếu Bán Hàng
                 </h5>
             </div>
             <div class="card-body">
@@ -121,7 +144,7 @@
                 <a href="/" class="btn btn-secondary">
                     <i class="fas fa-arrow-left"></i> Quay về Trang chủ
                 </a>
-                <a href="/ban/add" class="btn btn-success">
+                <a href="/ban/add" class="btn btn-sale">
                     <i class="fas fa-plus"></i> Thêm Phiếu Bán
                 </a>
                 <a href="/ban/stats" class="btn btn-info">
@@ -130,8 +153,26 @@
             </div>
         </div>
     </div>
+    <!-- Footer thống nhất -->
+    <footer class="text-center">
+        <div class="container">
+            <p>&copy; 2025 Nhóm 12 - OOP_N02_T3. Ứng dụng Quản Lý Cửa Hàng Tạp Hóa với Spring Boot</p>
+            <p><strong>Thành viên:</strong> Vũ Đức Vượng (24100383) | Tưởng Văn Tuyên (24100462)</p>
+        </div>
+    </footer>
+
+    <button class="btn btn-sm btn-dark mode-toggle" id="modeToggle" title="Chuyển chế độ sáng/tối">
+        <i class="fas fa-moon"></i>
+    </button>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const btn = document.getElementById('modeToggle');
+        btn.addEventListener('click',()=>{
+            document.body.classList.toggle('dark-mode');
+            btn.innerHTML = document.body.classList.contains('dark-mode') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+    </script>
 </body>
 </html>

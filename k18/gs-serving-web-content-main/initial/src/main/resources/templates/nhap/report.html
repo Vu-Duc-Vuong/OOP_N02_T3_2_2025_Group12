@@ -1,81 +1,19 @@
-<!-- Báo cáo nhập hàng -->
+<!-- Thống kê nhập hàng -->
 <div class="row mb-4">
-    <div class="col-md-8">
-        <h2><i class="fas fa-chart-bar text-primary"></i> Báo Cáo Nhập Hàng</h2>
-    </div>
-    <div class="col-md-4 text-end">
-    <a href="/quanly/nhap" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Quay Lại
-        </a>
+    <div class="col">
+        <h2><i class="fas fa-chart-bar text-primary"></i> Thống kê nhập hàng</h2>
     </div>
 </div>
 
-<!-- Form chọn ngày -->
-<div class="row mb-4">
-    <div class="col-md-6 mx-auto">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="fas fa-calendar"></i> Chọn Ngày Báo Cáo
-                </h5>
-            </div>
-            <div class="card-body">
-                <form action="/quanly/nhap/report" method="get">
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <i class="fas fa-calendar-day"></i>
-                        </span>
-                        <input type="date" class="form-control" name="date" 
-                               th:value="${targetDate}" required>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-chart-line"></i> Xem Báo Cáo
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- (Form chọn ngày đã được dời xuống dưới) -->
 
-<!-- Thống kê tổng quan -->
-<div class="row mb-4">
-    <div class="col-md-4">
-        <div class="card stats-card bg-primary text-white">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <i class="fas fa-calendar-day"></i> Ngày Báo Cáo
-                </h5>
-                <h4 th:text="${#temporals.format(targetDate, 'dd/MM/yyyy')}">01/08/2025</h4>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card stats-card bg-info text-white">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <i class="fas fa-receipt"></i> Số Phiếu Nhập
-                </h5>
-                <h4 th:text="${#lists.size(nhapTrongNgay)}">0</h4>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card stats-card bg-success text-white">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <i class="fas fa-money-bill-wave"></i> Tổng Tiền Nhập
-                </h5>
-                <h4 th:text="${#numbers.formatDecimal(tongTienNhap, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">0 VNĐ</h4>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- ĐÃ XÓA dãy thống kê tổng quan theo yêu cầu -->
 
 <!-- Chi tiết nhập hàng trong ngày -->
 <div class="card">
     <div class="card-header">
         <h5 class="mb-0">
-            <i class="fas fa-list-alt"></i> Chi Tiết Nhập Hàng Ngày 
+            <i class="fas fa-list-alt"></i> Chi tiết nhập hàng ngày 
             <span th:text="${#temporals.format(targetDate, 'dd/MM/yyyy')}">01/08/2025</span>
         </h5>
     </div>
@@ -105,9 +43,10 @@
                         </td>
                         <td th:text="${nhap.tenHang}">Gạo ST25</td>
                         <td th:text="${nhap.soLuongNhap}">100</td>
-                        <td th:text="${#numbers.formatDecimal(nhap.giaNhap,0,0,'COMMA','POINT')} + ' VNĐ'">15,000 VNĐ</td>
+                        <!-- Sửa tham số formatDecimal: dạng đúng giống các template khác -->
+                        <td th:text="${#numbers.formatDecimal(nhap.giaNhap, 0, 'POINT', 0, 'COMMA')} + ' VNĐ'">15.000 VNĐ</td>
                         <td>
-                            <strong class="text-success" th:text="${#numbers.formatDecimal(nhap.tongTien, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">1,500,000 VNĐ</strong>
+                            <strong class="text-success" th:text="${#numbers.formatDecimal(nhap.tongTien, 0, 'POINT', 0, 'COMMA')} + ' VNĐ'">1.500.000 VNĐ</strong>
                         </td>
                     </tr>
                 </tbody>
@@ -115,7 +54,7 @@
                     <tr>
                         <th colspan="5" class="text-end">TỔNG CỘNG:</th>
                         <th>
-                            <span class="text-warning" th:text="${#numbers.formatDecimal(tongTienNhap, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">0 VNĐ</span>
+                            <span class="text-warning" th:text="${#numbers.formatDecimal(tongTienNhap, 0, 'POINT', 0, 'COMMA')} + ' VNĐ'">0 VNĐ</span>
                         </th>
                     </tr>
                 </tfoot>
@@ -123,6 +62,39 @@
         </div>
     </div>
 </div>
+
+    <!-- Form chọn ngày thống kê (dời xuống dưới) -->
+    <div class="row mt-4">
+        <div class="col-md-6 mx-auto">
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-calendar"></i> Chọn ngày xem thống kê
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form action="/quanly/nhap/report" method="get" class="mb-0">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-calendar-day"></i></span>
+                            <input type="date" class="form-control" name="date" th:value="${targetDate}" required>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-chart-line"></i> Xem Thống Kê
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nút quay lại dưới cùng -->
+    <div class="row mt-4 mb-2">
+        <div class="col text-center">
+            <a href="/quanly/nhap" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Quay Lại
+            </a>
+        </div>
+    </div>
 
 <script>
     // Tự động set ngày hiện tại

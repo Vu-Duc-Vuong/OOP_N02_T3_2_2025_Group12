@@ -25,9 +25,12 @@ public class NhapController {
         List<Nhap> nhapToday = nhapService.getNhapByDate(today);
         int totalCountToday = nhapToday.size();
         double totalMoneyToday = nhapService.getTongTienNhapTheoNgay(today);
+    // Tổng tiền của toàn bộ danh sách (tránh dùng biểu thức phức tạp trong Thymeleaf gây lỗi)
+    double totalAllMoney = danhSachNhap.stream().mapToDouble(Nhap::getTongTien).sum();
         model.addAttribute("danhSachNhap", danhSachNhap);
         model.addAttribute("totalCountToday", totalCountToday);
         model.addAttribute("totalMoneyToday", String.format("%,.0f VNĐ", totalMoneyToday));
+    model.addAttribute("totalAllMoney", totalAllMoney);
         model.addAttribute("title", "Danh Sách Nhập Hàng");
         model.addAttribute("content", "nhap/list");
         return "layout";
@@ -55,53 +58,7 @@ public class NhapController {
     return "redirect:/quanly/nhap";
     }
     
-    @GetMapping("/edit/{index}")
-    public String showEditForm(@PathVariable int index, Model model, RedirectAttributes redirectAttributes) {
-        Nhap nhap = nhapService.getNhapByIndex(index);
-        if (nhap == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy phiếu nhập!");
-            return "redirect:/quanly/nhap";
-        }
-        
-        model.addAttribute("nhap", nhap);
-        model.addAttribute("index", index);
-        model.addAttribute("title", "Sửa Phiếu Nhập");
-        model.addAttribute("content", "nhap/form");
-        model.addAttribute("action", "edit");
-        return "layout";
-    }
-    
-    @PostMapping("/edit/{index}")
-    public String updateNhap(@PathVariable int index, @ModelAttribute Nhap nhap, 
-                            RedirectAttributes redirectAttributes) {
-        try {
-            nhapService.updateNhap(index, nhap);
-            redirectAttributes.addFlashAttribute("successMessage", 
-                "Cập nhật phiếu nhập hàng hóa " + nhap.getHanghoaID() + " (" + nhap.getTenHang() + ") thành công!");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", 
-                "Có lỗi xảy ra khi cập nhật phiếu nhập: " + e.getMessage());
-        }
-    return "redirect:/quanly/nhap";
-    }
-    
-    @PostMapping("/delete/{index}")
-    public String deleteNhap(@PathVariable int index, RedirectAttributes redirectAttributes) {
-        try {
-            Nhap nhap = nhapService.getNhapByIndex(index);
-            if (nhap != null) {
-                nhapService.deleteNhap(index);
-                redirectAttributes.addFlashAttribute("successMessage", 
-                    "Xóa phiếu nhập hàng hóa " + nhap.getHanghoaID() + " (" + nhap.getTenHang() + ") thành công!");
-            } else {
-                redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy phiếu nhập!");
-            }
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", 
-                "Có lỗi xảy ra khi xóa phiếu nhập: " + e.getMessage());
-        }
-    return "redirect:/quanly/nhap";
-    }
+    // TODO: Khi chuyển UI sang dùng ID thật sẽ bổ sung edit/delete theo ID.
     
     
     @GetMapping("/report")
@@ -115,7 +72,7 @@ public class NhapController {
         model.addAttribute("targetDate", targetDate);
         model.addAttribute("nhapTrongNgay", nhapTrongNgay);
         model.addAttribute("tongTienNhap", tongTienNhap);
-        model.addAttribute("title", "Báo Cáo Nhập Hàng");
+    model.addAttribute("title", "Thống Kê Nhập Hàng");
         model.addAttribute("content", "nhap/report");
         return "layout";
     }

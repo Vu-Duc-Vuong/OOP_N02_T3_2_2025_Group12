@@ -5,14 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${appName}">Quản Lý Cửa Hàng Tạp Hóa</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts for attractive hero tagline -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Quicksand:wght@500;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .hero-section {background: linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:80px 0}
-        .feature-card {transition:transform .3s;height:100%}
-        .feature-card:hover {transform:translateY(-5px)}
+    .hero-section {background: linear-gradient(135deg,#6366F1 0%,#7C3AED 50%,#8B5CF6 100%);color:#fff;padding:80px 0;position:relative;overflow:hidden}
+    .hero-section:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 40%,rgba(255,255,255,.15),transparent 60%);mix-blend-mode:overlay;}
+    .hero-tagline {font-family:'Poppins','Quicksand','Segoe UI',sans-serif;font-size:1.18rem;font-weight:600;letter-spacing:.5px;line-height:1.55;text-shadow:0 3px 8px rgba(0,0,0,.35),0 0 2px rgba(255,255,255,.35);}
+    .feature-subtitle {font-family:'Poppins','Quicksand','Segoe UI',sans-serif;font-size:1rem;font-weight:500;letter-spacing:.5px;}
+    .feature-card {transition:.35s cubic-bezier(.4,0,.2,1);height:100%;border:1px solid #e5e7eb;border-radius:18px;box-shadow:0 2px 6px rgba(0,0,0,.05);position:relative;background:#fff;overflow:hidden}
+    .feature-card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,102,241,.08),rgba(139,92,246,.08));opacity:0;transition:.35s}
+    .feature-card:hover {transform:translateY(-6px) scale(1.015);box-shadow:0 12px 28px -6px rgba(79,70,229,.35);}
+    .feature-card:hover:before{opacity:1}
+    .feature-card i {transition:transform .45s ease, filter .45s;}
+    .feature-card:hover i {transform:scale(1.12) rotate(-2deg);filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));}
+    .feature-card h5{font-weight:600;letter-spacing:.4px;margin-top:.25rem}
+    .feature-card{cursor:pointer;}
+    .feature-card:focus-visible{outline:3px solid #6366F1;outline-offset:2px;}
+    .feature-card p{color:#6B7280;font-size:.9rem;min-height:42px}
+    .feature-card .btn{border-radius:30px;font-weight:600;letter-spacing:.5px;padding:.4rem 1.05rem;font-size:.75rem;text-transform:uppercase;box-shadow:0 2px 4px rgba(0,0,0,.12);}
+    .feature-card .btn:hover{box-shadow:0 4px 14px rgba(0,0,0,.25);transform:translateY(-2px);}
+    .feature-card .btn:active{transform:translateY(0);}        
         .navbar-brand {font-weight:bold}
         footer {background:#343a40;color:#fff;padding:40px 0}
         .stats-section {background:#f8f9fa;padding:60px 0}
+    /* Sale (Bán hàng) custom palette */
+    .text-sale{color:#EF4444!important;}
+    .btn-sale{background:#EF4444;border-color:#EF4444;color:#fff;}
+    .btn-sale:hover{background:#dc2626;border-color:#dc2626;color:#fff;}
     </style>
 </head>
 <body>
@@ -28,7 +50,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link active" href="/"><i class="fas fa-home"></i> Trang Chủ</a></li>
                 <li class="nav-item"><a class="nav-link" href="/hanghoa"><i class="fas fa-boxes"></i> Hàng Hóa</a></li>
-                <li class="nav-item"><a class="nav-link" href="/nhap"><i class="fas fa-truck"></i> Nhập Hàng</a></li>
+                <li class="nav-item"><a class="nav-link" href="/quanly/nhap"><i class="fas fa-truck"></i> Nhập Hàng</a></li>
                 <li class="nav-item"><a class="nav-link" href="/ban"><i class="fas fa-cash-register"></i> Bán Hàng</a></li>
                 <li class="nav-item"><a class="nav-link" href="/doanhthu"><i class="fas fa-chart-line"></i> Doanh Thu</a></li>
             </ul>
@@ -39,30 +61,21 @@
 <section class="hero-section">
     <div class="container text-center">
         <h1 class="display-5 mb-4"><i class="fas fa-store"></i> <span th:text="${appName}">Hệ Thống Quản Lý</span></h1>
-        <p class="lead mb-5">Ứng dụng quản lý hiện đại được xây dựng với Spring Boot</p>
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="row g-3">
-                    <div class="col-6 col-md-3"><a href="/hanghoa" class="btn btn-light btn-lg w-100"><i class="fas fa-boxes"></i> Hàng Hóa</a></div>
-                    <div class="col-6 col-md-3"><a href="/nhap" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-truck"></i> Nhập Hàng</a></div>
-                    <div class="col-6 col-md-3"><a href="/ban" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-cash-register"></i> Bán Hàng</a></div>
-                    <div class="col-6 col-md-3"><a href="/doanhthu" class="btn btn-outline-light btn-lg w-100"><i class="fas fa-chart-line"></i> Doanh Thu</a></div>
-                </div>
-            </div>
-        </div>
+    <p class="lead mb-5 hero-tagline">Theo dõi hàng hóa, nhập – xuất kho, và doanh thu mọi lúc, mọi nơi với hệ thống quản lý tạp hóa hiện đại.</p>
+    <!-- Dãy nút nhanh đã được gỡ bỏ theo yêu cầu -->
     </div>
 </section>
 
 <section class="py-5">
     <div class="container">
         <div class="row text-center mb-5">
-            <div class="col"><h2>Tính Năng Chính</h2><p class="text-muted">Quản lý kho - nhập hàng - doanh thu</p></div>
+            <div class="col"><h2>Tính Năng Chính</h2><p class="text-muted feature-subtitle">Quản lí kho - nhập hàng - bán hàng - doanh thu</p></div>
         </div>
         <div class="row">
-            <div class="col-md-3 mb-4"><div class="card feature-card text-center"><div class="card-body"><i class="fas fa-boxes fa-3x text-primary mb-3"></i><h5>Kho Hàng</h5><p>Quản lý danh mục & tồn kho.</p><a href="/hanghoa" class="btn btn-primary btn-sm">Xem</a></div></div></div>
-            <div class="col-md-3 mb-4"><div class="card feature-card text-center"><div class="card-body"><i class="fas fa-truck fa-3x text-warning mb-3"></i><h5>Nhập Hàng</h5><p>Theo dõi phiếu nhập nhanh.</p><a href="/nhap" class="btn btn-warning btn-sm text-white">Vào</a></div></div></div>
-            <div class="col-md-3 mb-4"><div class="card feature-card text-center"><div class="card-body"><i class="fas fa-cash-register fa-3x text-danger mb-3"></i><h5>Bán Hàng</h5><p>Quản lý & ghi nhận phiếu bán.</p><a href="/ban" class="btn btn-danger btn-sm text-white">Mở</a></div></div></div>
-            <div class="col-md-3 mb-4"><div class="card feature-card text-center"><div class="card-body"><i class="fas fa-chart-line fa-3x text-success mb-3"></i><h5>Doanh Thu</h5><p>Theo dõi lãi / lỗ mỗi ngày.</p><a href="/doanhthu" class="btn btn-success btn-sm">Xem</a></div></div></div>
+            <div class="col-md-3 mb-4"><div class="card feature-card text-center" tabindex="0" data-href="/hanghoa"><div class="card-body"><i class="fas fa-boxes fa-3x text-primary mb-3"></i><h5>Kho Hàng</h5><p>Quản lý danh mục & tồn kho.</p><a href="/hanghoa" class="btn btn-primary btn-sm">Vào</a></div></div></div>
+            <div class="col-md-3 mb-4"><div class="card feature-card text-center" tabindex="0" data-href="/quanly/nhap"><div class="card-body"><i class="fas fa-truck fa-3x text-warning mb-3"></i><h5>Nhập Hàng</h5><p>Theo dõi phiếu nhập nhanh.</p><a href="/quanly/nhap" class="btn btn-warning btn-sm text-dark fw-semibold">Vào</a></div></div></div>
+            <div class="col-md-3 mb-4"><div class="card feature-card text-center" tabindex="0" data-href="/ban"><div class="card-body"><i class="fas fa-cash-register fa-3x text-sale mb-3"></i><h5>Bán Hàng</h5><p>Quản lý & ghi nhận phiếu bán.</p><a href="/ban" class="btn btn-sale btn-sm text-white">Vào</a></div></div></div>
+            <div class="col-md-3 mb-4"><div class="card feature-card text-center" tabindex="0" data-href="/doanhthu"><div class="card-body"><i class="fas fa-chart-line fa-3x text-success mb-3"></i><h5>Doanh Thu</h5><p>Theo dõi lãi / lỗ mỗi ngày.</p><a href="/doanhthu" class="btn btn-success btn-sm">Vào</a></div></div></div>
         </div>
     </div>
 </section>
@@ -75,5 +88,16 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.querySelectorAll('.feature-card').forEach(card=>{
+        card.addEventListener('click',e=>{
+            const link=card.querySelector('a.btn');
+            if(link) window.location=link.getAttribute('href');
+        });
+        card.addEventListener('keypress',e=>{
+            if(e.key==='Enter' || e.key===' ') {e.preventDefault();card.click();}
+        });
+    });
+</script>
 </body>
 </html>

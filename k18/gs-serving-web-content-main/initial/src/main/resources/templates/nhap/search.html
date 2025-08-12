@@ -81,10 +81,10 @@
                                 <strong th:text="${nhap.hanghoaID}">HH001</strong>
                             </td>
                             <td th:text="${nhap.soLuongNhap}">100</td>
-                            <td th:text="${#numbers.formatDecimal(nhap.giaNhap,0,0,'COMMA','POINT')} + ' VNĐ'">15,000 VNĐ</td>
+                            <td th:text="${#numbers.formatDecimal(nhap.giaNhap, 0, 'POINT', 0, 'COMMA')} + ' VNĐ'">15.000 VNĐ</td>
                             <td th:text="${#temporals.format(nhap.ngayNhap, 'dd/MM/yyyy')}">01/08/2025</td>
                             <td>
-                                <strong class="text-success" th:text="${#numbers.formatDecimal(nhap.tongTien, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">1,500,000 VNĐ</strong>
+                                <strong class="text-success" th:text="${#numbers.formatDecimal(nhap.tongTien, 0, 'POINT', 0, 'COMMA')} + ' VNĐ'">1.500.000 VNĐ</strong>
                             </td>
                             <td>
                                 <a th:href="@{/quanly/nhap/edit/{index}(index=${iterStat.index})}" 
