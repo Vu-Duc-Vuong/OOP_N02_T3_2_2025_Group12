@@ -37,36 +37,40 @@
 
 ---
 
-## 📊 UML Diagrams
+## 📊 Diagrams
 
 ### 1. 🏗️ Class Diagram
-Mô tả cấu trúc lớp và mối quan hệ giữa các đối tượng trong hệ thống.
+Mô tả cấu trúc lớp và mối quan hệ giữa các đối tượng trong hệ thống quản lý cửa hàng.
 
-![Class Diagram](diagrams/class-diagram.png)
+![Class Diagram](diagrams/ClassDiagram.png)
 
-### 2. 🎯 Use Case Diagram  
-Mô tả các chức năng chính và tương tác giữa người dùng với hệ thống.
+### 2. 🔄 Activity Diagrams
+Mô tả các luồng xử lý nghiệp vụ chính trong hệ thống.
 
-![Use Case Diagram](diagrams/use-case-diagram.png)
+#### Quản Lý Hàng Hóa
+Quy trình thêm, sửa, xóa hàng hóa (đã loại bỏ chức năng tìm kiếm).
 
-### 3. 🔄 Activity Diagrams
-Mô tả luồng xử lý nghiệp vụ nhập hàng và bán hàng.
+![Goods Management Activity](diagrams/GoodsManagementActivity.png)
 
-#### Quy trình Nhập Hàng
-![Activity Diagram - Nhập Hàng](diagrams/activity-diagram-nhap-hang.png)
+#### Quy Trình Nhập Hàng
+Mô tả luồng nhập hàng và cập nhật tồn kho.
 
-#### Quy trình Bán Hàng  
-![Activity Diagram - Bán Hàng](diagrams/activity-diagram-ban-hang.png)
+![Import Activity](diagrams/ImportActivity.png)
 
-### 4. 📈 Sequence Diagram
-Mô tả tương tác giữa các đối tượng trong quy trình tính doanh thu.
+#### Quy Trình Bán Hàng
+Mô tả luồng bán hàng, kiểm tra tồn kho và xử lý thanh toán.
 
-![Sequence Diagram - Doanh Thu](diagrams/sequence-diagram-doanh-thu.png)
+![Sales Activity](diagrams/SalesActivity.png)
 
-### 5. 🚀 Deployment Diagram
-Mô tả kiến trúc triển khai hệ thống.
+#### Báo Cáo Doanh Thu
+Quy trình tính toán và hiển thị báo cáo doanh thu, lợi nhuận.
 
-![Deployment Diagram](diagrams/deployment-diagram.png)
+![Revenue Report Activity](diagrams/RevenueReportActivity.png)
+
+#### Đăng Nhập Hệ Thống
+Quy trình xác thực người dùng trước khi truy cập hệ thống.
+
+![Login Activity](diagrams/LoginActivity.png)
 
 ---
 
