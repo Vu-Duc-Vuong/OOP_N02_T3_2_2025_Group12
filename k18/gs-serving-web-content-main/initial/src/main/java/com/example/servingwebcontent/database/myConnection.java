@@ -1,31 +1,58 @@
 package com.example.servingwebcontent.database;
 
-import java.sql.DriverManager;
 import java.sql.Connection;
-import org.springframework.stereotype.Component;
+import java.sql.DriverManager;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+/**
+ * Kết nối DB theo 2 kiểu cấu hình:
+ * 1. app.database.* (ưu tiên nếu tồn tại) – giống dự án trong k17.
+ * 2. spring.datasource.* (fallback) – chuẩn Spring Boot.
+ */
 @Component
 public class myConnection {
-    @Value("${spring.datasource.url}")
-    private String urlString;
-    @Value("${spring.datasource.driver-class-name}")
-    private String appDriver;
-    @Value("${spring.datasource.username}")
-    private String appUser;
-    @Value("${spring.datasource.password}")
-    private String appPassword;
-    
+    // Kiểu raw (giống k17)
+    @Value(value = "${app.database.url:}")
+    private String altUrl;
+    @Value(value = "${app.database.driver:}")
+    private String altDriver;
+    @Value(value = "${app.database.user:}")
+    private String altUser;
+    @Value(value = "${app.database.password:}")
+    private String altPassword;
+
+    // Kiểu chuẩn Spring
+    @Value(value = "${spring.datasource.url:}")
+    private String stdUrl;
+    @Value(value = "${spring.datasource.driver-class-name:}")
+    private String stdDriver;
+    @Value(value = "${spring.datasource.username:}")
+    private String stdUser;
+    @Value(value = "${spring.datasource.password:}")
+    private String stdPassword;
+
+    private boolean hasAlt() {
+        return altUrl != null && !altUrl.isBlank();
+    }
+
     public Connection getConnection() {
-        System.out.println("DB URL: " + urlString);
-        System.out.println("DB Driver: " + appDriver);
-        System.out.println("DB User: " + appUser);
+        final String url = hasAlt() ? altUrl : stdUrl;
+        final String driver = hasAlt() ? altDriver : stdDriver;
+        final String user = hasAlt() ? altUser : stdUser;
+        final String pass = hasAlt() ? altPassword : stdPassword;
+
+        System.out.println("[myConnection] Mode=" + (hasAlt() ? "app.database" : "spring.datasource"));
+        System.out.println("[myConnection] URL=" + url);
+        System.out.println("[myConnection] User=" + user);
+
         try {
-            Class.forName(appDriver);
-            return DriverManager.getConnection(urlString, appUser, appPassword);
-        }
-        catch(Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            if (driver != null && !driver.isBlank()) {
+                Class.forName(driver);
+            }
+            return DriverManager.getConnection(url, user, pass);
+        } catch (Exception e) {
+            System.out.println("[myConnection] ERROR: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
