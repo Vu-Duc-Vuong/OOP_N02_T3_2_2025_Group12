@@ -15,3 +15,8 @@ application.properties
 
 # Logs
 *.log
+
+# Env files (không commit mật khẩu thật)
+.env
+.env.*
+!.env.example
