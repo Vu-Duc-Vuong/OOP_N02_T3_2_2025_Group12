@@ -149,6 +149,7 @@ Project/
 ### 1. Chạy ứng dụng Spring Boot:
 ```bash
 cd Project/gs-serving-web-content-main/initial && ./mvnw spring-boot:run
+
 ```
 
 ### 2. Chạy kiểm thử nghiệp vụ (Java thuần):
