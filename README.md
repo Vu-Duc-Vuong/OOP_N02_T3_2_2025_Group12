@@ -2,7 +2,7 @@
 
 > **Dự án cuối kỳ môn Lập trình Hướng Đối Tượng (OOP)**  
 > Nhóm 12 – N02_T3_2_2025 – Học kỳ 2 – Năm học 2024-2025
-
+> Giảng viên hướng dẫn: TS. Nguyễn Lệ Thu
 ---
 
 ## 📋 Thông Tin Dự Án
