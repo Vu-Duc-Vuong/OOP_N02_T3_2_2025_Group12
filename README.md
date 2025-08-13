@@ -13,7 +13,7 @@
 ---
 
 ## 📌 Giới thiệu
-Ứng dụng quản lý cửa hàng tạp hóa giúp quản lý nhập hàng, bán hàng, tồn kho, doanh thu, lãi/lỗ. Xây dựng bằng Java (Spring Boot), giao diện web (Thymeleaf), lưu trữ dữ liệu với JPA/Hibernate.
+Ứng dụng quản lý cửa hàng tạp hóa là một hệ thống mô phỏng các nghiệp vụ quản lý nhập hàng, bán hàng, tồn kho, doanh thu và lãi/lỗ. Ứng dụng được xây dựng bằng Java với giao diện console, áp dụng mô hình hướng đối tượng (OOP), lưu trữ dữ liệu bằng file nhị phân và sử dụng các cấu trúc dữ liệu như ArrayList để quản lý thông tin hàng hóa, phiếu nhập, phiếu bán và thống kê doanh thu.
 
 ---
 
