@@ -1,10 +1,11 @@
-import com.example.servingwebcontent.model.HangHoa;
-import com.example.servingwebcontent.model.Ban;
+package Project.review;
+import Model.HangHoa;
+import Model.Ban;
 import java.time.LocalDate;
 import java.util.*;
 
 public class TestDoanhThu {
-    public static void main(String[] args) {
+    public static void testDoanhThu() {
         HangHoa h1 = new HangHoa("H01", "Gao", 0, "Vinafood", 18000);
         List<Ban> banList = Arrays.asList(
             new Ban("PB01", h1, 5, LocalDate.of(2025,8,10)),

@@ -10,8 +10,8 @@
 .DS_Store
 
 # Secrets / local config
-application.properties
-**/src/main/resources/application.properties
+# application.properties
+# **/src/main/resources/application.properties
 # Allow sanitized module application.properties (no secret inside)
 !k18/gs-serving-web-content-main/initial/src/main/resources/application.properties
 

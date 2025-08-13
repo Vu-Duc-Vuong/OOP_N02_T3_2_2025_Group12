@@ -1,10 +1,11 @@
-import com.example.servingwebcontent.model.HangHoa;
-import com.example.servingwebcontent.model.Nhap;
+package Project.review;
+import Model.HangHoa;
+import Model.Nhap;
 import java.time.LocalDate;
 import java.util.*;
 
 public class TestThongKeNhapTheoNgay {
-    public static void main(String[] args) {
+    public static void testThongKeNhapTheoNgay() {
         HangHoa h1 = new HangHoa("H01", "Gao", 0, "Vinafood", 18000);
         List<Nhap> nhapList = Arrays.asList(
             new Nhap("PN01", h1, 10, LocalDate.of(2025,8,10)),

@@ -1,9 +1,10 @@
+package Project.review;
 
-import com.example.servingwebcontent.model.HangHoa;
+import Model.HangHoa;
 import java.util.*;
 
 public class TestSelector {
-    public static void main(String[] args) {
+    public static void testSelector() {
         List<HangHoa> ds = new ArrayList<>();
         ds.add(new HangHoa("H01", "Gao ST25", 100, "Vinafood", 18000));
         ds.add(new HangHoa("H02", "Sua tuoi", 45, "Vinamilk", 12000));

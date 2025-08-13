@@ -1,7 +1,7 @@
 import Model.HangHoa;
 import java.util.ArrayList;
 
-public class TestPhuongThuc1 {
+public class TestFilterProduct {
     public static void main(String[] args) {
         System.out.println("=== TEST PHƯƠNG THỨC LỌC HÀNG HÓA ===");
         System.out.println("Người thực hiện: Tưởng Văn Tuyên - 24100462\n");
