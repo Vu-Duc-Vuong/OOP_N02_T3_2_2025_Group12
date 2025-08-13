@@ -37,7 +37,7 @@ Project/
 
 ---
 
-## 👥 Đối tượng & Chức năng chính
+## 🧠 Phân tích đối tượng & Chức năng chính
 
 ### 1. 📦 Hàng Hóa (`HangHoa`)
 - Quản lý thông tin hàng hóa: mã, tên, số lượng, nhà sản xuất, đơn giá
