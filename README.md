@@ -3,14 +3,6 @@
 > **Dự án cuối kỳ môn Lập trình Hướng Đối Tượng (OOP)**  
 > Nhóm 12 – N02_T3_2_2025 – Học kỳ 2 – Năm học 2024-2025
 
----
-
-
-
-## 📋 Thông Tin Dự Án
-- **Giảng viên hướng dẫn:** (bổ sung)
-
----
 
 ## 📌 Giới thiệu
 Ứng dụng quản lý cửa hàng tạp hóa là một hệ thống mô phỏng các nghiệp vụ quản lý nhập hàng, bán hàng, tồn kho, doanh thu và lãi/lỗ. Ứng dụng được xây dựng bằng Java với giao diện console, áp dụng mô hình hướng đối tượng (OOP), lưu trữ dữ liệu bằng file nhị phân và sử dụng các cấu trúc dữ liệu như ArrayList để quản lý thông tin hàng hóa, phiếu nhập, phiếu bán và thống kê doanh thu.
@@ -26,16 +18,6 @@
 | 3   | Nguyễn Lệ Thu	    |     |                                              | Giảng viên hướng dẫn   |
 
 ---
-
----
-
-## 📌 Giới thiệu
-Ứng dụng quản lý cửa hàng tạp hóa là một hệ thống mô phỏng các nghiệp vụ quản lý nhập hàng, bán hàng, tồn kho, doanh thu và lãi/lỗ. Ứng dụng được xây dựng bằng Java với giao diện console, áp dụng mô hình hướng đối tượng (OOP), lưu trữ dữ liệu bằng file nhị phân và sử dụng các cấu trúc dữ liệu như ArrayList để quản lý thông tin hàng hóa, phiếu nhập, phiếu bán và thống kê doanh thu.
-
----
-
-
-
 ## 🧠 Phân tích đối tượng & Chức năng chính
 
 ### 1. 📦 Hàng Hóa (`HangHoa`)
@@ -99,8 +81,7 @@ Project/
 
 ### 1. Chạy ứng dụng Spring Boot:
 ```bash
-cd Project/gs-serving-web-content-main/initial
-./mvnw spring-boot:run
+cd Project/gs-serving-web-content-main/initial && ./mvnw spring-boot:run
 ```
 
 ### 2. Chạy kiểm thử nghiệp vụ (Java thuần):
