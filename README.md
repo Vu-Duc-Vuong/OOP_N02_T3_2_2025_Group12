@@ -18,24 +18,6 @@
 
 ---
 
-## 🗂️ Cấu trúc thư mục
-
-```plaintext
-Project/
-├── QuanLy/                 # Các class nghiệp vụ quản lý (QuanLyBan, QuanLyNhap, ...)
-├── review/                 # File kiểm thử, review logic nghiệp vụ
-├── unitest/                # Các file kiểm thử đơn vị
-├── gs-serving-web-content-main/initial/ # Spring Boot MVC, controller, model, view
-│   ├── src/main/java/com/example/servingwebcontent/
-│   │   ├── controller/     # Controller Spring Boot
-│   │   ├── model/          # Entity/model JPA
-│   │   └── ...
-│   └── ...
-├── README.md               # Tài liệu mô tả dự án
-└── ...
-```
-
----
 
 ## 🧠 Phân tích đối tượng & Chức năng chính
 
@@ -53,6 +35,25 @@ Project/
 
 ### 4. 💰 Doanh Thu (`DoanhThu`)
 - Tính tổng tiền nhập, bán, doanh thu, lãi/lỗ theo ngày
+
+---
+
+## 🗂️ Cấu trúc thư mục
+
+```plaintext
+Project/
+├── QuanLy/                 # Các class nghiệp vụ quản lý (QuanLyBan, QuanLyNhap, ...)
+├── review/                 # File kiểm thử, review logic nghiệp vụ
+├── unitest/                # Các file kiểm thử đơn vị
+├── gs-serving-web-content-main/initial/ # Spring Boot MVC, controller, model, view
+│   ├── src/main/java/com/example/servingwebcontent/
+│   │   ├── controller/     # Controller Spring Boot
+│   │   ├── model/          # Entity/model JPA
+│   │   └── ...
+│   └── ...
+├── README.md               # Tài liệu mô tả dự án
+└── ...
+```
 
 ---
 
