@@ -10,7 +10,6 @@ import Model.HangHoa;
 public class QuanLyNhap {
     ArrayList<Nhap> dsNhap = new ArrayList<>();
 
-    // Thêm phiếu nhập với kiểm tra dữ liệu và xử lý lỗi
     public boolean them(Nhap n) {
         if (n == null) {
             System.out.println("Phiếu nhập không được null!");
@@ -41,12 +40,10 @@ public class QuanLyNhap {
         }
     }
 
-    // Xoá phiếu nhập theo mã
     public void xoa(String ma) {
         dsNhap.removeIf(p -> p.maPhieu.equals(ma));
     }
 
-    // Sửa số lượng nhập
     public void sua(String ma) {
         Scanner sc = new Scanner(System.in);
         for (Nhap p : dsNhap) {
@@ -58,7 +55,6 @@ public class QuanLyNhap {
         }
     }
 
-    // Hiển thị danh sách đã nhập
     public void hienThi() {
         for (Nhap p : dsNhap) {
             System.out.println("Phieu: " + p.maPhieu + " - Hang: " + p.hang.tenHang +
@@ -67,7 +63,6 @@ public class QuanLyNhap {
         }
     }
 
-    // Tính tổng tiền nhập các phiếu
     public double tongNhap() {
         double tong = 0;
         for (Nhap p : dsNhap) {
@@ -76,7 +71,6 @@ public class QuanLyNhap {
         return tong;
     }
 
-    // Chức năng: Tính tổng số tiền đã nhập hàng trong ngày hiện tại
     public double tongNhapTrongNgayHienTai() {
         double tong = 0;
         LocalDate ngayHienTai = LocalDate.now();
@@ -87,7 +81,6 @@ public class QuanLyNhap {
         }
         return tong;
     }
-    // Phương thức 2: tính tổng nhập theo ngày:
  public void tinhTongNhapTheoNgay() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Nhập ngày cần thống kê (định dạng dd-MM-yyyy): ");

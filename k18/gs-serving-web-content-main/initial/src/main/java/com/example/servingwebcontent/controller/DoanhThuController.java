@@ -17,7 +17,7 @@ import java.util.List;
 public class DoanhThuController {
 
     private final NhapService nhapService;
-    private final UIBan uiBan; // dùng danh sách bán hiện có
+    private final UIBan uiBan;
 
     public DoanhThuController(NhapService nhapService, UIBan uiBan){
         this.nhapService = nhapService;
@@ -28,7 +28,6 @@ public class DoanhThuController {
     public String viewToday(@RequestParam(required = false) String from,
                             @RequestParam(required = false) String to,
                             Model model){
-        // Hàm parse an toàn: trả null nếu chuỗi rỗng hoặc lỗi định dạng
         java.util.function.Function<String, LocalDateTime> safeParse = (s) -> {
             if(s == null) return null;
             s = s.trim();
@@ -40,10 +39,9 @@ public class DoanhThuController {
         LocalDateTime parsedTo   = safeParse.apply(to);
 
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime calcEnd = parsedTo != null ? parsedTo : now; // nếu không có to dùng hiện tại
-        LocalDateTime calcStart = parsedFrom != null ? parsedFrom : calcEnd.minusHours(24); // nếu không có from lùi 24h
+        LocalDateTime calcEnd = parsedTo != null ? parsedTo : now;
+        LocalDateTime calcStart = parsedFrom != null ? parsedFrom : calcEnd.minusHours(24);
 
-        // Nếu start sau end thì hoán đổi hoặc ép về 24h trước end
         if(calcStart.isAfter(calcEnd)){
             if(parsedFrom != null && parsedTo != null){
                 LocalDateTime tmp = calcStart; calcStart = calcEnd; calcEnd = tmp;
@@ -52,10 +50,9 @@ public class DoanhThuController {
             }
         }
 
-        final LocalDateTime start = calcStart; // hiệu lực final cho lambda
+        final LocalDateTime start = calcStart;
         final LocalDateTime end = calcEnd;
 
-        // Tổng nhập trong khoảng (lọc theo ngày + thời gian)
     double tongNhap = nhapService.getAllNhap().stream()
         .filter(n -> n.getThoiGianNhap()!=null && !n.getThoiGianNhap().isBefore(start) && !n.getThoiGianNhap().isAfter(end))
         .mapToDouble(Nhap::getTongTien)

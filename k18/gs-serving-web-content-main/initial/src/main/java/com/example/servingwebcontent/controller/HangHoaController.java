@@ -19,7 +19,6 @@ public class HangHoaController {
 	@Autowired
 	private HangHoaService hangHoaService;
 
-	// Danh sách
 	@GetMapping
 	public String listHangHoa(Model model) {
 		model.addAttribute("hangHoaList", hangHoaService.getAllHangHoa());
@@ -28,7 +27,6 @@ public class HangHoaController {
 		return "hanghoa/list";
 	}
 
-	// Form thêm
 	@GetMapping("/add")
 	public String showAddForm(Model model){
 		model.addAttribute("hangHoa", new HangHoa());
@@ -36,7 +34,6 @@ public class HangHoaController {
 		return "hanghoa/form";
 	}
 
-	// Xử lý thêm
 	@PostMapping("/add")
 	public String addHangHoa(@Valid @ModelAttribute HangHoa hangHoa,
 							 BindingResult bindingResult,
@@ -51,7 +48,6 @@ public class HangHoaController {
 		return "redirect:/hanghoa";
 	}
 
-	// Form sửa
 	@GetMapping("/edit/{maHang}")
 	public String showEditForm(@PathVariable String maHang, Model model, RedirectAttributes redirectAttributes){
 		HangHoa hh = hangHoaService.getHangHoaById(maHang);
@@ -64,7 +60,6 @@ public class HangHoaController {
 		return "hanghoa/form";
 	}
 
-	// Cập nhật
 	@PostMapping("/edit")
 	public String editHangHoa(@Valid @ModelAttribute HangHoa hangHoa,
 							  BindingResult bindingResult,
@@ -82,7 +77,6 @@ public class HangHoaController {
 		return "redirect:/hanghoa";
 	}
 
-	// Xóa
 	@PostMapping("/delete/{maHang}")
 	public String deleteHangHoa(@PathVariable String maHang, RedirectAttributes redirectAttributes){
 		HangHoa hh = hangHoaService.getHangHoaById(maHang);

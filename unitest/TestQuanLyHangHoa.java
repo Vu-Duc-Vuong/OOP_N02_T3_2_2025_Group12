@@ -5,7 +5,7 @@ import Model.HangHoa;
 public class TestQuanLyHangHoa {
     public static void test() {
         testQuanLyHangHoa();
-        testLocHangHoa(); // Test cho phương thức 1 ngay trong file này
+        testLocHangHoa();
         testQuanLyNhap();
         testQuanLyBan();
         testThongKeDoanhThu();
@@ -32,40 +32,34 @@ public class TestQuanLyHangHoa {
         ql.hienThi();
     }
 
-    // Test cho phương thức 1: Lọc hàng hóa theo tiêu chí
     static void testLocHangHoa() {
         System.out.println("\n*** Test Phương thức 1: Lọc hàng hóa theo tiêu chí ***");
         QuanLyHangHoa ql = new QuanLyHangHoa();
-        
-        // Thêm dữ liệu test
+
         HangHoa h1 = new HangHoa("H01", "Gao Tam Xoan", 100, "Vinafood", 15000);
         HangHoa h2 = new HangHoa("H02", "Duong Cat Lam", 50, "Ha Dong", 20000);
         HangHoa h3 = new HangHoa("H03", "Sua Tuoi", 30, "Vinamilk", 25000);
         HangHoa h4 = new HangHoa("H04", "Sua Chua", 40, "Vinamilk", 18000);
         HangHoa h5 = new HangHoa("H05", "Nuoc Ngot", 80, "Coca Cola", 12000);
-        
+
         ql.them(h1);
         ql.them(h2);
         ql.them(h3);
         ql.them(h4);
         ql.them(h5);
-        
+
         System.out.println("---> Danh sách toàn bộ hàng hóa:");
         ql.hienThi();
-        
-        // Test lọc theo tên
+
         System.out.println("\n---> Test lọc theo tên 'Sua':");
         ql.hienThiKetQuaLoc(ql.locTheoTen("Sua"), "tên chứa 'Sua'");
-        
-        // Test lọc theo nhà sản xuất
+
         System.out.println("\n---> Test lọc theo nhà sản xuất 'Vinamilk':");
         ql.hienThiKetQuaLoc(ql.locTheoNhaSanXuat("Vinamilk"), "nhà sản xuất 'Vinamilk'");
-        
-        // Test lọc theo số lượng
+
         System.out.println("\n---> Test lọc theo số lượng từ 40 đến 80:");
         ql.hienThiKetQuaLoc(ql.locTheoSoLuong(40, 80), "số lượng từ 40-80");
-        
-        // Test lọc theo mã
+
         System.out.println("\n---> Test lọc theo mã chứa 'H0':");
         ql.hienThiKetQuaLoc(ql.locTheoMa("H0"), "mã chứa 'H0'");
     }

@@ -23,7 +23,6 @@ public class NhapService {
     public NhapService(NhapRepository nhapRepository, HangHoaRepository hangHoaRepository) {
         this.nhapRepository = nhapRepository;
         this.hangHoaRepository = hangHoaRepository;
-        // seed sample if empty
         if (nhapRepository.count() == 0) {
             addNhapInternal(new Nhap("HH001", "Gạo ST25", 100, 15000, LocalDate.now().minusDays(1)));
             addNhapInternal(new Nhap("HH002", "Nước Mắm", 50, 25000, LocalDate.now()));
@@ -85,7 +84,6 @@ public class NhapService {
         );
         nhapRepository.save(entity);
 
-        // update stock
         HangHoa hangHoa = hangHoaRepository.findById(nhap.getHanghoaID()).orElse(null);
         if (hangHoa == null) {
             hangHoa = new HangHoa(nhap.getHanghoaID(), nhap.getTenHang(), nhap.getSoLuongNhap(), "Nhập Kho", nhap.getGiaNhap(), LocalDate.now().getYear());
@@ -97,7 +95,6 @@ public class NhapService {
         hangHoaRepository.save(hangHoa);
     }
 
-    // Legacy index-based access (derive from sorted list)
     public Nhap getNhapByIndex(int index) {
         List<Nhap> all = getAllNhap();
         if (index >=0 && index < all.size()) return all.get(index);
@@ -105,15 +102,10 @@ public class NhapService {
     }
 
     public void updateNhap(int index, Nhap nhap) {
-        // Simplistic: delete old by matching fields then re-add (since UI rarely edits in this demo)
-        // Better: expose ID and update by ID.
-        // Here we just add a new record to keep logic simple (audit style).
         addNhap(nhap);
     }
 
     public void deleteNhap(int index) {
-        // Not implemented precisely because index is unstable; could be added by switching UI to ID.
-        // For now no-op or throw.
         throw new UnsupportedOperationException("Xóa theo index không còn hỗ trợ sau khi chuyển JPA");
     }
 

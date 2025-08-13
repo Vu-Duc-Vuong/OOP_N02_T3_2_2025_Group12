@@ -17,11 +17,11 @@ public class orderAiven {
 
     @Autowired
     private myConnection myConnection;
-    
+
     public orderAiven(){}
 
     public ArrayList<Order> orderAivenList() {
-        ArrayList<Order> items = new ArrayList<Order>(); 
+        ArrayList<Order> items = new ArrayList<Order>();
         try {
             Connection conn = myConnection.getConnection();
             Statement sta = conn.createStatement();
@@ -29,10 +29,10 @@ public class orderAiven {
             int index =0;
             int columnCount = setdata.getMetaData().getColumnCount();
              System.out.println("column #"+columnCount);
-   
+
             while (setdata.next()) {
                 Order order = new Order();
-              
+
                 String orderID = setdata.getString("orderID");
                 Date sqlDate = setdata.getDate("orderDate");
                 String status = setdata.getString("status");
@@ -43,19 +43,19 @@ public class orderAiven {
                 order.setOrderId(orderID);
                 order.setOrderDate(sqlDate.toLocalDate());
                 order.setStatus(status);
-                
+
                 System.out.println("Get Order in order Aiven");
                 System.out.println(order.getOrderId());
                 System.out.println(index);
-        
+
             items.add(order);
        }
 
             setdata.close();
             sta.close();
             conn.close();
-           
-        } 
+
+        }
         catch (Exception e) {
             System.out.println("Error in database connecion");
             System.out.println(e);
@@ -65,20 +65,19 @@ public class orderAiven {
         return items;
 
     }
-    
 
     public ArrayList<OrderPayment> orderListByUserId(String userId) {
         ArrayList<OrderPayment> orders = new ArrayList<>();
         try {
             Connection conn = myConnection.getConnection();
 
-            String query = "SELECT o.orderID, o.orderDate, u.name, p.method, p.amount, p.status " + 
+            String query = "SELECT o.orderID, o.orderDate, u.name, p.method, p.amount, p.status " +
                            "FROM Orders o " +
                            "JOIN UserOrders uo ON o.orderID = uo.orderID " +
                            "JOIN Users u ON uo.userId = u.userId " +
                            "JOIN OrderPayments op ON o.orderID = op.orderID " +
                            "JOIN Payments p ON op.paymentID = p.paymentID " +
-                           "WHERE u.userId = ? AND p.status = 'Completed'"; 
+                           "WHERE u.userId = ? AND p.status = 'Completed'";
 
             PreparedStatement sta = conn.prepareStatement(query);
             sta.setString(1, userId);

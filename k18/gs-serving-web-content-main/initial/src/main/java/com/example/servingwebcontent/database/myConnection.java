@@ -5,14 +5,8 @@ import java.sql.DriverManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-/**
- * Kết nối DB theo 2 kiểu cấu hình:
- * 1. app.database.* (ưu tiên nếu tồn tại) – giống dự án trong k17.
- * 2. spring.datasource.* (fallback) – chuẩn Spring Boot.
- */
 @Component
 public class myConnection {
-    // Kiểu raw (giống k17)
     @Value(value = "${app.database.url:}")
     private String altUrl;
     @Value(value = "${app.database.driver:}")
@@ -22,7 +16,6 @@ public class myConnection {
     @Value(value = "${app.database.password:}")
     private String altPassword;
 
-    // Kiểu chuẩn Spring
     @Value(value = "${spring.datasource.url:}")
     private String stdUrl;
     @Value(value = "${spring.datasource.driver-class-name:}")

@@ -2,8 +2,6 @@ import java.util.*;
 import Model.Ban;
 import Model.HangHoa;
 
-
-
 public class QuanLyBan {
     ArrayList<Ban> dsBan = new ArrayList<>();
 

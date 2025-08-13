@@ -15,7 +15,7 @@ public class DoanhThu {
         System.out.println("=== THONG KE DOANH THU ===");
         System.out.printf("Tong tien nhap hang: %.2f\n", tongNhap);
         System.out.printf("Tong tien ban hang : %.2f\n", tongBan);
-        
+
         if (chenhLech > 0) {
             System.out.printf("→ Lai: %.2f\n", chenhLech);
         } else if (chenhLech < 0) {

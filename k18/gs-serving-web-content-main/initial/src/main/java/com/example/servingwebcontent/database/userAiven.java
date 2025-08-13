@@ -60,7 +60,6 @@ public class userAiven {
         return user;
     }
 
-    // Cập nhật User
     public void updateUser(User u) {
         try (Connection conn = myConnection.getConnection()) {
             String sql = "UPDATE Users SET name=?, gender=?, birthDate=?, phoneNumber=?, email=?, address=?, userType=? WHERE userID=?";
@@ -82,7 +81,6 @@ public class userAiven {
         }
     }
 
-    // Xóa user
     public void deleteUser(String id) {
         try (Connection conn = myConnection.getConnection()) {
             String sql = "DELETE FROM Users WHERE userID = ?";
@@ -119,16 +117,14 @@ public class userAiven {
 
     public boolean register(User user) {
         try (Connection conn = myConnection.getConnection()) {
-            // Kiểm tra email
             String checkSql = "SELECT COUNT(*) FROM Users WHERE email = ?";
             PreparedStatement checkStmt = conn.prepareStatement(checkSql);
             checkStmt.setString(1, user.getEmail());
             ResultSet rs = checkStmt.executeQuery();
             if (rs.next() && rs.getInt(1) > 0) {
-                return false; // Email đã tồn tại
+                return false;
             }
 
-            // Thêm người dùng
             String sql = "INSERT INTO Users (name, gender, birthDate, phoneNumber, email, address, password, userType) " +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pst = conn.prepareStatement(sql);

@@ -14,10 +14,10 @@ import java.util.List;
 @Controller
 @RequestMapping("/quanly/nhap")
 public class NhapController {
-    
+
     @Autowired
     private NhapService nhapService;
-    
+
     @GetMapping
     public String listNhap(Model model) {
         List<Nhap> danhSachNhap = nhapService.getAllNhap();
@@ -25,7 +25,6 @@ public class NhapController {
         List<Nhap> nhapToday = nhapService.getNhapByDate(today);
         int totalCountToday = nhapToday.size();
         double totalMoneyToday = nhapService.getTongTienNhapTheoNgay(today);
-    // Tổng tiền của toàn bộ danh sách (tránh dùng biểu thức phức tạp trong Thymeleaf gây lỗi)
     double totalAllMoney = danhSachNhap.stream().mapToDouble(Nhap::getTongTien).sum();
         model.addAttribute("danhSachNhap", danhSachNhap);
         model.addAttribute("totalCountToday", totalCountToday);
@@ -35,7 +34,7 @@ public class NhapController {
         model.addAttribute("content", "nhap/list");
         return "layout";
     }
-    
+
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("nhap", new Nhap());
@@ -44,31 +43,28 @@ public class NhapController {
         model.addAttribute("action", "add");
         return "layout";
     }
-    
+
     @PostMapping("/add")
     public String addNhap(@ModelAttribute Nhap nhap, RedirectAttributes redirectAttributes) {
         try {
             nhapService.addNhap(nhap);
-            redirectAttributes.addFlashAttribute("successMessage", 
+            redirectAttributes.addFlashAttribute("successMessage",
                 "Thêm phiếu nhập hàng hóa " + nhap.getHanghoaID() + " (" + nhap.getTenHang() + ") thành công!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", 
+            redirectAttributes.addFlashAttribute("errorMessage",
                 "Có lỗi xảy ra khi thêm phiếu nhập: " + e.getMessage());
         }
     return "redirect:/quanly/nhap";
     }
-    
-    // TODO: Khi chuyển UI sang dùng ID thật sẽ bổ sung edit/delete theo ID.
-    
-    
+
     @GetMapping("/report")
     public String showReport(@RequestParam(required = false) String date, Model model) {
-        LocalDate targetDate = (date != null && !date.isEmpty()) ? 
+        LocalDate targetDate = (date != null && !date.isEmpty()) ?
             LocalDate.parse(date) : LocalDate.now();
-        
+
         List<Nhap> nhapTrongNgay = nhapService.getNhapByDate(targetDate);
         double tongTienNhap = nhapService.getTongTienNhapTheoNgay(targetDate);
-        
+
         model.addAttribute("targetDate", targetDate);
         model.addAttribute("nhapTrongNgay", nhapTrongNgay);
         model.addAttribute("tongTienNhap", tongTienNhap);

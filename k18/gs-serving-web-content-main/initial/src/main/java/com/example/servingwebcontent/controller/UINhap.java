@@ -17,43 +17,41 @@ import java.util.List;
 public class UINhap {
     private List<Nhap> dsNhap = new ArrayList<>();
     private final HangHoaService hangHoaService;
- 
+
     public UINhap(HangHoaService hangHoaService) {
         this.hangHoaService = hangHoaService;
         Nhap n1 = new Nhap("HH001", 100, 25000.0, LocalDate.now().minusDays(10));
         Nhap n2 = new Nhap("HH002", 80, 15000.0, LocalDate.now().minusDays(5));
         Nhap n3 = new Nhap("HH003", 120, 8000.0, LocalDate.now());
-        
+
         dsNhap.add(n1);
         dsNhap.add(n2);
         dsNhap.add(n3);
     }
-    
+
     @GetMapping
     public String readList(Model model) {
         model.addAttribute("nhapList", dsNhap);
         model.addAttribute("tongSoPhieu", dsNhap.size());
-        
+
         int tongSoLuong = dsNhap.stream()
                                 .mapToInt(Nhap::getSoLuongNhap)
                                 .sum();
         model.addAttribute("tongSoLuong", tongSoLuong);
 
-    // Tổng tiền nhập (SL * Giá)
     double tongTienNhap = dsNhap.stream()
         .mapToDouble(Nhap::getTongTien)
         .sum();
     model.addAttribute("tongTienNhap", tongTienNhap);
-        
+
         return "UINhap";
     }
-    
+
     @GetMapping("/list")
     public String listNhap(Model model) {
         return readList(model);
     }
 
-    // Endpoint đơn giản để nhập hàng (ví dụ: /uinhap/add?ma=HH001&ten=Sua+Vinamilk&sl=10&gia=25000)
     @GetMapping("/add")
     public String addNhap(@org.springframework.web.bind.annotation.RequestParam String ma,
                           @org.springframework.web.bind.annotation.RequestParam String ten,
@@ -64,10 +62,8 @@ public class UINhap {
             model.addAttribute("error","Số lượng phải > 0");
             return readList(model);
         }
-        // Lưu phiếu nhập (đơn giản)
         Nhap phieu = new Nhap(ma, ten, soLuong, gia!=null? gia:0.0, LocalDate.now());
         dsNhap.add(phieu);
-        // Cập nhật kho
         HangHoa existing = hangHoaService.getHangHoaById(ma);
         if(existing == null){
             HangHoa newItem = new HangHoa(ma, ten, soLuong, "Chua ro", gia!=null? gia:0.0, LocalDate.now().getYear());

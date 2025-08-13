@@ -34,7 +34,6 @@ public class User {
         this.userType = userType;
     }
 
-    // Getter & Setter
     public String getUserId() {
         return userId;
     }

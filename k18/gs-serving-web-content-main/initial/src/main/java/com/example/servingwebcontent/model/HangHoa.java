@@ -9,40 +9,38 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "hang_hoa")
 public class HangHoa {
-    
+
     @NotBlank(message = "Mã hàng không được để trống")
     @Size(max = 10, message = "Mã hàng không được quá 10 ký tự")
     @Id
     @Column(name = "ma_hang", length = 10)
     private String maHang;
-    
+
     @NotBlank(message = "Tên hàng không được để trống")
     @Size(max = 100, message = "Tên hàng không được quá 100 ký tự")
     @Column(name = "ten_hang", length = 100, nullable = false)
     private String tenHang;
-    
+
     @NotNull(message = "Số lượng không được để trống")
     @Positive(message = "Số lượng phải lớn hơn 0")
     @Column(name = "so_luong", nullable = false)
     private Integer soLuong;
-    
+
     @NotBlank(message = "Nhà sản xuất không được để trống")
     @Size(max = 100, message = "Nhà sản xuất không được quá 100 ký tự")
     @Column(name = "nha_san_xuat", length = 100, nullable = false)
     private String nhaSanXuat;
-    
+
     @NotNull(message = "Đơn giá không được để trống")
     @Positive(message = "Đơn giá phải lớn hơn 0")
     @Column(name = "don_gia", nullable = false)
     private Double donGia;
-    
+
     @Column(name = "nam_sx")
     private Integer namSanXuat;
 
-    // Constructor mặc định
     public HangHoa() {}
 
-    // Constructor đầy đủ
     public HangHoa(String maHang, String tenHang, Integer soLuong, String nhaSanXuat, Double donGia, Integer namSanXuat) {
         this.maHang = maHang;
         this.tenHang = tenHang;
@@ -52,7 +50,6 @@ public class HangHoa {
         this.namSanXuat = namSanXuat;
     }
 
-    // Getter và Setter
     public String getMaHang() {
         return maHang;
     }
@@ -101,7 +98,6 @@ public class HangHoa {
         this.namSanXuat = namSanXuat;
     }
 
-    // Phương thức tính thành tiền
     public double thanhTien() {
         return soLuong * donGia;
     }

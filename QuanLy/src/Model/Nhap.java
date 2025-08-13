@@ -5,7 +5,7 @@ public class Nhap {
     public String maPhieu;
     public HangHoa hang;
     public int soLuongNhap;
-    public LocalDate ngayNhap; // ⬅ Thêm dòng này
+    public LocalDate ngayNhap;
 
     public Nhap(String maPhieu, HangHoa hang, int soLuongNhap, LocalDate ngayNhap) {
         this.maPhieu = maPhieu;
@@ -14,12 +14,11 @@ public class Nhap {
         this.ngayNhap = ngayNhap;
     }
 
-    // Constructor cũ cho tương thích
     public Nhap(String maPhieu, HangHoa hang, int soLuongNhap) {
         this.maPhieu = maPhieu;
         this.hang = hang;
         this.soLuongNhap = soLuongNhap;
-        this.ngayNhap = LocalDate.now(); // Mặc định là ngày hiện tại
+        this.ngayNhap = LocalDate.now();
     }
 
     public double tongTien() {

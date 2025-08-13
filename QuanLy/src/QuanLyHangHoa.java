@@ -4,8 +4,6 @@ import Model.HangHoa;
 public class QuanLyHangHoa {
     ArrayList<HangHoa> ds = new ArrayList<>();
 
-    // Đã xóa chức năng thêm hàng hóa
-
     public void xoa(String ma) {
         ds.removeIf(h -> h.maHang.equals(ma));
     }
@@ -47,7 +45,6 @@ public class QuanLyHangHoa {
         return tong;
     }
 
-    // Phương thức 1: Lọc hàng hóa theo tiêu chí
     public ArrayList<HangHoa> locTheoMa(String ma) {
         ArrayList<HangHoa> ketQua = new ArrayList<>();
         for (HangHoa h : ds) {

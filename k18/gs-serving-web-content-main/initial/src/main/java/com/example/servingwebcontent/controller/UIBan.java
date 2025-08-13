@@ -17,33 +17,32 @@ import com.example.servingwebcontent.model.StatItem;
 @Controller
 @RequestMapping("/ban")
 public class UIBan {
-    
+
     private List<Ban> dsBan = new ArrayList<>();
 
     private final HangHoaService hangHoaService;
- 
+
     public UIBan(HangHoaService hangHoaService) {
         this.hangHoaService = hangHoaService;
         Ban b1 = new Ban("P001", "Gạo ST25", "Khach Minh", 5, 50000.0);
         Ban b2 = new Ban("P002", "Nước Mắm", "Khach Dung", 3, 30000.0);
         Ban b3 = new Ban("P003", "Đường Cát", "Khach Duc", 8, 80000.0);
-        
+
         dsBan.add(b1);
         dsBan.add(b2);
         dsBan.add(b3);
     }
-    
-    // Method readList() như yêu cầu của cô
+
     @GetMapping
     public String readList(Model model) {
         model.addAttribute("banList", dsBan);
         model.addAttribute("tongSoPhieu", dsBan.size());
-        
+
         double tongDoanhThu = dsBan.stream()
                                    .mapToDouble(Ban::tongTien)
                                    .sum();
         model.addAttribute("tongDoanhThu", tongDoanhThu);
-        
+
         return "UIBan";
     }
 
@@ -51,7 +50,7 @@ public class UIBan {
     public String showAddForm(Model model) {
         model.addAttribute("ban", new Ban());
         model.addAttribute("action", "add");
-        return "ban/form"; // new template
+        return "ban/form";
     }
 
     @PostMapping("/add")
@@ -70,7 +69,6 @@ public class UIBan {
                     model.addAttribute("error","Kho chỉ còn " + target.getSoLuong() + " - không đủ để bán " + ban.getSoLuong());
                     return readList(model);
                 }
-                // Trừ tồn kho
                 target.setSoLuong(target.getSoLuong() - ban.getSoLuong());
                 hangHoaService.updateHangHoa(target);
                 if(ban.getDonGia() <= 0 && target.getDonGia()!=null){
@@ -81,7 +79,7 @@ public class UIBan {
         dsBan.add(ban);
         return "redirect:/ban";
     }
-    
+
     @GetMapping("/list")
     public String listBan(Model model) {
         return readList(model);
@@ -105,7 +103,6 @@ public class UIBan {
         return "statsBan";
     }
 
-    // Getter để controller khác (DoanhThu) truy cập
     public List<Ban> getDsBan(){
         return dsBan;
     }

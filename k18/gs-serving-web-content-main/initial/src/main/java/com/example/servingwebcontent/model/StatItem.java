@@ -1,8 +1,8 @@
 package com.example.servingwebcontent.model;
 
 public class StatItem {
-    private String code; // Mã hàng hoặc ký hiệu
-    private String name; // Tên hàng
+    private String code;
+    private String name;
     private int quantity;
     private double totalValue;
 

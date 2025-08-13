@@ -15,11 +15,9 @@ import com.example.servingwebcontent.model.StatItem;
 @Controller
 public class GreetingController {
 
-	// Danh sách phiếu nhập đơn giản cho UI UINhap (khác module /quanly/nhap)
 	private final List<Nhap> uiNhapList = new ArrayList<>();
 
 	public GreetingController(){
-		// dữ liệu mẫu ban đầu
 		uiNhapList.add(new Nhap("HH010", "Bánh Quy", 10, 12000, LocalDate.now().minusDays(1)));
 		uiNhapList.add(new Nhap("HH011", "Sữa Tươi", 5, 20000, LocalDate.now()));
 	}
@@ -36,10 +34,8 @@ public class GreetingController {
 		return "index";
 	}
 
-
 	@GetMapping("/nhap")
 	public String nhapRedirect(){
-		// Hợp nhất về module /quanly/nhap
 		return "redirect:/quanly/nhap";
 	}
 
@@ -60,10 +56,6 @@ public class GreetingController {
 		return "statsNhap";
 	}
 
-	// ĐÃ GỠ /nhap/add để tránh trùng với NhapStandaloneController (/nhap/add)
-	// Nếu cần giao diện đơn giản riêng, đổi sang đường dẫn khác (ví dụ: /nhap/simple/add)
-
-	// Báo cáo đơn giản theo ngày (hôm nay) cho UI
 	@GetMapping("/nhap/report")
 	public String reportNhap(Model model){
 		LocalDate today = LocalDate.now();
@@ -74,9 +66,7 @@ public class GreetingController {
 		model.addAttribute("targetDate", today);
 		model.addAttribute("tongTienNhap", tongTien);
 		model.addAttribute("nhapTrongNgay", uiNhapList);
-		return "nhap/report"; // dùng template report hiện có (layout khác có thể giản lược)
+		return "nhap/report";
 	}
-
-	// /ban route handled in controller.UIBan
 
 }

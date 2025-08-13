@@ -19,22 +19,19 @@ public class NhapStandaloneController {
     public String showAddForm(Model model) {
         model.addAttribute("nhap", new Nhap());
         model.addAttribute("action", "add");
-        return "nhap/fullform"; // template full page
+        return "nhap/fullform";
     }
-
-    // Root /nhap đã được GreetingController xử lý redirect; không khai báo lại để tránh xung đột.
-
 
     @PostMapping("/add")
     public String addNhap(@ModelAttribute Nhap nhap, RedirectAttributes redirectAttributes) {
         try {
             nhapService.addNhap(nhap);
-            redirectAttributes.addFlashAttribute("successMessage", 
+            redirectAttributes.addFlashAttribute("successMessage",
                 "Thêm phiếu nhập hàng hóa " + nhap.getHanghoaID() + " (" + nhap.getTenHang() + ") thành công!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", 
+            redirectAttributes.addFlashAttribute("errorMessage",
                 "Có lỗi xảy ra khi thêm phiếu nhập: " + e.getMessage());
         }
-        return "redirect:/quanly/nhap"; // quay về danh sách quản lý
+        return "redirect:/quanly/nhap";
     }
 }
