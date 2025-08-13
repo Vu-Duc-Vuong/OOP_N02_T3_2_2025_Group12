@@ -37,8 +37,6 @@
 ### 4. 💰 Doanh Thu (`DoanhThu`)
 - Tính tổng tiền nhập, bán, doanh thu, lãi/lỗ theo ngày
 
----
-
 ## ⚙️ Các Phương Thức Chính
 
 - Tính tổng tiền nhập, tiền bán theo ngày
@@ -62,16 +60,6 @@ Project/
 ├── README.md               # Tài liệu mô tả dự án
 └── ...
 ```
-
----
-
-## ⚙️ Các Phương Thức Chính
-
-- Tính tổng tiền nhập, tiền bán theo ngày
-- Tính doanh thu, xác định lãi/lỗ theo ngày
-
----
-
 
 ## 🧪 Kiểm thử & Review
 
