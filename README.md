@@ -19,6 +19,7 @@
 ---
 
 
+
 ## 🧠 Phân tích đối tượng & Chức năng chính
 
 ### 1. 📦 Hàng Hóa (`HangHoa`)
@@ -35,6 +36,13 @@
 
 ### 4. 💰 Doanh Thu (`DoanhThu`)
 - Tính tổng tiền nhập, bán, doanh thu, lãi/lỗ theo ngày
+
+---
+
+## ⚙️ Các Phương Thức Chính
+
+- Tính tổng tiền nhập, tiền bán theo ngày
+- Tính doanh thu, xác định lãi/lỗ theo ngày
 
 ---
 
@@ -64,9 +72,22 @@ Project/
 
 ---
 
+
 ## 🧪 Kiểm thử & Review
-- Thư mục `review/`: kiểm thử logic nhập, bán, tồn kho, doanh thu
-- Thư mục `unitest/`: kiểm thử đơn vị các class nghiệp vụ
+
+| Lớp (Class)         | Chức năng kiểm thử chính |
+|---------------------|--------------------------|
+| `HangHoa`           | Thêm, sửa, xóa, hiển thị, cập nhật số lượng, kiểm tra lỗi số lượng không hợp lệ |
+| `Nhap`              | Tạo phiếu nhập, cập nhật tồn kho, kiểm tra nhập hàng với dữ liệu không hợp lệ |
+| `Ban`               | Tạo phiếu bán, cập nhật tồn kho, kiểm tra bán hàng vượt tồn kho |
+| `DoanhThu`          | Tính tổng tiền nhập, bán, doanh thu, lãi/lỗ theo ngày |
+| `QuanLyHangHoa`     | Quản lý danh sách hàng hóa, tìm kiếm, thống kê tồn kho |
+| `QuanLyNhap`        | Quản lý phiếu nhập, thống kê nhập theo ngày |
+| `QuanLyBan`         | Quản lý phiếu bán, thống kê bán theo ngày |
+
+**Thư mục kiểm thử:**
+- `review/`: kiểm thử logic nhập, bán, tồn kho, doanh thu
+- `unitest/`: kiểm thử đơn vị các class nghiệp vụ
 
 ---
 
