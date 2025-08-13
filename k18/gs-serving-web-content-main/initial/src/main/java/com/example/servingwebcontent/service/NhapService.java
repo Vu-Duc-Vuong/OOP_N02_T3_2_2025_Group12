@@ -6,6 +6,7 @@ import com.example.servingwebcontent.model.HangHoa;
 import com.example.servingwebcontent.repository.NhapRepository;
 import com.example.servingwebcontent.repository.HangHoaRepository;
 import org.springframework.stereotype.Service;
+import com.example.servingwebcontent.util.CodeGenerator;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -50,7 +51,9 @@ public class NhapService {
 
     private void validate(Nhap nhap){
         if (nhap.getHanghoaID() == null || nhap.getHanghoaID().isEmpty()) {
-            throw new IllegalArgumentException("Mã hàng hóa không được để trống!");
+            // Sinh mã nhập mới (nếu không truyền) dùng chung làm mã hàng hóa mới.
+            String code = CodeGenerator.nextNhap();
+            nhap.setHanghoaID(code);
         }
         if (nhap.getTenHang() == null || nhap.getTenHang().isEmpty()) {
             throw new IllegalArgumentException("Tên hàng hóa không được để trống!");
@@ -84,7 +87,7 @@ public class NhapService {
         );
         nhapRepository.save(entity);
 
-        HangHoa hangHoa = hangHoaRepository.findById(nhap.getHanghoaID()).orElse(null);
+    HangHoa hangHoa = hangHoaRepository.findById(nhap.getHanghoaID()).orElse(null);
         if (hangHoa == null) {
             hangHoa = new HangHoa(nhap.getHanghoaID(), nhap.getTenHang(), nhap.getSoLuongNhap(), "Nhập Kho", nhap.getGiaNhap(), LocalDate.now().getYear());
         } else {

@@ -3,6 +3,7 @@ package com.example.servingwebcontent.service;
 import com.example.servingwebcontent.model.HangHoa;
 import com.example.servingwebcontent.repository.HangHoaRepository;
 import org.springframework.stereotype.Service;
+import com.example.servingwebcontent.util.CodeGenerator;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -39,8 +40,13 @@ public class HangHoaService {
         if (h == null) return false;
         int newQty = h.getSoLuong() + delta;
         if (newQty < 0) return false;
-    h.setSoLuong(newQty);
-    repository.save(h);
+        if (newQty == 0) {
+            // Bán hết / xuất hết: xóa hàng khỏi kho để tránh vi phạm @Positive
+            repository.delete(h);
+            return true;
+        }
+        h.setSoLuong(newQty);
+        repository.save(h);
         return true;
     }
 
@@ -59,10 +65,16 @@ public class HangHoaService {
     public HangHoa getHangHoaById(String maHang) { return repository.findById(maHang).orElse(null); }
 
     public boolean addHangHoa(HangHoa hangHoa) {
-    if (repository.existsById(hangHoa.getMaHang())) {
+        if (hangHoa.getMaHang()==null || hangHoa.getMaHang().isBlank()) {
+            // Sinh mã mới dạng HHX
+            String code;
+            do { code = CodeGenerator.nextHangHoa(); } while (repository.existsById(code));
+            hangHoa.setMaHang(code);
+        }
+        if (repository.existsById(hangHoa.getMaHang())) {
             return false;
         }
-    repository.save(hangHoa);
+        repository.save(hangHoa);
         return true;
     }
 

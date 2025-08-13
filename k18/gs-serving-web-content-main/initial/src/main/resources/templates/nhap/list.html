@@ -10,15 +10,7 @@
     .total-highlight-row th{background:#FFF3CD !important;color:#D9534F !important;font-weight:700;font-size:1.05rem}
 </style>
 
-<!-- Alerts -->
-<div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
-    <i class="fas fa-check-circle"></i> <span th:text="${successMessage}"></span>
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-</div>
-<div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
-    <i class="fas fa-exclamation-circle"></i> <span th:text="${errorMessage}"></span>
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-</div>
+<!-- Alerts hiển thị ở layout.html, bỏ tại đây để tránh trùng lặp -->
 
 <div class="card">
     <div class="primary-gradient">
@@ -37,12 +29,11 @@
                         <th>Giá Nhập</th>
                         <th>Thời Gian Nhập</th>
                         <th>Tổng Tiền</th>
-                        <th>Thao Tác</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:if="${#lists.isEmpty(danhSachNhap)}">
-                        <td colspan="8" class="text-center text-muted"><i class="fas fa-inbox"></i> Chưa có phiếu nhập nào</td>
+                        <td colspan="7" class="text-center text-muted"><i class="fas fa-inbox"></i> Chưa có phiếu nhập nào</td>
                     </tr>
                     <tr th:each="nhap, iterStat : ${danhSachNhap}">
                         <td th:text="${iterStat.index + 1}">1</td>
@@ -52,13 +43,12 @@
                         <td><span th:if="${nhap.giaNhap >= 0}" th:text="|${#numbers.formatDecimal(nhap.giaNhap,0,'POINT',0,'COMMA')} VNĐ|">0 VNĐ</span></td>
                         <td th:text="${nhap.thoiGianNhap != null ? #temporals.format(nhap.thoiGianNhap,'HH:mm dd/MM/yyyy') : 'N/A'}">N/A</td>
                         <td><strong class="money-success" th:text="|${#numbers.formatDecimal(nhap.tongTien,0,'POINT',0,'COMMA')} VNĐ|">0 VNĐ</strong></td>
-                        <td><em class="text-muted">(Chưa hỗ trợ)</em></td>
                     </tr>
                 </tbody>
                 <tfoot th:if="${!#lists.isEmpty(danhSachNhap)}">
                     <tr class="total-highlight-row">
                         <th colspan="6" class="text-end">TỔNG CỘNG:</th>
-                        <th colspan="2"><span th:text="|${#numbers.formatDecimal(totalAllMoney,0,'POINT',0,'COMMA')} VNĐ|">0 VNĐ</span></th>
+                        <th><span th:text="|${#numbers.formatDecimal(totalAllMoney,0,'POINT',0,'COMMA')} VNĐ|">0 VNĐ</span></th>
                     </tr>
                 </tfoot>
             </table>

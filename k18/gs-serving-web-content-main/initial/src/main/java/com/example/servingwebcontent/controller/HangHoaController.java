@@ -88,4 +88,11 @@ public class HangHoaController {
 		}
 		return "redirect:/hanghoa";
 	}
+
+	// Thêm GET mapping để hỗ trợ link <a> hiện tại trong giao diện (tránh lỗi 405).
+	// Khuyến nghị lâu dài: đổi sang form POST/DELETE để đúng chuẩn REST.
+	@GetMapping("/delete/{maHang}")
+	public String deleteHangHoaGet(@PathVariable String maHang, RedirectAttributes redirectAttributes){
+		return deleteHangHoa(maHang, redirectAttributes);
+	}
 }

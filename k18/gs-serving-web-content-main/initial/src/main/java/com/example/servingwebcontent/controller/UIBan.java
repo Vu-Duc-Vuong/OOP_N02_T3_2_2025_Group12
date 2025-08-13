@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.time.LocalDate;
+import com.example.servingwebcontent.util.CodeGenerator;
 import com.example.servingwebcontent.model.StatItem;
 
 @Controller
@@ -55,7 +56,9 @@ public class UIBan {
 
     @PostMapping("/add")
     public String addBan(@ModelAttribute Ban ban, Model model) {
-        if (ban.getMaPhieu() == null || ban.getMaPhieu().isEmpty()) return "redirect:/ban";
+        if (ban.getMaPhieu() == null || ban.getMaPhieu().isBlank()) {
+            ban.setMaPhieu(CodeGenerator.nextBan());
+        }
         if (ban.getSoLuong() <=0){
             model.addAttribute("error","Số lượng phải >0");
             return readList(model);
@@ -69,8 +72,8 @@ public class UIBan {
                     model.addAttribute("error","Kho chỉ còn " + target.getSoLuong() + " - không đủ để bán " + ban.getSoLuong());
                     return readList(model);
                 }
-                target.setSoLuong(target.getSoLuong() - ban.getSoLuong());
-                hangHoaService.updateHangHoa(target);
+                // Giảm số lượng; nếu về 0 sẽ bị xóa bởi service
+                hangHoaService.adjustSoLuong(target.getMaHang(), -ban.getSoLuong());
                 if(ban.getDonGia() <= 0 && target.getDonGia()!=null){
                     ban.setDonGia(target.getDonGia());
                 }
@@ -91,8 +94,9 @@ public class UIBan {
         for(Ban b: dsBan){
             String code = b.getMaPhieu();
             String name = b.getTenHang()!=null? b.getTenHang(): code;
-            map.computeIfAbsent(code, c -> new StatItem(c, name))
-                .add(b.getSoLuong(), b.tongTien());
+            StatItem item = map.computeIfAbsent(code, c -> new StatItem(c, name));
+            item.add(b.getSoLuong(), b.tongTien());
+            item.setThoiGian(b.getThoiGianBan());
         }
         List<StatItem> items = new ArrayList<>(map.values());
         double totalValue = items.stream().mapToDouble(StatItem::getTotalValue).sum();

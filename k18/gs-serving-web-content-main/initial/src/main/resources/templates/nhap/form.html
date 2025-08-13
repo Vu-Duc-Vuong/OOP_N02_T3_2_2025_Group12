@@ -42,14 +42,15 @@
                                placeholder="Nhập số lượng">
                     </div>
                     
-                    <!-- Giá Nhập -->
+                    <!-- Giá Nhập với định dạng nghìn -->
                     <div class="mb-3">
-                        <label for="giaNhap" class="form-label">
+                        <label class="form-label">
                             <i class="fas fa-money-bill"></i> Giá Nhập (VNĐ) <span class="text-danger">*</span>
                         </label>
-                        <input type="number" class="form-control" id="giaNhap" 
-                               th:field="*{giaNhap}" required min="0" step="1000"
-                               placeholder="Nhập giá nhập">
+                        <!-- Trường hiển thị định dạng 1.000 -->
+                        <input type="text" class="form-control" id="giaNhapDisplay" placeholder="VD: 100.000" inputmode="numeric" autocomplete="off" required>
+                        <!-- Trường ẩn submit giá trị số -->
+                        <input type="hidden" th:field="*{giaNhap}" id="giaNhap" />
                     </div>
                     
                     <!-- Thời Gian Nhập (mới bổ sung) -->
@@ -78,6 +79,30 @@
             </div>
         </div>
     </div>
-</div>
+></div>
+
+<!-- Script định dạng giá nhập -->
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    const giaNhapHidden = document.getElementById('giaNhap');
+    const giaNhapDisplay = document.getElementById('giaNhapDisplay');
+    const soLuong = document.getElementById('soLuongNhap');
+
+    function formatNumber(v){
+        if(v === '' || v == null) return '';
+        const num = Number(v.toString().replace(/\D/g,''));
+        if(isNaN(num)) return '';
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+    if(giaNhapHidden.value){
+        giaNhapDisplay.value = formatNumber(giaNhapHidden.value);
+    }
+    giaNhapDisplay.addEventListener('input', function(){
+        const numeric = this.value.replace(/\D/g,'');
+        giaNhapHidden.value = numeric;
+        this.value = formatNumber(numeric);
+    });
+});
+</script>
 
 <!-- Đã xóa script tự động set Ngày Nhập theo yêu cầu -->
