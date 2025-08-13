@@ -5,11 +5,27 @@
 
 ---
 
+
+
 ## 📋 Thông Tin Dự Án
 - **Giảng viên hướng dẫn:** (bổ sung)
-- **Thành viên nhóm:**
-  - Vũ Đức Vượng (24100383) – Team Leader, Backend
-  - Tưởng Văn Tuyên (24100462) – Frontend, UI/UX
+
+---
+
+## 📌 Giới thiệu
+Ứng dụng quản lý cửa hàng tạp hóa giúp quản lý nhập hàng, bán hàng, tồn kho, doanh thu, lãi/lỗ. Xây dựng bằng Java (Spring Boot), giao diện web (Thymeleaf), lưu trữ dữ liệu với JPA/Hibernate.
+
+---
+
+## 👥 Thành viên nhóm
+
+| STT | Họ tên           | Mã sinh viên | GitHub                                      | Vai trò                |
+|-----|------------------|--------------|----------------------------------------------|------------------------|
+| 1   | Vũ Đức Vượng     | 24100383     | [Vu-Duc-Vuong](https://github.com/Vu-Duc-Vuong)   | Team Leader, Backend   |
+| 2   | Tưởng Văn Tuyên  | 24100462     | [vantuyendev](https://github.com/vantuyendev)     | Frontend, UI/UX        |
+| 3   | (bổ sung GVHD)    | (bổ sung)    |                                              | Giảng viên hướng dẫn   |
+
+---
 
 ---
 
@@ -106,6 +122,7 @@ java TestDoanhThu
   - Quản lý luồng xử lý, cấu trúc theo mô hình MVC
 - Giao diện: Console (text-based)
 - Lưu trữ: File nhị phân 
+- Cấu trúc dữ liệu: ArrayList, LinkedList, Map, ....
 ---
 
 ## 📚 Tài liệu tham khảo
