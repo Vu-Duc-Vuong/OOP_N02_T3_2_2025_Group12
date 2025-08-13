@@ -157,3 +157,7 @@ public DoanhThu tinhDoanhThuNgay(LocalDate ngay) {
    (Vũ Đức Vượng)
 2. **✅ Hàng Hóa (HangHoa)**
    (Tưởng Văn Tuyên)
+
+
+**cách chạy: cd Project/gs-serving-web-content-main/initial
+./mvnw spring-boot:run
