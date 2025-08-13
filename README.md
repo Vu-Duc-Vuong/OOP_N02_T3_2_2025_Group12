@@ -21,9 +21,9 @@
 
 | STT | Họ tên           | Mã sinh viên | GitHub                                      | Vai trò                |
 |-----|------------------|--------------|----------------------------------------------|------------------------|
-| 1   | Vũ Đức Vượng     | 24100383     | [Vu-Duc-Vuong](https://github.com/Vu-Duc-Vuong)   | Team Leader, Backend   |
-| 2   | Tưởng Văn Tuyên  | 24100462     | [vantuyendev](https://github.com/vantuyendev)     | Frontend, UI/UX        |
-| 3   | (bổ sung GVHD)    | (bổ sung)    |                                              | Giảng viên hướng dẫn   |
+| 1   | Vũ Đức Vượng     | 24100383     | [Vu-Duc-Vuong](https://github.com/Vu-Duc-Vuong)   | Fullstack Developer |
+| 2   | Tưởng Văn Tuyên  | 24100462     | [vantuyendev](https://github.com/vantuyendev)     | UI/UX Designer      |
+| 3   | Nguyễn Lệ Thu	    |     |                                              | Giảng viên hướng dẫn   |
 
 ---
 
