@@ -1,163 +1,108 @@
 # 🏪 Ứng Dụng Quản Lý Cửa Hàng Tạp Hóa
 
+> **Dự án cuối kỳ môn Lập trình Hướng Đối Tượng (OOP)**  
+> Nhóm 12 – N02_T3_2_2025 – Học kỳ 2 – Năm học 2024-2025
+
+---
+
 ## 📋 Thông Tin Dự Án
-
-**Môn học:** Lập Trình Hướng Đối Tượng (OOP)  
-**Lớp:** N02_T3_2_2025  
-**Nhóm:** 12  
-**Học kỳ:** 2 - Năm học 2024-2025  
-
-### 👥 Thành Viên Nhóm
-
-1. **Vũ Đức Vượng** (24100383)  
-   - GitHub: [Vu-Duc-Vuong](https://github.com/Vu-Duc-Vuong)
-   - Email: 24100383@student.hust.edu.vn
-   - Vai trò: Team Leader, Backend Developer
-
-2. **Tưởng Văn Tuyên** (24100462)  
-   - GitHub: [vantuyendev](https://github.com/vantuyendev)  
-   - Email: 24100462@student.hust.edu.vn
-   - Vai trò: Frontend Developer, UI/UX Designer
+- **Giảng viên hướng dẫn:** (bổ sung)
+- **Thành viên nhóm:**
+  - Vũ Đức Vượng (24100383) – Team Leader, Backend
+  - Tưởng Văn Tuyên (24100462) – Frontend, UI/UX
 
 ---
 
-## 🎯 Mô Tả Dự Án
-
-Ứng dụng **Quản Lý Cửa Hàng Tạp Hóa** được xây dựng bằng Spring Boot Framework, cung cấp giải pháp toàn diện cho việc quản lý hoạt động kinh doanh của cửa hàng tạp hóa. Ứng dụng hỗ trợ quản lý nhập hàng, bán hàng, theo dõi tồn kho và tính toán doanh thu một cách hiệu quả.
-
-### ✨ Tính Năng Chính
-
-- 📦 **Quản lý nhập hàng**: Thêm, sửa, xóa phiếu nhập
-- 🛒 **Quản lý bán hàng**: Xử lý các giao dịch bán hàng
-- 📊 **Báo cáo doanh thu**: Thống kê theo ngày, tháng
-- 🔍 **Tìm kiếm và lọc**: Tìm kiếm hàng hóa theo nhiều tiêu chí
-- 💰 **Tính toán lãi/lỗ**: Phân tích hiệu quả kinh doanh
-- 📱 **Giao diện responsive**: Hỗ trợ đa nền tảng
+## 📌 Giới thiệu
+Ứng dụng quản lý cửa hàng tạp hóa giúp quản lý nhập hàng, bán hàng, tồn kho, doanh thu, lãi/lỗ. Xây dựng bằng Java (Spring Boot), giao diện web (Thymeleaf), lưu trữ dữ liệu với JPA/Hibernate.
 
 ---
 
-### 🗂️ Các Lớp Đối Tượng Chính
+## 🗂️ Cấu trúc thư mục
 
-#### **1. 📦 Hàng Hóa (HangHoa)**
-```java
-public class HangHoa {
-    private String hanghoaID;      // Mã hàng hóa (Primary Key)
-    private String tenHangHoa;     // Tên hàng hóa
-    private int soLuongHangHoa;    // Số lượng tồn kho
-    private String nhaSanXuat;     // Nhà sản xuất
-    private int namSanXuat;        // Năm sản xuất
-    private double donGia;         // Đơn giá
-}
+```plaintext
+Project/
+├── QuanLy/                 # Các class nghiệp vụ quản lý (QuanLyBan, QuanLyNhap, ...)
+├── review/                 # File kiểm thử, review logic nghiệp vụ
+├── unitest/                # Các file kiểm thử đơn vị
+├── gs-serving-web-content-main/initial/ # Spring Boot MVC, controller, model, view
+│   ├── src/main/java/com/example/servingwebcontent/
+│   │   ├── controller/     # Controller Spring Boot
+│   │   ├── model/          # Entity/model JPA
+│   │   └── ...
+│   └── ...
+├── README.md               # Tài liệu mô tả dự án
+└── ...
 ```
 
-#### **2. 📥 Nhập Hàng (Nhap)**
-```java
-public class Nhap {
-    private String hanghoaID;      // Mã hàng hóa (Foreign Key)
-    private int soLuongNhap;       // Số lượng nhập
-    private double giaNhap;        // Giá nhập
-    private LocalDate ngayNhap;    // Ngày nhập
-   private String tenHangHoa;     // Tên hàng hóa
-}
-```
+---
 
-#### **3. 🛒 Bán Hàng (Ban)**
-```java
-public class Ban {
-    private String hanghoaID;      // Mã hàng hóa (Foreign Key)
-    private String tenHangHoa;     // Tên hàng hóa
-    private int soLuongBan;        // Số lượng bán
-    private double giaBan;         // Giá bán
-    private LocalDate ngayBan;     // Ngày bán
-}
-```
+## 👥 Đối tượng & Chức năng chính
 
-#### **4. 💰 Doanh Thu (DoanhThu)**
-```java
-public class DoanhThu {
-    private LocalDate ngay;           // Ngày tính doanh thu
-    private double tongTienNhap;      // Tổng tiền nhập
-    private double tongTienBan;       // Tổng tiền bán
-    private double doanhThu;          // Doanh thu = Bán - Nhập
-    private String trangThai;         // "LÃI" hoặc "LỖ"
-}
-```
+### 1. 📦 Hàng Hóa (`HangHoa`)
+- Quản lý thông tin hàng hóa: mã, tên, số lượng, nhà sản xuất, đơn giá
+- Thêm, sửa, xóa hàng hóa
+
+### 2. 📥 Nhập Hàng (`Nhap`)
+- Lưu phiếu nhập: mã phiếu, mã hàng, số lượng, ngày nhập
+- Cập nhật tồn kho khi nhập
+
+### 3. 🛒 Bán Hàng (`Ban`)
+- Lưu phiếu bán: mã phiếu, mã hàng, số lượng, ngày bán
+- Cập nhật tồn kho khi bán
+
+### 4. 💰 Doanh Thu (`DoanhThu`)
+- Tính tổng tiền nhập, bán, doanh thu, lãi/lỗ theo ngày
 
 ---
 
 ## ⚙️ Các Phương Thức Chính
 
-### 🔍 **1. Phương thức lọc hàng hóa theo tiêu chí** (Tưởng Văn Tuyên)
-
-```java
-public List<HangHoa> locHangHoaTheoTieuChi(String tieuChi, String giaTri) {
-    // Lọc danh sách hàng hóa theo các tiêu chí:
-    // - Mã hàng hóa, tên hàng hóa, nhà sản xuất
-    // - Số lượng tồn kho, năm sản xuất
-}
-```
-
-**Chức năng:** Cho phép người dùng lọc danh sách hàng hóa dựa trên nhiều tiêu chí như mã hàng hóa, tên hàng hóa, số lượng tồn kho, hoặc nhà sản xuất.
-
-**Đầu vào:** Người dùng nhập từ bàn phím tiêu chí cần lọc (ví dụ: nhập tên hàng là "Sữa").
-
-**Đầu ra:** Danh sách các hàng hóa thỏa mãn tiêu chí lọc được hiển thị ra màn hình.
+- Tính tổng tiền nhập, tiền bán theo ngày
+- Tính doanh thu, xác định lãi/lỗ theo ngày
 
 ---
 
-### 💰 **2. Phương thức tính tổng tiền nhập hàng trong ngày** (Vũ Đức Vượng)
-
-```java
-public double getTongTienNhapTheoNgay(LocalDate ngay) {
-    return danhSachNhap.stream()
-        .filter(nhap -> nhap.getNgayNhap().equals(ngay))
-        .mapToDouble(nhap -> nhap.getSoLuongNhap() * nhap.getGiaNhap())
-        .sum();
-}
-```
-
-**Chức năng:** Tính tổng số tiền đã nhập hàng trong ngày hiện tại, dựa trên các phiếu nhập đã lưu.
-
-**Đầu vào:** Danh sách các phiếu nhập có ngày nhập bằng ngày hiện tại.
-
-**Đầu ra:** Tổng số tiền nhập (tổng = tổng của (số lượng nhập × đơn giá) của từng mặt hàng trong phiếu nhập).
+## 🧪 Kiểm thử & Review
+- Thư mục `review/`: kiểm thử logic nhập, bán, tồn kho, doanh thu
+- Thư mục `unitest/`: kiểm thử đơn vị các class nghiệp vụ
 
 ---
 
-### 📊 **3. Phương thức tính doanh thu và xác định lãi/lỗ trong ngày**
+## 🚀 Hướng dẫn chạy
 
-```java
-public DoanhThu tinhDoanhThuNgay(LocalDate ngay) {
-    double tongTienNhap = getTongTienNhapTheoNgay(ngay);
-    double tongTienBan = getTongTienBanTheoNgay(ngay);
-    double doanhThu = tongTienBan - tongTienNhap;
-    
-    return new DoanhThu(ngay, tongTienNhap, tongTienBan, doanhThu,
-                       doanhThu >= 0 ? "LÃI" : "LỖ");
-}
-```
-
-**Chức năng:** Tính tổng tiền bán và tiền nhập trong ngày. Từ đó xác định lãi (tổng bán > tổng nhập) hoặc lỗ (tổng bán < tổng nhập).
-
-**Đầu vào:** Danh sách các phiếu nhập và phiếu bán có ngày thực hiện là ngày hiện tại.
-
-**Đầu ra:** 
-- Tổng tiền nhập
-- Tổng tiền bán  
-- Trạng thái lãi/lỗ
-- Mức độ lãi/lỗ
-
----
-
-## 🎯 Kết Quả Đạt Được
-
-### ✅ Các Tính Năng Hoàn Thành
-
-1. **✅ Nhập Hàng (Nhap)**
-   (Vũ Đức Vượng)
-2. **✅ Hàng Hóa (HangHoa)**
-   (Tưởng Văn Tuyên)
-
-
-**cách chạy: cd Project/gs-serving-web-content-main/initial
+### 1. Chạy ứng dụng Spring Boot:
+```bash
+cd Project/gs-serving-web-content-main/initial
 ./mvnw spring-boot:run
+```
+
+### 2. Chạy kiểm thử nghiệp vụ (Java thuần):
+```bash
+cd Project/review
+javac *.java
+java TestNhapHang
+java TestBanHang
+java TestTonKho
+java TestDoanhThu
+```
+
+---
+
+## 💡 Công nghệ sử dụng
+- Ngôn ngữ lập trình: **Java**
+- Mô hình hướng đối tượng (OOP)
+- **Framework**: [Spring Boot](https://spring.io/projects/spring-boot)
+  - Quản lý luồng xử lý, cấu trúc theo mô hình MVC
+- Giao diện: Console (text-based)
+- Lưu trữ: File nhị phân 
+---
+
+## 📚 Tài liệu tham khảo
+
+- Slide bài giảng môn Lập trình Hướng Đối Tượng – GVHD: Nguyễn Lệ Thu
+- Java Docs – Oracle
+- Stack Overflow – Community
+
+---
+> © 2025 Nhóm 12 – Ứng dụng quản lý cửa hàng tạp hóa – Mã nguồn mở cho mục đích học tập
