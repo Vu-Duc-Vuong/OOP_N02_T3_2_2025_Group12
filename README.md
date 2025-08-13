@@ -1,13 +1,12 @@
 # 🏪 Ứng Dụng Quản Lý Cửa Hàng Tạp Hóa
 
 > **Dự án cuối kỳ môn Lập trình Hướng Đối Tượng (OOP)**  
-**Nhóm 12 – N02_T3_2_2025**  
-**Học kỳ 2 – Năm học 2024-2025**  
-**Giảng viên hướng dẫn:** TS. Nguyễn Lệ Thu  
+> Nhóm 12 – N02_T3_2_2025 – Học kỳ 2 – Năm học 2024-2025
 
 ---
 
 ## 📋 Thông Tin Dự Án
+- **Giảng viên hướng dẫn:** (bổ sung)
 - **Thành viên nhóm:**
   - Vũ Đức Vượng (24100383) – Team Leader, Backend
   - Tưởng Văn Tuyên (24100462) – Frontend, UI/UX
