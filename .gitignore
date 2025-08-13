@@ -19,6 +19,7 @@
 *.log
 
 
-.env
-.env.*
+## .env is now tracked for team convenience (security risk if public repo)
+# .env
+# .env.*
 !.env.example
