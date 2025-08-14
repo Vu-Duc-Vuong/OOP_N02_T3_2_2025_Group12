@@ -49,25 +49,19 @@
 ### 1. Đăng nhập
 ![Login Activity](images/Activity_login.png)
 
-#### Quản Lý Hàng Hóa
-Quy trình thêm, sửa, xóa hàng hóa (đã loại bỏ chức năng tìm kiếm).
 
-![Goods Management Activity](diagrams/GoodsManagementActivity.png)
+### 2. Quản lý hàng hóa 
+![management activity](images/management_activity.png)
 
-#### Quy Trình Nhập Hàng
-Mô tả luồng nhập hàng và cập nhật tồn kho.
 
-![Import Activity](diagrams/ImportActivity.png)
+### 3. Nhập hàng
+![import activity](images/import_activities.png)
 
-#### Quy Trình Bán Hàng
-Mô tả luồng bán hàng, kiểm tra tồn kho và xử lý thanh toán.
+### 4. Bán hàng
+![Sell Activity](images/Sell_Activity.png)
 
-![Sales Activity](diagrams/SalesActivity.png)
-
-#### Báo Cáo Doanh Thu
-Quy trình tính toán và hiển thị báo cáo doanh thu, lợi nhuận.
-
-![Revenue Report Activity](diagrams/RevenueReportActivity.png)
+### 5. Doanh thu 
+![revenue activity](images/revenue_activity.png)
 
 #### Đăng Nhập Hệ Thống
 Quy trình xác thực người dùng trước khi truy cập hệ thống.
