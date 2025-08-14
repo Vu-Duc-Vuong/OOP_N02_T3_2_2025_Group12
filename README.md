@@ -37,15 +37,17 @@
 
 ---
 
-## 📊 Diagrams
+## 📊 Biểu đồ lớp (Class Diagram)
 
-### 1. 🏗️ Class Diagram
-Mô tả cấu trúc lớp và mối quan hệ giữa các đối tượng trong hệ thống quản lý cửa hàng.
+### 🏗️ Class Diagram
 
-![Class Diagram](diagrams/ClassDiagram.png)
+![Class Diagram](images/ClassDiagram.png)
+---
 
-### 2. 🔄 Activity Diagrams
-Mô tả các luồng xử lý nghiệp vụ chính trong hệ thống.
+## 🔁 Biểu đồ hoạt động (Activity Diagram)
+
+### 1. Đăng nhập
+![Login Activity](images/Activity_login.png)
 
 #### Quản Lý Hàng Hóa
 Quy trình thêm, sửa, xóa hàng hóa (đã loại bỏ chức năng tìm kiếm).
