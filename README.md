@@ -137,9 +137,9 @@ Project/
 ![Console](images/Console.png)
 
 ## 🔑 Thông tin đăng nhập
-- **Tài khoản **: admin
-- **mật kh **: admin
-
+- ài khoản : admin
+- mật khẩu : admin
+t
 ## 🚀 Hướng dẫn chạy
 
 ### 1. Chạy ứng dụng Spring Boot:
