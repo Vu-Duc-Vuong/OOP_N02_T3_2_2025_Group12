@@ -22,13 +22,8 @@ public class NhapService {
     private final HangHoaRepository hangHoaRepository;
 
     public NhapService(NhapRepository nhapRepository, HangHoaRepository hangHoaRepository) {
-        this.nhapRepository = nhapRepository;
-        this.hangHoaRepository = hangHoaRepository;
-        if (nhapRepository.count() == 0) {
-            addNhapInternal(new Nhap("HH001", "Gạo ST25", 100, 15000, LocalDate.now().minusDays(1)));
-            addNhapInternal(new Nhap("HH002", "Nước Mắm", 50, 25000, LocalDate.now()));
-            addNhapInternal(new Nhap("HH003", "Đường Cát", 200, 8000, LocalDate.now().minusDays(2)));
-        }
+    this.nhapRepository = nhapRepository;
+    this.hangHoaRepository = hangHoaRepository;
     }
 
     private Nhap map(NhapEntity e) {

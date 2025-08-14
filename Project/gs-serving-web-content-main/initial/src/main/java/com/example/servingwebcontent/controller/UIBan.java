@@ -24,14 +24,7 @@ public class UIBan {
     private final HangHoaService hangHoaService;
 
     public UIBan(HangHoaService hangHoaService) {
-        this.hangHoaService = hangHoaService;
-        Ban b1 = new Ban("P001", "Gạo ST25", "Khach Minh", 5, 50000.0);
-        Ban b2 = new Ban("P002", "Nước Mắm", "Khach Dung", 3, 30000.0);
-        Ban b3 = new Ban("P003", "Đường Cát", "Khach Duc", 8, 80000.0);
-
-        dsBan.add(b1);
-        dsBan.add(b2);
-        dsBan.add(b3);
+    this.hangHoaService = hangHoaService;
     }
 
     @GetMapping
