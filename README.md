@@ -37,6 +37,74 @@
 
 ---
 
+---
+
+## 🗂️ Cấu trúc thư mục
+
+```plaintext
+Project/
+├── QuanLy/                 # Các class nghiệp vụ quản lý (QuanLyBan, QuanLyNhap, ...)
+├── review/                 # File kiểm thử, review logic nghiệp vụ
+├── unitest/                # Các file kiểm thử đơn vị
+├── gs-serving-web-content-main/initial/ # Spring Boot MVC, controller, model, view
+│   ├── src/main/java/com/example/servingwebcontent/
+│   │   ├── controller/     # Controller Spring Boot
+│   │   ├── model/          # Entity/model JPA
+│   │   └── ...
+│   └── ...
+├── README.md               # Tài liệu mô tả dự án
+└── ...
+```
+
+---
+
+## 🧪 Kiểm thử & Review
+
+| Lớp (Class)         | Chức năng kiểm thử chính |
+|---------------------|--------------------------|
+| `HangHoa`           | Thêm, sửa, xóa, hiển thị, cập nhật số lượng, kiểm tra lỗi số lượng không hợp lệ |
+| `Nhap`              | Tạo phiếu nhập, cập nhật tồn kho, kiểm tra nhập hàng với dữ liệu không hợp lệ |
+| `Ban`               | Tạo phiếu bán, cập nhật tồn kho, kiểm tra bán hàng vượt tồn kho |
+| `DoanhThu`          | Tính tổng tiền nhập, bán, doanh thu, lãi/lỗ theo ngày |
+| `QuanLyHangHoa`     | Quản lý danh sách hàng hóa, tìm kiếm, thống kê tồn kho |
+| `QuanLyNhap`        | Quản lý phiếu nhập, thống kê nhập theo ngày |
+| `QuanLyBan`         | Quản lý phiếu bán, thống kê bán theo ngày |
+
+**Thư mục kiểm thử:**
+- `review/`: kiểm thử logic nhập, bán, tồn kho, doanh thu
+- `unitest/`: kiểm thử đơn vị các class nghiệp vụ
+
+---
+
+
+
+## 🛠️ Chức năng chính
+
+### 1. Quản lý người dùng
+- Thêm / Sửa / Xóa người dùng
+- Lọc theo loại: Khách hàng (Customer), Nhà cung cấp (Seller)
+
+### 2. Quản lý sản phẩm
+- Thêm / Sửa / Xóa sản phẩm
+- Gán sản phẩm cho nhà cung cấp
+- Cập nhật số lượng sản phẩm sau mỗi đơn hàng
+
+### 3. Quản lý đơn hàng
+- Tạo / Cập nhật đơn hàng
+- Hiển thị danh sách đơn hàng
+- Gán đơn hàng cho khách hàng và thanh toán
+- Tính tổng tiền đơn hàng
+
+### 4. Quản lý thanh toán
+- Tạo và cập nhật thanh toán
+- Hiển thị thông tin thanh toán
+- Cập nhật trạng thái, phương thức thanh toán
+
+### 5. Lưu trữ dữ liệu
+- Dữ liệu được lưu vào file nhị phân
+- Sử dụng ObjectOutputStream, ObjectInputStream
+- Áp dụng ArrayList, Map,... để quản lý dữ liệu trong bộ nhớ
+
 ## 📊 Biểu đồ lớp (Class Diagram)
 
 ### 🏗️ Class Diagram
@@ -63,54 +131,10 @@
 ### 5. Doanh thu 
 ![revenue activity](images/revenue_activity.png)
 
-#### Đăng Nhập Hệ Thống
-Quy trình xác thực người dùng trước khi truy cập hệ thống.
-
-![Login Activity](diagrams/LoginActivity.png)
-
 ---
 
-## ⚙️ Các Phương Thức Chính
-
-- Tính tổng tiền nhập, tiền bán theo ngày
-- Tính doanh thu, xác định lãi/lỗ theo ngày
-
----
-
-## 🗂️ Cấu trúc thư mục
-
-```plaintext
-Project/
-├── QuanLy/                 # Các class nghiệp vụ quản lý (QuanLyBan, QuanLyNhap, ...)
-├── review/                 # File kiểm thử, review logic nghiệp vụ
-├── unitest/                # Các file kiểm thử đơn vị
-├── gs-serving-web-content-main/initial/ # Spring Boot MVC, controller, model, view
-│   ├── src/main/java/com/example/servingwebcontent/
-│   │   ├── controller/     # Controller Spring Boot
-│   │   ├── model/          # Entity/model JPA
-│   │   └── ...
-│   └── ...
-├── README.md               # Tài liệu mô tả dự án
-└── ...
-```
-
-## 🧪 Kiểm thử & Review
-
-| Lớp (Class)         | Chức năng kiểm thử chính |
-|---------------------|--------------------------|
-| `HangHoa`           | Thêm, sửa, xóa, hiển thị, cập nhật số lượng, kiểm tra lỗi số lượng không hợp lệ |
-| `Nhap`              | Tạo phiếu nhập, cập nhật tồn kho, kiểm tra nhập hàng với dữ liệu không hợp lệ |
-| `Ban`               | Tạo phiếu bán, cập nhật tồn kho, kiểm tra bán hàng vượt tồn kho |
-| `DoanhThu`          | Tính tổng tiền nhập, bán, doanh thu, lãi/lỗ theo ngày |
-| `QuanLyHangHoa`     | Quản lý danh sách hàng hóa, tìm kiếm, thống kê tồn kho |
-| `QuanLyNhap`        | Quản lý phiếu nhập, thống kê nhập theo ngày |
-| `QuanLyBan`         | Quản lý phiếu bán, thống kê bán theo ngày |
-
-**Thư mục kiểm thử:**
-- `review/`: kiểm thử logic nhập, bán, tồn kho, doanh thu
-- `unitest/`: kiểm thử đơn vị các class nghiệp vụ
-
----
+## 🖼️ Giao diện chương trình (Console)
+![Console](images/Console.png)
 
 ## 📊 Biểu đồ lớp (Class Diagram)
 
@@ -138,7 +162,9 @@ Project/
 ![Console](images/Console.png)
 
 ---
-
+## 🔑 Thông tin đăng nhập
+- **Tài khoản **: admin
+- **mật kh **: admin
 
 ## 🚀 Hướng dẫn chạy
 
