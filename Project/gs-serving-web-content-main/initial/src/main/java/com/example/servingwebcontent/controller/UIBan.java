@@ -18,6 +18,38 @@ import com.example.servingwebcontent.model.StatItem;
 @Controller
 @RequestMapping("/ban")
 public class UIBan {
+    @GetMapping("/edit/{index}")
+    public String showEditForm(@PathVariable int index, Model model) {
+        if (index < 0 || index >= dsBan.size()) {
+            model.addAttribute("error", "Không tìm thấy phiếu bán!");
+            return readList(model);
+        }
+        model.addAttribute("ban", dsBan.get(index));
+        model.addAttribute("action", "edit");
+        model.addAttribute("index", index);
+        return "ban/form";
+    }
+
+    @PostMapping("/edit/{index}")
+    public String editBan(@PathVariable int index, @ModelAttribute Ban ban, Model model) {
+        if (index < 0 || index >= dsBan.size()) {
+            model.addAttribute("error", "Không tìm thấy phiếu bán!");
+            return readList(model);
+        }
+        Ban old = dsBan.get(index);
+        // Không cho đổi mã phiếu
+        ban.setMaPhieu(old.getMaPhieu());
+        dsBan.set(index, ban);
+        return "redirect:/ban";
+    }
+
+    @GetMapping("/delete/{index}")
+    public String deleteBan(@PathVariable int index, Model model) {
+        if (index >= 0 && index < dsBan.size()) {
+            dsBan.remove(index);
+        }
+        return "redirect:/ban";
+    }
 
     private List<Ban> dsBan = new ArrayList<>();
 

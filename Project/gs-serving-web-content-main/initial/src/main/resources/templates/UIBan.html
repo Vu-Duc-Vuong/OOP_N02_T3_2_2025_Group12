@@ -104,6 +104,7 @@
                                 <th class="text-end"><i class="fas fa-tag"></i> Đơn Giá (VNĐ)</th>
                                 <th class="text-end"><i class="fas fa-clock"></i> Thời Gian Bán</th>
                                 <th class="text-end"><i class="fas fa-calculator"></i> Tổng Tiền (VNĐ)</th>
+                                <th class="text-center"><i class="fas fa-cogs"></i> Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -113,17 +114,20 @@
                                 <td th:text="${ban.tenHang}">Gạo</td>
                                 <td th:text="${ban.tenKhach}">Khách hàng</td>
                                 <td class="text-end"><span class="badge bg-info" th:text="${ban.soLuong}">0</span></td>
-                                <!-- Sửa thứ tự tham số formatDecimal -->
                                 <td class="text-end"><span th:text="${#numbers.formatDecimal(ban.donGia, 0, 'POINT', 0, 'COMMA')}">0</span></td>
                                 <td class="text-end"><span class="badge bg-light text-dark" th:text="${#temporals.format(ban.thoiGianBan, 'dd/MM HH:mm')}">--</span></td>
                                 <td class="text-end"><strong class="text-success"><span th:text="${#numbers.formatDecimal(ban.tongTien(), 0, 'POINT', 0, 'COMMA')}">0</span></strong></td>
+                                <td>
+                                    <a th:href="@{'/ban/edit/' + ${iterStat.index}}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Sửa</a>
+                                    <a th:href="@{'/ban/delete/' + ${iterStat.index}}" class="btn btn-danger btn-sm" onclick="return confirm('Xác nhận xóa phiếu này?')"><i class="fas fa-trash"></i> Xóa</a>
+                                </td>
                             </tr>
                         </tbody>
                         <tfoot class="table-light">
                             <tr>
-                                <th colspan="6" class="text-end"><strong>TỔNG CỘNG:</strong></th>
-                                <!-- Sửa thứ tự tham số formatDecimal -->
+                                <th colspan="7" class="text-end"><strong>TỔNG CỘNG:</strong></th>
                                 <th class="text-success text-end"><strong><span th:text="${#numbers.formatDecimal(tongDoanhThu, 0, 'POINT', 0, 'COMMA')}">0</span></strong></th>
+                                <th></th>
                             </tr>
                         </tfoot>
                     </table>

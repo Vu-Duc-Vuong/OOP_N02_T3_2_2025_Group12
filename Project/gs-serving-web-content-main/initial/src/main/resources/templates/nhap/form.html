@@ -20,7 +20,8 @@
                         </label>
                         <input type="text" class="form-control" id="hanghoaID" 
                                th:field="*{hanghoaID}" required
-                               placeholder="Nhập mã hàng hóa (VD: HH001)">
+                               placeholder="Nhập mã hàng hóa (VD: HH001)"
+                               th:readonly="${action == 'edit'}">
                     </div>
                     <!-- Tên Hàng -->
                     <div class="mb-3">

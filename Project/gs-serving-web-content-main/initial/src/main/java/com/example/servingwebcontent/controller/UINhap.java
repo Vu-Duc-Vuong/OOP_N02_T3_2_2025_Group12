@@ -1,4 +1,9 @@
+
 package com.example.servingwebcontent.controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.Model;
 
 import com.example.servingwebcontent.model.Nhap;
 import com.example.servingwebcontent.model.HangHoa;
@@ -15,6 +20,38 @@ import java.util.List;
 @Controller
 @RequestMapping("/uinhap")
 public class UINhap {
+    @GetMapping("/edit/{index}")
+    public String showEditForm(@PathVariable int index, Model model) {
+        if (index < 0 || index >= dsNhap.size()) {
+            model.addAttribute("error", "Không tìm thấy phiếu nhập!");
+            return readList(model);
+        }
+        model.addAttribute("nhap", dsNhap.get(index));
+        model.addAttribute("action", "edit");
+        model.addAttribute("index", index);
+        return "nhap/form";
+    }
+
+    @PostMapping("/edit/{index}")
+    public String editNhap(@PathVariable int index, @ModelAttribute Nhap nhap, Model model) {
+        if (index < 0 || index >= dsNhap.size()) {
+            model.addAttribute("error", "Không tìm thấy phiếu nhập!");
+            return readList(model);
+        }
+        Nhap old = dsNhap.get(index);
+        // Không cho đổi mã hàng hóa
+        nhap.setHanghoaID(old.getHanghoaID());
+        dsNhap.set(index, nhap);
+        return "redirect:/uinhap";
+    }
+
+    @GetMapping("/delete/{index}")
+    public String deleteNhap(@PathVariable int index, Model model) {
+        if (index >= 0 && index < dsNhap.size()) {
+            dsNhap.remove(index);
+        }
+        return "redirect:/uinhap";
+    }
     private List<Nhap> dsNhap = new ArrayList<>();
     private final HangHoaService hangHoaService;
 

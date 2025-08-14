@@ -142,8 +142,9 @@ Project/
 ## 🚀 Hướng dẫn chạy
 
 ### 1. Chạy ứng dụng Spring Boot:
-```bash
+```
 cd Project/gs-serving-web-content-main/initial && ./mvnw spring-boot:run
+
 
 ```
 

@@ -76,31 +76,21 @@
                                 <th><i class="fas fa-money-bill"></i> Giá Nhập</th>
                                 <th><i class="fas fa-clock"></i> Thời Gian Nhập</th>
                                 <th><i class="fas fa-calculator"></i> Tổng Tiền</th>
+                                <th class="text-center"><i class="fas fa-cogs"></i> Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="nhap, iterStat : ${nhapList}">
                                 <td th:text="${iterStat.count}">1</td>
+                                <td><span class="badge bg-warning" th:text="${nhap.hanghoaID}">HH001</span></td>
+                                <td><span class="badge bg-secondary" th:text="${nhap.tenHang}">Tên hàng</span></td>
+                                <td><span class="badge bg-info" th:text="${nhap.soLuongNhap}">0</span></td>
+                                <td><span th:text="${#numbers.formatDecimal(nhap.giaNhap, 0, 'POINT', 0, 'COMMA')}">0</span> VNĐ</td>
+                                <td><span class="badge bg-light text-dark" th:text="${#temporals.format(nhap.thoiGianNhap, 'dd/MM HH:mm')}"></span></td>
+                                <td><strong class="text-warning"><span th:text="${#numbers.formatDecimal(nhap.tongTien, 0, 'POINT', 0, 'COMMA')}">0</span> VNĐ</strong></td>
                                 <td>
-                                    <span class="badge bg-warning" th:text="${nhap.hanghoaID}">HH001</span>
-                                </td>
-                                <td>
-                                    <span class="badge bg-secondary" th:text="${nhap.tenHang}">Tên hàng</span>
-                                </td>
-                                <td>
-                                    <span class="badge bg-info" th:text="${nhap.soLuongNhap}">0</span>
-                                </td>
-                                <td>
-                                    <!-- Sửa thứ tự tham số: value, minInt, thousandsType, decimalDigits, decimalType -->
-                                    <span th:text="${#numbers.formatDecimal(nhap.giaNhap, 0, 'POINT', 0, 'COMMA')}">0</span> VNĐ
-                                </td>
-                                <td>
-                                    <span class="badge bg-light text-dark" th:text="${#temporals.format(nhap.thoiGianNhap, 'dd/MM HH:mm')}" title="" ></span>
-                                </td>
-                                <td>
-                                    <strong class="text-warning">
-                                        <span th:text="${#numbers.formatDecimal(nhap.tongTien, 0, 'POINT', 0, 'COMMA')}">0</span> VNĐ
-                                    </strong>
+                                    <a th:href="@{'/uinhap/edit/' + ${iterStat.index}}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Sửa</a>
+                                    <a th:href="@{'/uinhap/delete/' + ${iterStat.index}}" class="btn btn-danger btn-sm" onclick="return confirm('Xác nhận xóa phiếu này?')"><i class="fas fa-trash"></i> Xóa</a>
                                 </td>
                             </tr>
                         </tbody>
