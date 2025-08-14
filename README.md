@@ -139,7 +139,6 @@ Project/
 ## 🔑 Thông tin đăng nhập
 - tài khoản : admin
 - mật khẩu : admin
-t
 ## 🚀 Hướng dẫn chạy
 
 ### 1. Chạy ứng dụng Spring Boot:
