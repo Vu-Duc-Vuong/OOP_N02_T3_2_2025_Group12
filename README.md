@@ -136,32 +136,6 @@ Project/
 ## 🖼️ Giao diện chương trình (Console)
 ![Console](images/Console.png)
 
-## 📊 Biểu đồ lớp (Class Diagram)
-
-![Class Diagram](images/ClassDiagram.png)
-
----
-
-## 🔁 Biểu đồ hoạt động (Activity Diagram)
-
-### 1. Đăng nhập
-![Login Activity](images/Activity_login.png)
-
-### 2. Mua hàng
-![Buy Activity](images/BuyActivityDiagram.png)
-
-### 3. Bán hàng
-![Sell Activity](images/SellActivityDiagram.png)
-
-### 4. Tìm kiếm danh sách đơn hàng đã thanh toán của khách hàng cụ thể 
-![Image](images/An.png)
-
----
-
-## 🖼️ Giao diện chương trình (Console)
-![Console](images/Console.png)
-
----
 ## 🔑 Thông tin đăng nhập
 - **Tài khoản **: admin
 - **mật kh **: admin
