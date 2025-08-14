@@ -137,7 +137,7 @@ Project/
 ![Console](images/Console.png)
 
 ## 🔑 Thông tin đăng nhập
-- ài khoản : admin
+- tài khoản : admin
 - mật khẩu : admin
 t
 ## 🚀 Hướng dẫn chạy
