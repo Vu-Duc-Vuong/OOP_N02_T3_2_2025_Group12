@@ -3,10 +3,24 @@ import Model.Ban;
 import Model.HangHoa;
 
 public class QuanLyBan {
-    ArrayList<Ban> dsBan = new ArrayList<>();
+    ArrayList<Ban> dsBan;
+
+    public QuanLyBan() {
+        try {
+            dsBan = Model.BanDAO.getAll();
+        } catch (Exception e) {
+            dsBan = new ArrayList<>();
+            System.err.println("Lỗi đọc dữ liệu từ MySQL: " + e.getMessage());
+        }
+    }
 
     public void them(Ban b) {
         dsBan.add(b);
+        try {
+            Model.BanDAO.save(b);
+        } catch (Exception e) {
+            System.err.println("Lỗi lưu vào MySQL: " + e.getMessage());
+        }
     }
 
     public void xoa(String ma) {

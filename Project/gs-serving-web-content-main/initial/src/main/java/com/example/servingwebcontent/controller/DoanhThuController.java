@@ -1,5 +1,7 @@
 package com.example.servingwebcontent.controller;
 import com.example.servingwebcontent.model.Ban;
+import com.example.servingwebcontent.model.BanEntity;
+import com.example.servingwebcontent.service.BanService;
 import com.example.servingwebcontent.model.Nhap;
 import com.example.servingwebcontent.service.NhapService;
 import org.springframework.stereotype.Controller;
@@ -18,10 +20,12 @@ public class DoanhThuController {
 
     private final NhapService nhapService;
     private final UIBan uiBan;
+    private final BanService banService;
 
-    public DoanhThuController(NhapService nhapService, UIBan uiBan){
+    public DoanhThuController(NhapService nhapService, UIBan uiBan, BanService banService){
         this.nhapService = nhapService;
         this.uiBan = uiBan;
+        this.banService = banService;
     }
 
     @GetMapping
@@ -58,7 +62,20 @@ public class DoanhThuController {
         .mapToDouble(Nhap::getTongTien)
         .sum();
 
-    double tongBan = uiBan.getDsBan().stream()
+    // Lấy danh sách bán từ MySQL, chuyển sang Ban để giữ logic cũ
+    List<Ban> banList = new java.util.ArrayList<>();
+    for (BanEntity e : banService.getAll()) {
+        Ban b = new Ban();
+        b.setMaPhieu(e.getMaPhieu());
+        b.setTenHang(e.getTenHang());
+        b.setTenKhach(e.getTenKhach());
+        b.setSoLuong(e.getSoLuongBan());
+        b.setDonGia(e.getDonGia());
+        b.setNgayBan(e.getNgayBan());
+        b.setThoiGianBan(e.getThoiGianBan());
+        banList.add(b);
+    }
+    double tongBan = banList.stream()
         .filter(b -> b.getThoiGianBan()!=null && !b.getThoiGianBan().isBefore(start) && !b.getThoiGianBan().isAfter(end))
         .mapToDouble(Ban::tongTien)
         .sum();
