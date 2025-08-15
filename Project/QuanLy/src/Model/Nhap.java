@@ -28,4 +28,8 @@ public class Nhap {
     public LocalDate getNgayNhap() {
         return ngayNhap;
     }
+
+    public int getSoLuong() {
+        return soLuongNhap;
+    }
 }

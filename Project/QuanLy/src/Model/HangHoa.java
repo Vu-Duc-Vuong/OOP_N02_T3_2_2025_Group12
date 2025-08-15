@@ -18,4 +18,20 @@ public class HangHoa {
     public double thanhTien() {
         return soLuong * donGia;
     }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public double getGia() {
+        return donGia;
+    }
+
+    public String getTen() {
+        return tenHang;
+    }
 }
