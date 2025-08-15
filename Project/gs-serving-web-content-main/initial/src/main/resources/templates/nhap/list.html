@@ -26,6 +26,7 @@
                         <th>Mã Hàng Hóa</th>
                         <th>Tên Hàng</th>
                         <th>Số Lượng Nhập</th>
+                        <th>Nhà Sản Xuất</th>
                         <th>Giá Nhập</th>
                         <th>Thời Gian Nhập</th>
                         <th>Tổng Tiền</th>
@@ -40,6 +41,7 @@
                         <td><strong th:text="${nhap.hanghoaID}">HH001</strong></td>
                         <td th:text="${nhap.tenHang}">Gạo ST25</td>
                         <td th:text="${nhap.soLuongNhap}">100</td>
+                        <td th:text="${nhap.nhaSanXuat}">Vinamilk</td>
                         <td><span th:if="${nhap.giaNhap >= 0}" th:text="|${#numbers.formatDecimal(nhap.giaNhap,0,'POINT',0,'COMMA')} VNĐ|">0 VNĐ</span></td>
                         <td th:text="${nhap.thoiGianNhap != null ? #temporals.format(nhap.thoiGianNhap,'HH:mm dd/MM/yyyy') : 'N/A'}">N/A</td>
                         <td><strong class="money-success" th:text="|${#numbers.formatDecimal(nhap.tongTien,0,'POINT',0,'COMMA')} VNĐ|">0 VNĐ</strong></td>
@@ -47,8 +49,11 @@
                 </tbody>
                 <tfoot th:if="${!#lists.isEmpty(danhSachNhap)}">
                     <tr class="total-highlight-row">
-                        <th colspan="6" class="text-end">TỔNG CỘNG:</th>
-                        <th><span th:text="|${#numbers.formatDecimal(totalAllMoney,0,'POINT',0,'COMMA')} VNĐ|">0 VNĐ</span></th>
+                        <th colspan="7" style="background:#FFF3CD !important;"></th>
+                        <th style="background:#FFF3CD !important; text-align:left;">
+                            <span style="color:#D9534F; font-weight:700; font-size:1.05rem; margin-left:-113px;">TỔNG CỘNG:</span>
+                            <span style="color:#28A745; font-weight:700; font-size:1.05rem; margin-left:2px;" th:text="|${#numbers.formatDecimal(totalAllMoney,0,'POINT',0,'COMMA')} VNĐ|">0 VNĐ</span>
+                        </th>
                     </tr>
                 </tfoot>
             </table>

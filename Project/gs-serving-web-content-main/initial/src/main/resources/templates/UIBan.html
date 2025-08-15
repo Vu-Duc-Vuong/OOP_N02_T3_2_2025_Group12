@@ -118,8 +118,8 @@
                                 <td class="text-end"><span class="badge bg-light text-dark" th:text="${#temporals.format(ban.thoiGianBan, 'dd/MM HH:mm')}">--</span></td>
                                 <td class="text-end"><strong class="text-success"><span th:text="${#numbers.formatDecimal(ban.tongTien(), 0, 'POINT', 0, 'COMMA')}">0</span></strong></td>
                                 <td>
-                                    <a th:href="@{'/ban/edit/' + ${iterStat.index}}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Sửa</a>
-                                    <a th:href="@{'/ban/delete/' + ${iterStat.index}}" class="btn btn-danger btn-sm" onclick="return confirm('Xác nhận xóa phiếu này?')"><i class="fas fa-trash"></i> Xóa</a>
+                                    <a th:href="@{'/ban/edit/' + ${ban.maPhieu}}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Sửa</a>
+                                    <a th:href="@{'/ban/delete/' + ${ban.maPhieu}}" class="btn btn-danger btn-sm" onclick="return confirm('Xác nhận xóa phiếu này?')"><i class="fas fa-trash"></i> Xóa</a>
                                 </td>
                             </tr>
                         </tbody>

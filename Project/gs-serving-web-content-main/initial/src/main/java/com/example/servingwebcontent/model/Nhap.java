@@ -8,8 +8,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Nhap {
     private String hanghoaID;
     private String tenHang;
+    private String nhaSanXuat;
     private int soLuongNhap;
     private double giaNhap;
+    public String getNhaSanXuat() {
+        return nhaSanXuat;
+    }
+    public void setNhaSanXuat(String nhaSanXuat) {
+        this.nhaSanXuat = nhaSanXuat;
+    }
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate ngayNhap;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")

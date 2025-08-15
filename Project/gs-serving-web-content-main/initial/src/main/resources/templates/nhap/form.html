@@ -32,6 +32,15 @@
                                th:field="*{tenHang}" required
                                placeholder="Nhập tên hàng (VD: Gạo ST25)">
                     </div>
+                    <!-- Nhà sản xuất -->
+                    <div class="mb-3">
+                        <label for="nhaSanXuat" class="form-label">
+                            <i class="fas fa-industry"></i> Nhà sản xuất <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="nhaSanXuat" 
+                               th:field="*{nhaSanXuat}" required
+                               placeholder="Nhập tên nhà sản xuất (VD: Vinamilk)">
+                    </div>
                     
                     <!-- Số Lượng Nhập -->
                     <div class="mb-3">

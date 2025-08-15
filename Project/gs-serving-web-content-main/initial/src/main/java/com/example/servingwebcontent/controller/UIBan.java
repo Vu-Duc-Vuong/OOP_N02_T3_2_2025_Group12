@@ -47,14 +47,35 @@ public class UIBan {
             return readList(model);
         }
         BanEntity entity = toBanEntity(ban);
-        entity.setMaPhieu(maPhieu);
+        entity.setMaPhieu(maPhieu); // giữ nguyên mã phiếu
+        // Tìm lại mã hàng theo tên hàng mới (nếu có trong kho), nếu không có thì giữ mã hàng cũ
+        String tenHangMoi = ban.getTenHang();
+        String maHangMoi = old.getMaHang();
+        if (tenHangMoi != null) {
+            com.example.servingwebcontent.model.HangHoa hang = hangHoaService.findByTenExact(tenHangMoi);
+            if (hang != null) {
+                maHangMoi = hang.getMaHang();
+            }
+        }
+        entity.setMaHang(maHangMoi); // luôn có giá trị
         banService.save(entity);
+        model.addAttribute("success", "Cập nhật phiếu bán thành công!");
         return "redirect:/ban";
     }
 
     @GetMapping("/delete/{maPhieu}")
     public String deleteBan(@PathVariable String maPhieu, Model model) {
-        banService.delete(maPhieu);
+        if (!banService.getById(maPhieu).isPresent()) {
+            model.addAttribute("error", "Không tìm thấy phiếu bán để xóa!");
+            return readList(model);
+        }
+        try {
+            banService.delete(maPhieu);
+            model.addAttribute("success", "Xóa phiếu bán thành công!");
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi khi xóa phiếu bán: " + e.getMessage());
+            return readList(model);
+        }
         return "redirect:/ban";
     }
 
@@ -95,10 +116,9 @@ public class UIBan {
                 .filter(h -> h.getTenHang().equalsIgnoreCase(ban.getTenHang()))
                 .findFirst().orElse(null);
             if(target != null){
-                if(target.getSoLuong() < ban.getSoLuong()){
-                    // Nếu bán vượt kho, set số lượng về 0
-                    target.setSoLuong(0);
-                    hangHoaService.updateHangHoa(target);
+                if(target.getSoLuong() <= ban.getSoLuong()){
+                    // Nếu bán hết hoặc vượt kho, xóa luôn hàng hóa khỏi kho
+                    hangHoaService.deleteHangHoa(target.getMaHang());
                 } else {
                     // Nếu bán không vượt kho, trừ kho như bình thường
                     hangHoaService.adjustSoLuong(target.getMaHang(), -ban.getSoLuong());

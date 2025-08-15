@@ -50,7 +50,7 @@
                     </h5>
                 </div>
                 <div class="card-body">
-                    <form th:action="${action == 'add' ? '/ban/add' : '/ban/edit/' + index}" th:object="${ban}" method="post">
+                    <form th:action="${action == 'add' ? '/ban/add' : '/ban/edit/' + ban.maPhieu}" th:object="${ban}" method="post">
                         <!-- Mã Phiếu -->
                         <div class="mb-3">
                             <label class="form-label">
@@ -163,6 +163,17 @@ document.body.appendChild(dmBtn);
 dmBtn.addEventListener('click',()=>{
     document.body.classList.toggle('dark-mode');
     dmBtn.innerHTML = document.body.classList.contains('dark-mode') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+});
+</script>
+<script>
+// Đảm bảo giá trị giá bán luôn được đồng bộ khi submit form
+document.querySelector('form').addEventListener('submit', function() {
+    var display = document.getElementById('donGiaDisplay');
+    var hidden = document.getElementById('donGia');
+    if(display && hidden) {
+        const numeric = display.value.replace(/\D/g,'');
+        hidden.value = numeric;
+    }
 });
 </script>
 <footer class="text-center"><div class="container"><p>&copy; 2025 Nhóm 12 - OOP_N02_T3.</p></div></footer>

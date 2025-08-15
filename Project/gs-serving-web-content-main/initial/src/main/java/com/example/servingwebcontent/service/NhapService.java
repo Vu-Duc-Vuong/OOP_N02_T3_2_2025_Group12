@@ -34,6 +34,13 @@ public class NhapService {
         n.setGiaNhap(e.getGiaNhap());
         n.setNgayNhap(e.getNgayNhap());
         n.setThoiGianNhap(e.getThoiGianNhap());
+        // Map nhà sản xuất từ hàng hóa nếu có
+        HangHoa hang = hangHoaRepository.findById(e.getHanghoaID()).orElse(null);
+        if (hang != null) {
+            n.setNhaSanXuat(hang.getNhaSanXuat());
+        } else {
+            n.setNhaSanXuat("");
+        }
         return n;
     }
 
@@ -82,13 +89,21 @@ public class NhapService {
         );
         nhapRepository.save(entity);
 
-    HangHoa hangHoa = hangHoaRepository.findById(nhap.getHanghoaID()).orElse(null);
+        HangHoa hangHoa = hangHoaRepository.findById(nhap.getHanghoaID()).orElse(null);
         if (hangHoa == null) {
-            hangHoa = new HangHoa(nhap.getHanghoaID(), nhap.getTenHang(), nhap.getSoLuongNhap(), "Nhập Kho", nhap.getGiaNhap(), LocalDate.now().getYear());
+            hangHoa = new HangHoa(
+                nhap.getHanghoaID(),
+                nhap.getTenHang(),
+                nhap.getSoLuongNhap(),
+                nhap.getNhaSanXuat() != null ? nhap.getNhaSanXuat() : "Nhập Kho",
+                nhap.getGiaNhap(),
+                LocalDate.now().getYear()
+            );
         } else {
             hangHoa.setSoLuong(hangHoa.getSoLuong() + nhap.getSoLuongNhap());
             if (nhap.getTenHang()!=null) hangHoa.setTenHang(nhap.getTenHang());
             if (nhap.getGiaNhap()>0) hangHoa.setDonGia(nhap.getGiaNhap());
+            if (nhap.getNhaSanXuat()!=null && !nhap.getNhaSanXuat().isEmpty()) hangHoa.setNhaSanXuat(nhap.getNhaSanXuat());
         }
         hangHoaRepository.save(hangHoa);
     }
