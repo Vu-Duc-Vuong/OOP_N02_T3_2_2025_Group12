@@ -165,7 +165,7 @@ Trong Terminal tích hợp, chạy:
 cd Project/gs-serving-web-content-main/initial && ./mvnw spring-boot:run
 
 Nhấn nút "Ports" → chọn 9999 → publish port để nhận public URL.
-
+(nếu web lag vui lòng tắt và bật lại port)
 ```
 
 ### 2. Chạy kiểm thử nghiệp vụ (Java thuần):
