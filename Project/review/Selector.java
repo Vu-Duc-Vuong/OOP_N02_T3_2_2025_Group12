@@ -1,5 +1,5 @@
 // Selector.java - ví dụ review logic cho quản lý hàng hóa
-import com.example.servingwebcontent.model.HangHoa;
+import Model.HangHoa;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -1,5 +1,0 @@
-{
-  "name": "HotelManagementSystem",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-  "postCreateCommand": "bash -lc 'sudo apt-get update && sudo apt-get install -y openjdk-17-jdk maven && echo \"export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64\" >> ~/.bashrc && echo \"export PATH=\\$JAVA_HOME/bin:\\$PATH\" >> ~/.bashrc'"
-}
