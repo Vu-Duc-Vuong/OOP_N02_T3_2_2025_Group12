@@ -10,8 +10,10 @@
                 </h5>
             </div>
             <div class="card-body">
-                <form th:action="${action == 'add' ? '/quanly/nhap/add' : '/quanly/nhap/edit/' + index}" 
-                      th:object="${nhap}" method="post">
+            <form th:action="@{${action == 'add' ? '/quanly/nhap/add' : '/quanly/nhap/edit/' + nhap.id}}" 
+                th:object="${nhap}" method="post">
+                    <!-- Hidden id for edit -->
+                    <input type="hidden" th:field="*{id}" />
                     
                     <!-- Mã Hàng Hóa -->
                     <div class="mb-3">

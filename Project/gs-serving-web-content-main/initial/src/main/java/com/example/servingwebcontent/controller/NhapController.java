@@ -72,4 +72,42 @@ public class NhapController {
         model.addAttribute("content", "nhap/report");
         return "layout";
     }
+
+    // --- Sửa phiếu nhập ---
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        Nhap nhap = nhapService.getNhapById(id);
+        if (nhap == null) {
+            model.addAttribute("errorMessage", "Không tìm thấy phiếu nhập!");
+            return "redirect:/quanly/nhap";
+        }
+        model.addAttribute("nhap", nhap);
+        model.addAttribute("title", "Sửa Phiếu Nhập");
+        model.addAttribute("content", "nhap/form");
+        model.addAttribute("action", "edit");
+        return "layout";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editNhap(@PathVariable Long id, @ModelAttribute Nhap nhap, RedirectAttributes redirectAttributes) {
+        try {
+            nhapService.updateNhapById(id, nhap);
+            redirectAttributes.addFlashAttribute("successMessage", "Cập nhật phiếu nhập thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Có lỗi khi cập nhật: " + e.getMessage());
+        }
+        return "redirect:/quanly/nhap";
+    }
+
+    // --- Xóa phiếu nhập ---
+    @GetMapping("/delete/{id}")
+    public String deleteNhap(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            nhapService.deleteNhapById(id);
+            redirectAttributes.addFlashAttribute("successMessage", "Đã xóa phiếu nhập thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Không xóa được: " + e.getMessage());
+        }
+        return "redirect:/quanly/nhap";
+    }
 }

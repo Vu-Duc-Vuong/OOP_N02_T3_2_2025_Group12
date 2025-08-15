@@ -6,11 +6,18 @@ import java.time.LocalTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Nhap {
+    private Long id; // Thêm trường id để CRUD chính xác từng phiếu nhập
     private String hanghoaID;
     private String tenHang;
     private String nhaSanXuat;
     private int soLuongNhap;
     private double giaNhap;
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getNhaSanXuat() {
         return nhaSanXuat;
     }

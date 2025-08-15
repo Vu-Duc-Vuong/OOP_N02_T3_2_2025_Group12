@@ -17,6 +17,39 @@ import java.util.stream.Collectors;
 
 @Service
 public class NhapService {
+    public Nhap getNhapById(Long id) {
+        NhapEntity entity = nhapRepository.findById(id).orElse(null);
+        return entity != null ? map(entity) : null;
+    }
+
+    @Transactional
+    public void updateNhapById(Long id, Nhap nhap) {
+        NhapEntity entity = nhapRepository.findById(id).orElse(null);
+        if (entity == null) throw new IllegalArgumentException("Không tìm thấy phiếu nhập!");
+        // Cập nhật các trường
+    entity.setTenHang(nhap.getTenHang());
+    entity.setSoLuongNhap(nhap.getSoLuongNhap());
+    entity.setGiaNhap(nhap.getGiaNhap());
+    entity.setThoiGianNhap(nhap.getThoiGianNhap());
+    entity.setNgayNhap(nhap.getNgayNhap());
+    entity.setNhaSanXuat(nhap.getNhaSanXuat());
+        nhapRepository.save(entity);
+        // Đồng bộ lại hàng hóa
+        HangHoa hangHoa = hangHoaRepository.findById(entity.getHanghoaID()).orElse(null);
+        if (hangHoa != null) {
+            hangHoa.setTenHang(nhap.getTenHang());
+            hangHoa.setDonGia(nhap.getGiaNhap());
+            hangHoa.setNhaSanXuat(nhap.getNhaSanXuat());
+            hangHoaRepository.save(hangHoa);
+        }
+    }
+
+    @Transactional
+    public void deleteNhapById(Long id) {
+        NhapEntity entity = nhapRepository.findById(id).orElse(null);
+        if (entity == null) throw new IllegalArgumentException("Không tìm thấy phiếu nhập!");
+        nhapRepository.delete(entity);
+    }
 
     private final NhapRepository nhapRepository;
     private final HangHoaRepository hangHoaRepository;
@@ -28,18 +61,23 @@ public class NhapService {
 
     private Nhap map(NhapEntity e) {
         Nhap n = new Nhap();
+        n.setId(e.getId());
         n.setHanghoaID(e.getHanghoaID());
         n.setTenHang(e.getTenHang());
         n.setSoLuongNhap(e.getSoLuongNhap());
         n.setGiaNhap(e.getGiaNhap());
         n.setNgayNhap(e.getNgayNhap());
         n.setThoiGianNhap(e.getThoiGianNhap());
-        // Map nhà sản xuất từ hàng hóa nếu có
-        HangHoa hang = hangHoaRepository.findById(e.getHanghoaID()).orElse(null);
-        if (hang != null) {
-            n.setNhaSanXuat(hang.getNhaSanXuat());
+        // Map nhà sản xuất: ưu tiên lấy từ entity, nếu null thì lấy từ hàng hóa
+        if (e.getNhaSanXuat() != null && !e.getNhaSanXuat().isEmpty()) {
+            n.setNhaSanXuat(e.getNhaSanXuat());
         } else {
-            n.setNhaSanXuat("");
+            HangHoa hang = hangHoaRepository.findById(e.getHanghoaID()).orElse(null);
+            if (hang != null) {
+                n.setNhaSanXuat(hang.getNhaSanXuat());
+            } else {
+                n.setNhaSanXuat("");
+            }
         }
         return n;
     }

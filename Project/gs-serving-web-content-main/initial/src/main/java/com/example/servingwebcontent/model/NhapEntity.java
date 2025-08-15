@@ -7,6 +7,10 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "nhap")
 public class NhapEntity {
+    @Column(name = "nha_san_xuat", length = 100)
+    private String nhaSanXuat;
+    public String getNhaSanXuat() { return nhaSanXuat; }
+    public void setNhaSanXuat(String n) { this.nhaSanXuat = n; }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

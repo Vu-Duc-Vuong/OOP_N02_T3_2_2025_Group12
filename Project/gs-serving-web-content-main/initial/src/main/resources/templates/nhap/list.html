@@ -30,11 +30,12 @@
                         <th>Giá Nhập</th>
                         <th>Thời Gian Nhập</th>
                         <th>Tổng Tiền</th>
+                        <th>Hành Động</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:if="${#lists.isEmpty(danhSachNhap)}">
-                        <td colspan="7" class="text-center text-muted"><i class="fas fa-inbox"></i> Chưa có phiếu nhập nào</td>
+                        <td colspan="9" class="text-center text-muted"><i class="fas fa-inbox"></i> Chưa có phiếu nhập nào</td>
                     </tr>
                     <tr th:each="nhap, iterStat : ${danhSachNhap}">
                         <td th:text="${iterStat.index + 1}">1</td>
@@ -45,6 +46,10 @@
                         <td><span th:if="${nhap.giaNhap >= 0}" th:text="|${#numbers.formatDecimal(nhap.giaNhap,0,'POINT',0,'COMMA')} VNĐ|">0 VNĐ</span></td>
                         <td th:text="${nhap.thoiGianNhap != null ? #temporals.format(nhap.thoiGianNhap,'HH:mm dd/MM/yyyy') : 'N/A'}">N/A</td>
                         <td><strong class="money-success" th:text="|${#numbers.formatDecimal(nhap.tongTien,0,'POINT',0,'COMMA')} VNĐ|">0 VNĐ</strong></td>
+                        <td>
+                            <a th:href="@{'/quanly/nhap/edit/' + ${nhap.id}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Sửa</a>
+                            <a th:href="@{'/quanly/nhap/delete/' + ${nhap.id}}" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa phiếu nhập này?');"><i class="fas fa-trash"></i> Xóa</a>
+                        </td>
                     </tr>
                 </tbody>
                 <tfoot th:if="${!#lists.isEmpty(danhSachNhap)}">
