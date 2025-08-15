@@ -80,26 +80,23 @@ Project/
 
 ## 🛠️ Chức năng chính
 
-### 1. Quản lý người dùng
-- Thêm / Sửa / Xóa người dùng
-- Lọc theo loại: Khách hàng (Customer), Nhà cung cấp (Seller)
-
-### 2. Quản lý sản phẩm
-- Thêm / Sửa / Xóa sản phẩm
-- Gán sản phẩm cho nhà cung cấp
+### 1. Quản lý Doanh thu
+-Hiển thị tổng tiền nhập / tổng tiền bán, doanh thu theo thời gian
+### 2. Quản lý hàng hóa
+- Sửa / Xóa hàng hóa
+- Gán sản phẩm cho nhà sản xuất
 - Cập nhật số lượng sản phẩm sau mỗi đơn hàng
 
-### 3. Quản lý đơn hàng
-- Tạo / Cập nhật đơn hàng
-- Hiển thị danh sách đơn hàng
-- Gán đơn hàng cho khách hàng và thanh toán
+### 3. Quản lý nhập hàng
+- Tạo / Cập nhật phiếu nhập hàng
+- Hiển thị danh sách phiếu nhập hàng
 - Tính tổng tiền đơn hàng
-
-### 4. Quản lý thanh toán
-- Tạo và cập nhật thanh toán
-- Hiển thị thông tin thanh toán
-- Cập nhật trạng thái, phương thức thanh toán
-
+- Sửa/Xóa phiếu nhập
+### 4. Quản lý bán hàng
+- Tạo và cập nhật phiếu bán hàng
+-Sửa/Xóa phiếu bán hàng
+- Tính tổng tiền bán hàng
+-Hiển thị danh sách phiếu nhập hàng
 ### 5. Lưu trữ dữ liệu
 - Dữ liệu được lưu vào file nhị phân
 - Sử dụng ObjectOutputStream, ObjectInputStream
