@@ -140,7 +140,9 @@ Project/
 
 ### 1. Chạy ứng dụng Spring Boot:
 ```
+Trong Terminal tích hợp, chạy:
 cd Project/gs-serving-web-content-main/initial && ./mvnw spring-boot:run
+Nhấn nút "Ports" → chọn 9999 → publish port để nhận public URL.
 
 ```
 
