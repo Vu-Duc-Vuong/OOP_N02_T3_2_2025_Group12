@@ -132,7 +132,16 @@ Project/
 
 ## 🖼️ Giao diện chương trình (Console)
 ![Console](images/Console.png)
-
+![đăng nhập](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
+![alt text](image-5.png)
+![alt text](image-6.png)
+![alt text](image-7.png)
+![alt text](image-8.png)
+![alt text](image-9.png)
 ## 🔑 Thông tin đăng nhập
 - tài khoản : admin
 - mật khẩu : admin
@@ -141,7 +150,9 @@ Project/
 ### 1. Chạy ứng dụng Spring Boot:
 ```
 Trong Terminal tích hợp, chạy:
+
 cd Project/gs-serving-web-content-main/initial && ./mvnw spring-boot:run
+
 Nhấn nút "Ports" → chọn 9999 → publish port để nhận public URL.
 
 ```
