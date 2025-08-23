@@ -1,7 +1,7 @@
 # 🏪 Ứng Dụng Quản Lý Cửa Hàng Tạp Hóa
 
 > **Dự án cuối kỳ môn Lập trình Hướng Đối Tượng (OOP)**  
-> Nhóm 12 – N02_T3_2_2025 – Học kỳ 2 – Năm học 2024-2025
+> Nhóm 12 – N02_T3_2_2025 – Học kỳ 3 – Năm học 2025
 
 
 ## 📌 Giới thiệu
